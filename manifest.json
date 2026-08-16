@@ -1,0 +1,32 @@
+{
+  "name": "Karang Taruna (Putra Asmara)",
+  "short_name": "Karang Taruna",
+  "description": "Website resmi Karang Taruna (Putra Asmara) — Dari Pemuda Untuk Desa.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2c7a7b",
+  "lang": "id-ID",
+  "dir": "ltr",
+  "categories": [
+    "social",
+    "community",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrgyRNOvRz64nJHacMOfS1zS3Nu-uffga7jZfnnXjAmaelH9p6oQVFMlE5UKiUeV9NxzjOnjqRyXqReI-DpEgWkqBT5pfeiM-U-ry9lf-opHX7-M2V_KEAi4NH8sOOWc1zZfea49CLVXRwRUKN4IBYKJAxuY7sybH_Xe-e6g0ZcGiGRRHGP0BGGFAzoMg/s320/1000007259.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrgyRNOvRz64nJHacMOfS1zS3Nu-uffga7jZfnnXjAmaelH9p6oQVFMlE5UKiUeV9NxzjOnjqRyXqReI-DpEgWkqBT5pfeiM-U-ry9lf-opHX7-M2V_KEAi4NH8sOOWc1zZfea49CLVXRwRUKN4IBYKJAxuY7sybH_Xe-e6g0ZcGiGRRHGP0BGGFAzoMg/s320/1000007259.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
