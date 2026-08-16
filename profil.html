@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2c7a7b">
+<meta name="description" content="Profil pribadi anggota Karang Taruna (Putra Asmara)">
+<title>Profil Saya — Karang Taruna (Putra Asmara)</title>
+
+<style>
+:root{
+  --primary:#2c7a7b;
+  --primary2:#38b2ac;
+  --primary-soft:#e8f5f4;
+  --bg:#f4f8f8;
+  --card:#ffffff;
+  --text:#183a3c;
+  --muted:#718486;
+  --line:#dcebea;
+  --success:#15966d;
+  --warning:#d68b18;
+  --danger:#d84b4b;
+  --shadow:0 14px 38px rgba(25,80,82,.10);
+  --radius:20px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 0%,rgba(56,178,172,.12),transparent 28%),
+    linear-gradient(180deg,#edf8f7 0,#f8fbfb 45%,var(--bg) 100%);
+  min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.container{
+  width:min(1120px,calc(100% - 28px));
+  margin:auto;
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(220,235,234,.85);
+}
+.header-inner{
+  min-height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.back-btn,.header-action{
+  border:0;
+  background:var(--primary-soft);
+  color:var(--primary);
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-size:19px;
+}
+.page-title{
+  flex:1;
+  text-align:center;
+}
+.page-title strong{
+  display:block;
+  font-size:15px;
+}
+.page-title small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+/* HERO PROFILE */
+.profile-hero{
+  padding:34px 0 18px;
+}
+.profile-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,#ffffff,#eaf7f5);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+.profile-card:before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:rgba(56,178,172,.12);
+  right:-65px;
+  top:-75px;
+}
+.profile-main{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+.avatar-wrap{
+  position:relative;
+  flex:0 0 auto;
+}
+.avatar{
+  width:132px;
+  height:132px;
+  border-radius:34px;
+  object-fit:cover;
+  display:block;
+  background:linear-gradient(135deg,#dff3f1,#cce9e6);
+  border:5px solid #fff;
+  box-shadow:0 15px 35px rgba(44,122,123,.18);
+}
+.avatar-fallback{
+  display:grid;
+  place-items:center;
+  color:var(--primary);
+  font-size:48px;
+  font-weight:900;
+}
+.online-dot{
+  position:absolute;
+  right:3px;
+  bottom:5px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#28bf88;
+  border:5px solid #fff;
+}
+.profile-info{
+  min-width:0;
+}
+.eyebrow{
+  display:inline-flex;
+  padding:6px 9px;
+  border-radius:999px;
+  background:#dff3f1;
+  color:#176b6d;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+.profile-info h1{
+  margin:9px 0 3px;
+  font-size:clamp(25px,5vw,36px);
+  line-height:1.05;
+  letter-spacing:-.035em;
+}
+.username{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+}
+.profile-badges{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#f0f7f6;
+  border:1px solid var(--line);
+  color:var(--primary);
+  font-size:10px;
+  font-weight:900;
+}
+.badge.success{
+  color:#087854;
+  background:#e7f8f1;
+  border-color:#c8ecdf;
+}
+.profile-actions{
+  position:relative;
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.btn{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--text);
+  padding:11px 15px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:12px;
+  box-shadow:0 6px 18px rgba(25,80,82,.06);
+}
+.btn.primary{
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+.btn.danger{
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,#c53f3f,#e85b5b);
+}
+
+/* SECTION */
+.section{
+  padding:15px 0;
+}
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:12px;
+  margin:10px 0 14px;
+}
+.section-head h2{
+  margin:0;
+  font-size:21px;
+  letter-spacing:-.025em;
+}
+.section-head p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:11px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.stat{
+  padding:17px;
+  transition:.25s;
+}
+.stat:hover{
+  transform:translateY(-6px) scale(.97);
+  box-shadow:0 22px 42px rgba(44,122,123,.17);
+}
+.stat-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:var(--primary-soft);
+  font-size:18px;
+}
+.stat strong{
+  display:block;
+  margin-top:12px;
+  font-size:24px;
+}
+.stat span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+}
+
+/* INFO */
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+.info-card{
+  padding:20px;
+}
+.info-list{
+  display:grid;
+  gap:0;
+}
+.info-row{
+  display:grid;
+  grid-template-columns:145px 1fr;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid #edf3f2;
+}
+.info-row:last-child{border-bottom:0}
+.info-label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:800;
+}
+.info-value{
+  font-size:12px;
+  font-weight:850;
+  word-break:break-word;
+}
+.status-active{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:#087854;
+}
+.status-active:before{
+  content:"";
+  width:7px;
+  height:7px;
+  background:#22b97f;
+  border-radius:50%;
+}
+
+/* ACTIVITY */
+.activity-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+.activity-card{
+  padding:20px;
+}
+.activity-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid #edf3f2;
+}
+.activity-item:last-child{border-bottom:0}
+.activity-icon{
+  flex:0 0 auto;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:var(--primary-soft);
+}
+.activity-item b{
+  display:block;
+  font-size:12px;
+}
+.activity-item span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+.activity-value{
+  margin-left:auto;
+  font-weight:950;
+  color:var(--primary);
+}
+
+/* QUICK MENU */
+.quick-menu{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.quick{
+  padding:18px 13px;
+  text-align:center;
+  transition:.25s;
+}
+.quick:hover{
+  transform:translateY(-5px) scale(.98);
+}
+.quick-icon{
+  width:48px;
+  height:48px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  background:var(--primary-soft);
+  border-radius:15px;
+  font-size:22px;
+}
+.quick b{
+  display:block;
+  margin-top:9px;
+  font-size:11px;
+}
+.quick span{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  margin-top:3px;
+}
+
+/* SECURITY */
+.security{
+  padding:20px;
+}
+.security-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid #edf3f2;
+}
+.security-item:last-child{border-bottom:0}
+.security-icon{
+  width:39px;height:39px;
+  border-radius:12px;
+  background:#f0f7f6;
+  display:grid;
+  place-items:center;
+}
+.security-text{flex:1}
+.security-text b{display:block;font-size:12px}
+.security-text span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.arrow{color:var(--muted);font-size:18px}
+
+/* FOOTER */
+.footer{
+  margin-top:28px;
+  padding:28px 0;
+  background:#153b3d;
+  color:#dff1f0;
+}
+.footer-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.footer small{color:#a9c8c7;font-size:10px}
+.footer-links{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  font-size:10px;
+  font-weight:800;
+}
+
+/* MODAL */
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(11,42,43,.48);
+  backdrop-filter:blur(8px);
+}
+.overlay.show{display:flex}
+.modal{
+  width:min(650px,100%);
+  max-height:min(88vh,760px);
+  overflow:auto;
+  background:#fff;
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 30px 90px rgba(0,0,0,.25);
+}
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.modal-head h3{margin:0;font-size:19px}
+.close{
+  border:0;
+  background:#eef6f5;
+  width:38px;height:38px;
+  border-radius:11px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+  margin-top:15px;
+}
+.field.full{grid-column:1/-1}
+.field label{
+  display:block;
+  margin-bottom:6px;
+  font-size:10px;
+  font-weight:950;
+}
+.field input{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  outline:0;
+  color:var(--text);
+  background:#fbfdfd;
+}
+.field input:focus{border-color:var(--primary)}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:18px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:150;
+  max-width:340px;
+  padding:12px 15px;
+  border-radius:13px;
+  color:#fff;
+  background:#173b3d;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  opacity:0;
+  transform:translateY(15px);
+  pointer-events:none;
+  transition:.25s;
+  font-size:11px;
+  font-weight:850;
+}
+.toast.show{
+  opacity:1;
+  transform:none;
+}
+
+/* LOADING */
+.loading{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(244,248,248,.86);
+  backdrop-filter:blur(7px);
+}
+.loading.show{display:flex}
+.loader-box{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px 22px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+.spinner{
+  width:30px;height:30px;
+  border:3px solid #d8eeee;
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:auto;
+}
+.loader-box span{
+  display:block;
+  margin-top:9px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .info-grid,.activity-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .profile-main{display:block;text-align:center}
+  .avatar-wrap{width:max-content;margin:0 auto 16px}
+  .profile-badges,.profile-actions{justify-content:center}
+  .profile-card{padding:22px 17px}
+  .quick-menu{grid-template-columns:repeat(2,1fr)}
+  .info-row{grid-template-columns:120px 1fr}
+  .footer-row{display:block}
+  .footer-links{margin-top:13px}
+}
+@media(max-width:520px){
+  .container{width:min(100% - 20px,1120px)}
+  .header-inner{min-height:62px}
+  .avatar{width:112px;height:112px;border-radius:30px}
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .stat{padding:13px}
+  .stat strong{font-size:21px}
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .info-row{grid-template-columns:1fr;gap:4px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <button class="back-btn" id="backBtn" aria-label="Kembali">←</button>
+
+    <div class="page-title">
+      <strong>Profil Saya</strong>
+      <small>Karang Taruna (Putra Asmara)</small>
+    </div>
+
+    <!-- Ikon ⚙️ Konfigurasi API dihapus dari tampilan publik -->
+    <div style="width:42px;height:42px;"></div>
+  </div>
+</header>
+
+<main>
+
+<section class="profile-hero">
+  <div class="container">
+    <article class="profile-card">
+
+      <div class="profile-main">
+
+        <div class="avatar-wrap">
+          <img id="avatar" class="avatar" src="" alt="Foto Profil">
+          <div id="avatarFallback" class="avatar avatar-fallback" style="display:none">👤</div>
+          <span class="online-dot" title="Status aktif"></span>
+        </div>
+
+        <div class="profile-info">
+          <span class="eyebrow">PROFIL ANGGOTA</span>
+          <h1 id="fullName">Memuat Profil...</h1>
+          <div class="username" id="username">@user</div>
+
+          <div class="profile-badges">
+            <span class="badge success" id="memberStatus">● Aktif</span>
+            <span class="badge" id="memberPosition">👤 Anggota</span>
+            <span class="badge" id="memberNia">🆔 NIA —</span>
+          </div>
+
+          <div class="profile-actions">
+            <button class="btn primary" id="editBtn">✏️ Edit Profil</button>
+            <button class="btn" id="shareBtn">↗️ Bagikan Profil</button>
+          </div>
+        </div>
+
+      </div>
+
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Ringkasan Aktivitas</h2>
+        <p>Statistik pribadi akun Anda.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <article class="card stat">
+        <div class="stat-icon">📅</div>
+        <strong id="statActivities">0</strong>
+        <span>Kegiatan Diikuti</span>
+      </article>
+
+      <article class="card stat">
+        <div class="stat-icon">✅</div>
+        <strong id="statAttendance">0</strong>
+        <span>Kehadiran</span>
+      </article>
+
+      <article class="card stat">
+        <div class="stat-icon">🤝</div>
+        <strong id="statContribution">0</strong>
+        <span>Kontribusi</span>
+      </article>
+
+      <article class="card stat">
+        <div class="stat-icon">🏆</div>
+        <strong id="statAchievement">0</strong>
+        <span>Prestasi</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Informasi Pribadi</h2>
+        <p>Data akun dan identitas anggota.</p>
+      </div>
+    </div>
+
+    <div class="info-grid">
+
+      <article class="card info-card">
+        <h3>👤 Data Diri</h3>
+
+        <div class="info-list">
+
+          <div class="info-row">
+            <div class="info-label">Nama Lengkap</div>
+            <div class="info-value" id="infoName">—</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">NIA / ID Anggota</div>
+            <div class="info-value" id="infoNia">—</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Jenis Kelamin</div>
+            <div class="info-value" id="infoGender">—</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Email</div>
+            <div class="info-value" id="infoEmail">—</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">WhatsApp</div>
+            <div class="info-value" id="infoWhatsapp">—</div>
+          </div>
+
+        </div>
+      </article>
+
+      <article class="card info-card">
+        <h3>🏠 Domisili & Keanggotaan</h3>
+
+        <div class="info-list">
+
+          <div class="info-row">
+            <div class="info-label">Alamat</div>
+            <div class="info-value" id="infoAddress">—</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Desa</div>
+            <div class="info-value">Ciasmara</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Kecamatan</div>
+            <div class="info-value">Pamijahan</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Kabupaten</div>
+            <div class="info-value">Bogor</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Posisi</div>
+            <div class="info-value" id="infoPosition">Anggota</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Status</div>
+            <div class="info-value status-active" id="infoStatus">Aktif</div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-label">Tanggal Bergabung</div>
+            <div class="info-value" id="infoJoinDate">—</div>
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Aktivitas Saya</h2>
+        <p>Ringkasan aktivitas yang terhubung dengan akun.</p>
+      </div>
+    </div>
+
+    <div class="activity-grid">
+
+      <article class="card activity-card">
+        <div class="activity-item">
+          <div class="activity-icon">📅</div>
+          <div>
+            <b>Total Kegiatan</b>
+            <span>Program/kegiatan yang diikuti</span>
+          </div>
+          <div class="activity-value" id="activityTotal">0</div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon">✅</div>
+          <div>
+            <b>Kehadiran</b>
+            <span>Riwayat kehadiran</span>
+          </div>
+          <div class="activity-value" id="activityAttendance">0</div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon">🤝</div>
+          <div>
+            <b>Kontribusi</b>
+            <span>Partisipasi organisasi</span>
+          </div>
+          <div class="activity-value" id="activityContribution">0</div>
+        </div>
+      </article>
+
+      <article class="card activity-card">
+        <div class="activity-item">
+          <div class="activity-icon">🏆</div>
+          <div>
+            <b>Prestasi</b>
+            <span>Pencapaian yang tercatat</span>
+          </div>
+          <div class="activity-value" id="activityAchievement">0</div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon">🗓️</div>
+          <div>
+            <b>Anggota Sejak</b>
+            <span>Tanggal bergabung</span>
+          </div>
+          <div class="activity-value" id="activitySince">—</div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon">🟢</div>
+          <div>
+            <b>Status Akun</b>
+            <span>Status keanggotaan</span>
+          </div>
+          <div class="activity-value" id="activityStatus">Aktif</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Akses Cepat</h2>
+        <p>Menu yang berhubungan dengan akun Anda.</p>
+      </div>
+    </div>
+
+    <div class="quick-menu">
+
+      <a class="card quick" href="index.html">
+        <div class="quick-icon">🏠</div>
+        <b>Beranda</b>
+        <span>Website utama</span>
+      </a>
+
+      <a class="card quick" href="kegiatan.html">
+        <div class="quick-icon">📅</div>
+        <b>Kegiatan</b>
+        <span>Program & agenda</span>
+      </a>
+
+      <a class="card quick" href="inbox.html">
+        <div class="quick-icon">💬</div>
+        <b>Pesan</b>
+        <span>Pesan masuk</span>
+      </a>
+
+      <button class="card quick" id="securityBtn">
+        <div class="quick-icon">🔐</div>
+        <b>Keamanan</b>
+        <span>Akun & password</span>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <article class="card security">
+      <div class="section-head" style="margin-top:0">
+        <div>
+          <h2>Keamanan Akun</h2>
+          <p>Pengaturan keamanan akun pribadi.</p>
+        </div>
+      </div>
+
+      <div class="security-item">
+        <div class="security-icon">🔐</div>
+        <div class="security-text">
+          <b>Password</b>
+          <span>Ubah password akun secara berkala.</span>
+        </div>
+        <button class="btn" id="passwordBtn">Ubah</button>
+      </div>
+
+      <div class="security-item">
+        <div class="security-icon">🔔</div>
+        <div class="security-text">
+          <b>Notifikasi</b>
+          <span>Kelola preferensi pemberitahuan akun.</span>
+        </div>
+        <button class="btn" id="notificationBtn">Atur</button>
+      </div>
+
+      <div class="security-item">
+        <div class="security-icon">🚪</div>
+        <div class="security-text">
+          <b>Keluar</b>
+          <span>Keluar dari sesi akun saat ini.</span>
+        </div>
+        <button class="btn danger" id="logoutBtn">Logout</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-row">
+    <div>
+      <b>Karang Taruna (Putra Asmara)</b><br>
+      <small>Dari Pemuda Untuk Desa · Kecamatan Pamijahan — Kabupaten Bogor</small>
+    </div>
+
+    <div class="footer-links">
+      <a href="index.html">Beranda</a>
+      <a href="profil.html">Profil Saya</a>
+      <a href="dashboard-admin.html">Admin</a>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:17px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);text-align:center">
+    <small>© 2026 Karang Taruna (Putra Asmara)</small>
+  </div>
+</footer>
+
+
+<!-- EDIT PROFILE MODAL -->
+<div class="overlay" id="editOverlay">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h3>✏️ Edit Profil</h3>
+      <button class="close" data-close="editOverlay">✕</button>
+    </div>
+
+    <form id="editForm">
+
+      <div class="form-grid">
+
+        <div class="field full">
+          <label>Foto Profil — URL</label>
+          <input name="foto" type="url" placeholder="https://...">
+        </div>
+
+        <div class="field">
+          <label>Nama Lengkap</label>
+          <input name="nama_lengkap" required>
+        </div>
+
+        <div class="field">
+          <label>Username</label>
+          <input name="username" readonly>
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input name="email" type="email">
+        </div>
+
+        <div class="field">
+          <label>WhatsApp</label>
+          <input name="whatsapp" type="tel">
+        </div>
+
+        <div class="field">
+          <label>Jenis Kelamin</label>
+          <input name="jenis_kelamin">
+        </div>
+
+        <div class="field full">
+          <label>Alamat Lengkap</label>
+          <input name="alamat_lengkap">
+        </div>
+
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn" type="button" data-close="editOverlay">Batal</button>
+        <button class="btn primary" type="submit">💾 Simpan Perubahan</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+<!-- PASSWORD MODAL -->
+<div class="overlay" id="passwordOverlay">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h3>🔐 Ubah Password</h3>
+      <button class="close" data-close="passwordOverlay">✕</button>
+    </div>
+
+    <form id="passwordForm">
+
+      <div class="field">
+        <label>Password Lama</label>
+        <input name="oldPassword" type="password" required>
+      </div>
+
+      <div class="field">
+        <label>Password Baru</label>
+        <input name="newPassword" type="password" minlength="6" required>
+      </div>
+
+      <div class="field">
+        <label>Konfirmasi Password Baru</label>
+        <input name="confirmPassword" type="password" minlength="6" required>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn" type="button" data-close="passwordOverlay">Batal</button>
+        <button class="btn primary" type="submit">🔐 Ubah Password</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+
+<!-- API CONFIG MODAL (TETAP ADA, TAPI TIDAK ADA AKSES DARI TAMPILAN PUBLIK) -->
+<div class="overlay" id="apiOverlay">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h3>⚙️ Konfigurasi API</h3>
+      <button class="close" data-close="apiOverlay">✕</button>
+    </div>
+
+    <p style="color:var(--muted);font-size:12px;line-height:1.7">
+      Gunakan URL Web App Google Apps Script <b>yang sama</b> dengan
+      <code>index.html</code> dan <code>dashboard-admin.html</code>.
+    </p>
+
+    <div class="field">
+      <label>REST / Apps Script Web App URL</label>
+      <input id="apiInput" type="url" placeholder="https://script.google.com/macros/s/XXXX/exec">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" data-close="apiOverlay">Batal</button>
+      <button class="btn primary" id="saveApiBtn">💾 Simpan & Sinkronkan</button>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+<div class="loading" id="loading">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <span id="loadingText">Memuat data...</span>
+  </div>
+</div>
+
+
+<script>
+/* ============================================================
+   KARANG TARUNA (PUTRA ASMARA)
+   profil.html — USER PERSONAL PROFILE
+
+   Sumber data:
+     Google Sheets
+          ↕
+     Google Apps Script
+          ↕
+     profil.html
+
+   IDENTITAS USER:
+     1. URL ?nia=KT-001
+     2. sessionStorage KT_SESSION
+     3. localStorage KT_SESSION
+     4. localStorage KT_USER
+     5. fallback demo hanya jika tidak ada identitas
+
+   API:
+     GET  ?action=getUser&nia=KT-001
+     POST {action:"updateUser", nia:"KT-001", data:{...}}
+     POST {action:"changePassword", nia:"KT-001", ...}
+
+   Catatan keamanan:
+     Jangan menjadikan localStorage sebagai sumber otorisasi.
+     Backend Code.gs harus memvalidasi session/token untuk produksi.
+   ============================================================ */
+
+const CONFIG={
+  apiUrl:"",
+  fallbackUserKey:"KT_USER",
+  sessionKey:"KT_SESSION",
+  apiStorageKey:"KT_API_URL",
+  dbStorageKey:"KT_DB",
+  demoNia:"KT-001"
+};
+
+const $=id=>document.getElementById(id);
+
+function esc(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[char]));
+}
+
+function formatDate(value){
+  if(!value)return"—";
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return String(value);
+  return d.toLocaleDateString("id-ID",{
+    day:"2-digit",
+    month:"long",
+    year:"numeric"
+  });
+}
+
+function shortDate(value){
+  if(!value)return"—";
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return String(value);
+  return d.toLocaleDateString("id-ID",{
+    month:"short",
+    year:"numeric"
+  });
+}
+
+function showToast(message){
+  const el=$("toast");
+  el.textContent=message;
+  el.classList.add("show");
+  clearTimeout(window.__toast);
+  window.__toast=setTimeout(()=>el.classList.remove("show"),3200);
+}
+
+function setLoading(show,text="Memuat data..."){
+  $("loadingText").textContent=text;
+  $("loading").classList.toggle("show",show);
+}
+
+function getApiUrl(){
+  return (
+    CONFIG.apiUrl ||
+    localStorage.getItem(CONFIG.apiStorageKey) ||
+    ""
+  ).trim();
+}
+
+function getSession(){
+  const sources=[
+    sessionStorage.getItem(CONFIG.sessionKey),
+    localStorage.getItem(CONFIG.sessionKey),
+    localStorage.getItem(CONFIG.fallbackUserKey)
+  ];
+
+  for(const raw of sources){
+    if(!raw)continue;
+
+    try{
+      const parsed=JSON.parse(raw);
+
+      if(typeof parsed==="string"){
+        return {nia:parsed};
+      }
+
+      if(parsed && typeof parsed==="object"){
+        return parsed;
+      }
+    }catch(e){
+      return {nia:raw};
+    }
+  }
+
+  return null;
+}
+
+function getUserNia(){
+  const params=new URLSearchParams(location.search);
+
+  return (
+    params.get("nia") ||
+    params.get("user") ||
+    params.get("id") ||
+    getSession()?.nia ||
+    getSession()?.NIA ||
+    getSession()?.niaAnggota ||
+    CONFIG.demoNia
+  );
+}
+
+function getCachedUser(nia){
+  try{
+    const raw=localStorage.getItem("KT_USER_"+nia);
+    if(raw)return JSON.parse(raw);
+  }catch(e){}
+
+  try{
+    const db=JSON.parse(localStorage.getItem(CONFIG.dbStorageKey)||"null");
+    if(db && Array.isArray(db.members)){
+      return db.members.find(x=>
+        String(x.nia||x.NIA||"").toLowerCase()===String(nia).toLowerCase()
+      )||null;
+    }
+  }catch(e){}
+
+  return null;
+}
+
+function normalizeUser(raw,nia){
+  const u=raw?.user || raw?.member || raw?.data || raw || {};
+
+  return {
+    foto:u.foto||u.photo||u.avatar||"",
+    nia:u.nia||u.NIA||nia,
+    username:u.username||u.user_name||u.email?.split("@")[0]||"user",
+    nama_lengkap:u.nama_lengkap||u.nama||u.name||"Anggota Karang Taruna",
+    alamat_lengkap:u.alamat_lengkap||u.alamat||u.address||"",
+    jenis_kelamin:u.jenis_kelamin||u.gender||"",
+    email:u.email||"",
+    whatsapp:u.whatsapp||u.phone||u.telepon||"",
+    posisi:u.posisi||u.jabatan||u.role||"Anggota",
+    status:u.status||"Aktif",
+    tanggal_bergabung:u.tanggal_bergabung||u.joinDate||u.tanggalBergabung||"",
+    agama:u.agama||"",
+    activity:u.activity||u.activities||{
+      kegiatan:u.kegiatan||u.totalKegiatan||0,
+      kehadiran:u.kehadiran||u.totalKehadiran||0,
+      kontribusi:u.kontribusi||u.totalKontribusi||0,
+      prestasi:u.prestasi||u.totalPrestasi||0
+    }
+  };
+}
+
+function renderUser(user){
+  window.currentUser=user;
+
+  $("fullName").textContent=user.nama_lengkap||"Anggota";
+  $("username").textContent="@"+(user.username||"user");
+
+  $("memberNia").textContent="🆔 NIA "+(user.nia||"—");
+  $("memberPosition").textContent="👤 "+(user.posisi||"Anggota");
+  $("memberStatus").textContent=(String(user.status).toLowerCase()==="aktif"?"● Aktif":"● "+(user.status||"Tidak diketahui"));
+
+  $("infoName").textContent=user.nama_lengkap||"—";
+  $("infoNia").textContent=user.nia||"—";
+  $("infoGender").textContent=user.jenis_kelamin||"—";
+  $("infoEmail").textContent=user.email||"—";
+  $("infoWhatsapp").textContent=user.whatsapp||"—";
+  $("infoAddress").textContent=user.alamat_lengkap||"—";
+  $("infoPosition").textContent=user.posisi||"Anggota";
+  $("infoStatus").textContent=user.status||"—";
+  $("infoJoinDate").textContent=formatDate(user.tanggal_bergabung);
+
+  const activity=user.activity||{};
+  const kegiatan=Number(activity.kegiatan||0);
+  const kehadiran=Number(activity.kehadiran||0);
+  const kontribusi=Number(activity.kontribusi||0);
+  const prestasi=Number(activity.prestasi||0);
+
+  $("statActivities").textContent=kegiatan;
+  $("statAttendance").textContent=kehadiran;
+  $("statContribution").textContent=kontribusi;
+  $("statAchievement").textContent=prestasi;
+
+  $("activityTotal").textContent=kegiatan;
+  $("activityAttendance").textContent=kehadiran;
+  $("activityContribution").textContent=kontribusi;
+  $("activityAchievement").textContent=prestasi;
+  $("activitySince").textContent=shortDate(user.tanggal_bergabung);
+  $("activityStatus").textContent=user.status||"—";
+
+  const avatar=$("avatar");
+  const fallback=$("avatarFallback");
+
+  if(user.foto){
+    avatar.src=user.foto;
+    avatar.style.display="block";
+    fallback.style.display="none";
+  }else{
+    avatar.removeAttribute("src");
+    avatar.style.display="none";
+    fallback.style.display="grid";
+  }
+
+  avatar.onerror=()=>{
+    avatar.style.display="none";
+    fallback.style.display="grid";
+  };
+
+  fillEditForm(user);
+}
+
+function fillEditForm(user){
+  const form=$("editForm");
+
+  form.elements.foto.value=user.foto||"";
+  form.elements.nama_lengkap.value=user.nama_lengkap||"";
+  form.elements.username.value=user.username||"";
+  form.elements.email.value=user.email||"";
+  form.elements.whatsapp.value=user.whatsapp||"";
+  form.elements.jenis_kelamin.value=user.jenis_kelamin||"";
+  form.elements.alamat_lengkap.value=user.alamat_lengkap||"";
+}
+
+function cacheUser(user){
+  try{
+    localStorage.setItem("KT_USER_"+user.nia,JSON.stringify(user));
+  }catch(e){}
+}
+
+async function requestAPI(action,options={}){
+  const api=getApiUrl();
+
+  if(!api){
+    throw new Error("API belum dikonfigurasi");
+  }
+
+  if(options.method==="POST"){
+    const response=await fetch(api,{
+      method:"POST",
+      headers:{
+        "Content-Type":"text/plain;charset=utf-8"
+      },
+      body:JSON.stringify({
+        action,
+        ...options.body
+      })
+    });
+
+    if(!response.ok){
+      throw new Error("HTTP "+response.status);
+    }
+
+    return response.json();
+  }
+
+  const query=new URLSearchParams({
+    action,
+    ...(options.params||{})
+  });
+
+  const response=await fetch(api+"?"+query.toString(),{
+    method:"GET",
+    cache:"no-store"
+  });
+
+  if(!response.ok){
+    throw new Error("HTTP "+response.status);
+  }
+
+  return response.json();
+}
+
+async function loadUser(){
+  const nia=getUserNia();
+
+  let cached=getCachedUser(nia);
+
+  if(cached){
+    renderUser(normalizeUser(cached,nia));
+  }else{
+    renderUser(normalizeUser({nia},nia));
+  }
+
+  const api=getApiUrl();
+
+  if(!api){
+    showToast("Mode lokal: API belum dikonfigurasi.");
+    return;
+  }
+
+  try{
+    setLoading(true,"Mengambil profil dari database...");
+
+    const result=await requestAPI("getUser",{
+      params:{nia}
+    });
+
+    if(result && (result.user||result.member||result.data)){
+      const user=normalizeUser(result,nia);
+
+      cacheUser(user);
+      renderUser(user);
+
+      showToast("Profil berhasil disinkronkan.");
+    }else{
+      throw new Error("Data user tidak ditemukan");
+    }
+
+  }catch(error){
+    console.warn("getUser:",error);
+    showToast("API tidak tersedia. Menampilkan data cache.");
+  }finally{
+    setLoading(false);
+  }
+}
+
+async function updateUser(data){
+  const current=window.currentUser||{};
+  const nia=current.nia||getUserNia();
+
+  const updated={
+    ...current,
+    ...data,
+    nia
+  };
+
+  // Optimistic UI.
+  cacheUser(updated);
+  renderUser(updated);
+
+  const api=getApiUrl();
+
+  if(!api){
+    showToast("Profil disimpan di perangkat ini. Hubungkan API untuk sinkronisasi server.");
+    return;
+  }
+
+  try{
+    setLoading(true,"Menyimpan perubahan profil...");
+
+    const result=await requestAPI("updateUser",{
+      method:"POST",
+      body:{
+        nia,
+        data
+      }
+    });
+
+    if(result && result.success===false){
+      throw new Error(result.message||"Gagal menyimpan");
+    }
+
+    cacheUser(updated);
+    showToast("Profil berhasil diperbarui dan disinkronkan.");
+  }catch(error){
+    console.warn("updateUser:",error);
+    showToast("Perubahan tersimpan lokal, tetapi gagal dikirim ke server.");
+  }finally{
+    setLoading(false);
+  }
+}
+
+async function changePassword(oldPassword,newPassword){
+  const user=window.currentUser||{};
+  const nia=user.nia||getUserNia();
+  const api=getApiUrl();
+
+  if(!api){
+    showToast("Fitur ubah password membutuhkan koneksi API.");
+    return;
+  }
+
+  try{
+    setLoading(true,"Mengubah password...");
+
+    const result=await requestAPI("changePassword",{
+      method:"POST",
+      body:{
+        nia,
+        oldPassword,
+        newPassword
+      }
+    });
+
+    if(result && result.success===false){
+      throw new Error(result.message||"Password gagal diubah");
+    }
+
+    $("passwordOverlay").classList.remove("show");
+    $("passwordForm").reset();
+    showToast("Password berhasil diubah.");
+  }catch(error){
+    console.warn("changePassword:",error);
+    showToast(error.message||"Gagal mengubah password.");
+  }finally{
+    setLoading(false);
+  }
+}
+
+/* Navigation */
+$("backBtn").onclick=()=>{
+  if(history.length>1){
+    history.back();
+  }else{
+    location.href="index.html";
+  }
+};
+
+/* Edit profile */
+$("editBtn").onclick=()=>{
+  fillEditForm(window.currentUser||normalizeUser({},getUserNia()));
+  $("editOverlay").classList.add("show");
+};
+
+$("editForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const form=new FormData(event.target);
+  const data=Object.fromEntries(form.entries());
+
+  // Field yang tidak boleh diubah user dari halaman ini.
+  delete data.username;
+
+  await updateUser(data);
+  $("editOverlay").classList.remove("show");
+});
+
+/* Password */
+$("passwordBtn").onclick=()=>$("passwordOverlay").classList.add("show");
+$("securityBtn").onclick=()=>$("passwordOverlay").classList.add("show");
+
+$("passwordForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const data=Object.fromEntries(new FormData(event.target).entries());
+
+  if(data.newPassword!==data.confirmPassword){
+    showToast("Konfirmasi password baru tidak sama.");
+    return;
+  }
+
+  if(data.newPassword.length<6){
+    showToast("Password baru minimal 6 karakter.");
+    return;
+  }
+
+  await changePassword(data.oldPassword,data.newPassword);
+});
+
+/* Share profile */
+$("shareBtn").onclick=async()=>{
+  const user=window.currentUser||{};
+  const url=new URL(location.href);
+  url.searchParams.set("nia",user.nia||getUserNia());
+
+  const shareData={
+    title:"Profil "+(user.nama_lengkap||"Anggota Karang Taruna"),
+    text:"Profil anggota Karang Taruna (Putra Asmara)",
+    url:url.toString()
+  };
+
+  try{
+    if(navigator.share){
+      await navigator.share(shareData);
+    }else if(navigator.clipboard){
+      await navigator.clipboard.writeText(url.toString());
+      showToast("Link profil berhasil disalin.");
+    }else{
+      prompt("Salin link profil:",url.toString());
+    }
+  }catch(e){}
+};
+
+/* Notification */
+$("notificationBtn").onclick=()=>{
+  showToast("Pengaturan notifikasi akan menggunakan modul notifikasi akun.");
+};
+
+/* Logout */
+$("logoutBtn").onclick=()=>{
+  const yes=confirm("Apakah Anda yakin ingin keluar dari akun ini?");
+
+  if(!yes)return;
+
+  sessionStorage.removeItem(CONFIG.sessionKey);
+  localStorage.removeItem(CONFIG.sessionKey);
+
+  showToast("Sesi akun telah dihapus.");
+
+  setTimeout(()=>{
+    location.href="index.html";
+  },700);
+};
+
+/* Close modal */
+document.querySelectorAll("[data-close]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const target=button.getAttribute("data-close");
+    $(target)?.classList.remove("show");
+  });
+});
+
+document.querySelectorAll(".overlay").forEach(overlay=>{
+  overlay.addEventListener("click",event=>{
+    if(event.target===overlay){
+      overlay.classList.remove("show");
+    }
+  });
+});
+
+window.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){
+    document.querySelectorAll(".overlay.show").forEach(x=>x.classList.remove("show"));
+  }
+});
+
+/* ============================================================
+   AKSES KONFIGURASI API DARI BELAKANG LAYAR
+   - Gunakan URL parameter ?api=https://... untuk inisialisasi
+   - Admin dapat mengakses secara diam-diam melalui console:
+     localStorage.setItem("KT_API_URL","...")
+   ============================================================ */
+
+/* Quick configuration through URL parameter (hanya untuk admin) */
+(function boot(){
+  const params=new URLSearchParams(location.search);
+
+  if(params.get("api")){
+    localStorage.setItem(CONFIG.apiStorageKey,params.get("api"));
+    // Hapus parameter dari URL agar tidak terlihat
+    params.delete("api");
+    const newUrl = location.pathname + (params.toString() ? "?"+params.toString() : "");
+    if (history.replaceState) {
+      history.replaceState({}, "", newUrl);
+    }
+  }
+
+  if(params.get("nia")){
+    // NIA dari URL hanya untuk identifikasi request.
+    // Backend tetap wajib melakukan otorisasi/session validation.
+  }
+
+  loadUser();
+})();
+</script>
+
+</body>
+</html>
