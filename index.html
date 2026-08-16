@@ -367,7 +367,29 @@
 
 <nav class="bottom-nav" aria-label="Navigasi mobile"><a href="#home"><span>⌂</span>Home</a><a href="#berita"><span>📰</span>Berita</a><a href="#layanan"><span>📄</span>Layanan</a><a href="#" onclick="openModal('statusModal');return false"><span>🔔</span>Status</a><a href="profil.html"><span>👤</span>Profil</a></nav>
 
-<div class="drawer" id="drawer" onclick="if(event.target===this)closeDrawer()"><div class="drawer-panel"><div class="drawer-head"><h2>Menu Desa</h2><button class="icon-btn" onclick="closeDrawer()">×</button></div><a href="#home" onclick="closeDrawer()">🏠 Beranda</a><a href="#profil" onclick="closeDrawer()">🏛️ Tentang Kami</a><a href="#pemerintah" onclick="closeDrawer()">👥 Kepengurusan</a><a href="#berita" onclick="closeDrawer()">📰 Berita</a><a href="#layanan" onclick="closeDrawer()">📄 Layanan Pemuda</a><a href="#transparansi" onclick="closeDrawer()">📊 Program & Laporan</a><a href="#potensi" onclick="closeDrawer()">🌾 Potensi & UMKM</a><a href="#galeri" onclick="closeDrawer()">🖼️ Galeri</a><a href="#kontak" onclick="closeDrawer()">☎️ Kontak</a><a href="admin.html" onclick="closeDrawer()">🔐 Admin</a></div></div>
+<!-- SIDEBAR DRAWER (diperbaiki: posisi rapi, tinggi presisi, border-radius 5px) -->
+<div class="drawer" id="drawer" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer-panel" style="top:72px; height:calc(100% - 72px); border-radius:0 0 0 5px; padding:16px 16px 12px; display:flex; flex-direction:column; justify-content:space-between;">
+    <div>
+      <div class="drawer-head" style="margin-bottom:8px;">
+        <h2 style="font-size:18px; margin:0;">Menu Desa</h2>
+        <button class="icon-btn" onclick="closeDrawer()" style="width:34px;height:34px;">×</button>
+      </div>
+      <a href="#home" onclick="closeDrawer()">🏠 Beranda</a>
+      <a href="#profil" onclick="closeDrawer()">🏛️ Tentang Kami</a>
+      <a href="#pemerintah" onclick="closeDrawer()">👥 Kepengurusan</a>
+      <a href="#berita" onclick="closeDrawer()">📰 Berita</a>
+      <a href="#layanan" onclick="closeDrawer()">📄 Layanan Pemuda</a>
+      <a href="#transparansi" onclick="closeDrawer()">📊 Program & Laporan</a>
+      <a href="#potensi" onclick="closeDrawer()">🌾 Potensi & UMKM</a>
+      <a href="#galeri" onclick="closeDrawer()">🖼️ Galeri</a>
+      <a href="#kontak" onclick="closeDrawer()">☎️ Kontak</a>
+    </div>
+    <div style="border-top:1px solid var(--line); padding-top:10px; margin-top:6px;">
+      <a href="admin.html" onclick="closeDrawer()" style="font-weight:700; color:var(--primary);">🔐 Admin</a>
+    </div>
+  </div>
+</div>
 
 <div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()"><div class="search-box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Cari Informasi</h2><button class="modal-close" onclick="closeSearch()">×</button></div><input class="search-input" id="searchInput" oninput="performSearch(this.value)" placeholder="Cari berita, layanan, dokumen..." autofocus><div class="search-results" id="searchResults"></div></div></div>
 
@@ -657,15 +679,6 @@ document.addEventListener("DOMContentLoaded", function(){
       card.addEventListener(e, function(){ card.classList.remove("is-pressed"); });
     });
   });
-});
-
-// Perbaiki ukuran drawer agar tidak terlalu panjang
-document.addEventListener("DOMContentLoaded", function() {
-  const drawerPanel = document.querySelector('.drawer-panel');
-  if (drawerPanel) {
-    drawerPanel.style.maxHeight = '100vh';
-    drawerPanel.style.overflowY = 'auto';
-  }
 });
 </script>
   <script>
