@@ -310,7 +310,7 @@
 
 <section class="section"><div class="container"><div class="section-head"><div><div class="eyebrow">Data Desa</div><h2>Karang Taruna dalam Angka</h2></div><p>Ringkasan statistik yang dapat dikembangkan menjadi dashboard data desa terintegrasi.</p></div><div class="stats" id="stats"></div></div></section>
 
-<section class="section alt" id="berita"><div class="container"><div class="section-head"><div><div class="eyebrow">Informasi Terkini</div><h2>Berita Desa</h2></div><a class="link" href="#berita">Lihat semua →</a></div><div class="news-grid" id="news"></div></div></section>
+<section class="section alt" id="berita"><div class="container"><div class="section-head"><div><div class="eyebrow">Informasi Terkini</div><h2>Berita Desa</h2></div><a class="link" href="https://www.google.com" target="_blank">Lihat semua →</a></div><div class="news-grid" id="news"></div></div></section>
 
 <section class="section"><div class="container"><div class="section-head"><div><div class="eyebrow">Pemberitahuan</div><h2>Pengumuman</h2></div></div><div class="notice"><article class="notice-item"><span class="tag">Penting</span><h3>Jadwal Pelayanan Administrasi Desa</h3><p class="meta">Senin–Jumat • 08.00–15.00 WIB</p></article><article class="notice-item"><span class="tag">Informasi</span><h3>Pelayanan digital tersedia untuk masyarakat</h3><p class="meta">Pengajuan dapat dipantau melalui nomor permohonan.</p></article></div></div></section>
 
@@ -326,7 +326,7 @@
 
 <section class="section" id="transparansi"><div class="container transparency"><div><div class="eyebrow">Akuntabilitas</div><h2>Program & Laporan Desa</h2><p>Informasi anggaran dan realisasi pembangunan disajikan secara ringkas agar masyarakat dapat ikut mengawasi.</p><a class="btn" style="background:var(--primary);color:#fff" href="#dokumen">Dokumen Publik</a></div><div class="budget-card"><h3>Ringkasan Program & Kegiatan 2026</h3><div class="budget-row"><div><span>Pendapatan</span><b>Rp 2,45 M</b></div><div class="bar"><i style="width:86%"></i></div></div><div class="budget-row"><div><span>Belanja</span><b>Rp 2,18 M</b></div><div class="bar"><i style="width:75%"></i></div></div><div class="budget-row"><div><span>Realisasi Program</span><b>72%</b></div><div class="bar"><i style="width:72%"></i></div></div></div></div></section>
 
-<section class="section alt" id="dokumen"><div class="container"><div class="section-head"><div><div class="eyebrow">PPID & Dokumen Publik</div><h2>Dokumentasi Kegiatan</h2></div></div><div class="docs"><div class="doc">📄<div><b>Program Kerja 2026</b><small>Dokumen anggaran • PDF</small></div></div><div class="doc">⚖️<div><b>Peraturan Desa</b><small>Produk hukum • PDF</small></div></div><div class="doc">📊<div><b>Profil Organisasi</b><small>Data statistik • PDF</small></div></div><div class="doc">📋<div><b>Rencana Program</b><small>Rencana kerja • PDF</small></div></div><div class="doc">📑<div><b>Laporan Kegiatan</b><small>Laporan • PDF</small></div></div><div class="doc">📚<div><b>Arsip Dokumentasi</b><small>Dokumen publik • PDF</small></div></div></div></div></section>
+<section class="section alt" id="dokumen"><div class="container"><div class="section-head"><div><div class="eyebrow">PPID & Dokumen Publik</div><h2>Dokumentasi Kegiatan</h2></div></div><div class="docs" id="docsContainer"></div></div></section>
 
 <section class="section" id="potensi"><div class="container"><div class="section-head"><div><div class="eyebrow">Ekonomi Lokal</div><h2>Potensi & Produk Unggulan</h2></div></div><div class="products" id="products"></div></div></section>
 
@@ -358,80 +358,284 @@
 <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()"><button onclick="closeLightbox()">×</button><img id="lightboxImg" alt=""></div><div class="toast" id="toast"></div>
 
 <script>
-const villageData={
-  stats:[["👥","128","Anggota Aktif"],["🤝","24","Program Berjalan"],["❤️","36","Kegiatan Sosial"],["🌱","18","UMKM Binaan"]],
-  news:[["Karang Taruna Gelar Aksi Sosial untuk Warga","Kegiatan gotong royong dan kepedulian sosial menjadi ruang kolaborasi pemuda bersama masyarakat.","Sosial","12 Agustus 2026","https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1000&q=80"],["Festival Kreativitas Pemuda Desa","Ruang bagi pemuda untuk menampilkan karya, seni, olahraga, teknologi, dan ekonomi kreatif.","Kepemudaan","10 Agustus 2026","https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80"],["Program UMKM Muda Mulai Berjalan","Pendampingan branding dan digitalisasi membantu pelaku usaha muda memperluas pasar.","UMKM","8 Agustus 2026","https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80"]],
-  agenda:[["16","AGU","Rapat Pengurus Karang Taruna","19:30 WIB • Sekretariat"],["20","AGU","Aksi Bersih Lingkungan","07:00 WIB • Wilayah Desa"],["28","AGU","Pelatihan UMKM & Digital","13:00 WIB • Balai Pemuda"]],
-  officials:[["Ketua","Nama Ketua Karang Taruna","https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80"],["Wakil Ketua","Nama Wakil Ketua","https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"],["Sekretaris","Nama Sekretaris","https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"],["Bendahara","Nama Bendahara","https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"]],
-  services:[["🤝","Gabung Karang Taruna","Daftarkan diri sebagai anggota dan ikut berkontribusi.","Pendaftaran Anggota"],["💡","Usulkan Program","Sampaikan ide kegiatan yang bermanfaat bagi pemuda dan warga.","Usulan Program"],["❤️","Relawan Sosial","Bergabung dalam aksi sosial dan kegiatan kemanusiaan.","Relawan"],["🏆","Kegiatan Olahraga","Informasi dan pendaftaran kegiatan olahraga pemuda.","Kegiatan Olahraga"],["🎨","Kreativitas Pemuda","Komunitas seni, budaya, teknologi dan ekonomi kreatif.","Kreativitas Pemuda"],["💼","Bina UMKM","Pendampingan usaha, branding dan pemasaran digital.","Bina UMKM"],["📣","Aspirasi Pemuda","Sampaikan aspirasi, masukan dan kebutuhan pemuda.","Aspirasi Pemuda"],["🔎","Cek Pengajuan","Pantau status usulan atau pendaftaran Anda.","Cek Status"]],
-  products:[["Produk UMKM Muda","UMKM","https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80"],["Kerajinan Lokal","Kreatif","https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=800&q=80"],["Kopi Pemuda","UMKM","https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80"],["Kuliner Desa","UMKM","https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80"]],
-  gallery:["https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80"],
-  faq:[["Bagaimana cara bergabung?","Pilih layanan Gabung Karang Taruna, isi data yang diminta, lalu tunggu verifikasi pengurus."],["Program apa saja yang tersedia?","Program dapat mencakup sosial, olahraga, seni budaya, pendidikan, lingkungan, teknologi, kewirausahaan dan kegiatan kepemudaan."],["Bagaimana mengusulkan kegiatan?","Gunakan layanan Usulkan Program dan jelaskan tujuan, sasaran, waktu serta kebutuhan kegiatan."],["Apakah UMKM dapat ikut dibina?","Ya. Program Bina UMKM dapat digunakan untuk mengajukan pendampingan branding, digitalisasi dan pemasaran."]]
+// ===== DATA =====
+const villageData = {
+  stats: [["👥","128","Anggota Aktif"],["🤝","24","Program Berjalan"],["❤️","36","Kegiatan Sosial"],["🌱","18","UMKM Binaan"]],
+  news: [
+    ["Karang Taruna Gelar Aksi Sosial untuk Warga","Kegiatan gotong royong dan kepedulian sosial menjadi ruang kolaborasi pemuda bersama masyarakat.","Sosial","12 Agustus 2026","https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1000&q=80","https://www.google.com"],
+    ["Festival Kreativitas Pemuda Desa","Ruang bagi pemuda untuk menampilkan karya, seni, olahraga, teknologi, dan ekonomi kreatif.","Kepemudaan","10 Agustus 2026","https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80","https://www.google.com"],
+    ["Program UMKM Muda Mulai Berjalan","Pendampingan branding dan digitalisasi membantu pelaku usaha muda memperluas pasar.","UMKM","8 Agustus 2026","https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80","https://www.google.com"]
+  ],
+  agenda: [["16","AGU","Rapat Pengurus Karang Taruna","19:30 WIB • Sekretariat"],["20","AGU","Aksi Bersih Lingkungan","07:00 WIB • Wilayah Desa"],["28","AGU","Pelatihan UMKM & Digital","13:00 WIB • Balai Pemuda"]],
+  officials: [
+    ["Ketua","Nama Ketua Karang Taruna","https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80"],
+    ["Wakil Ketua","Nama Wakil Ketua","https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80"],
+    ["Sekretaris","Nama Sekretaris","https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"],
+    ["Bendahara","Nama Bendahara","https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"]
+  ],
+  // Layanan Pemuda: tombol Kirim Pengajuan arah ke WA admin
+  services: [
+    ["🤝","Gabung Karang Taruna","Daftarkan diri sebagai anggota dan ikut berkontribusi.","Pendaftaran Anggota", "https://wa.me/6285218483129"],
+    ["💡","Usulkan Program","Sampaikan ide kegiatan yang bermanfaat bagi pemuda dan warga.","Usulan Program", "https://wa.me/6285218483129"],
+    ["❤️","Relawan Sosial","Bergabung dalam aksi sosial dan kegiatan kemanusiaan.","Relawan", "https://wa.me/6285218483129"],
+    ["🏆","Kegiatan Olahraga","Informasi dan pendaftaran kegiatan olahraga pemuda.","Kegiatan Olahraga", "https://wa.me/6285218483129"],
+    ["🎨","Kreativitas Pemuda","Komunitas seni, budaya, teknologi dan ekonomi kreatif.","Kreativitas Pemuda", "https://wa.me/6285218483129"],
+    ["💼","Bina UMKM","Pendampingan usaha, branding dan pemasaran digital.","Bina UMKM", "https://wa.me/6285218483129"],
+    ["📣","Aspirasi Pemuda","Sampaikan aspirasi, masukan dan kebutuhan pemuda.","Aspirasi Pemuda", "https://wa.me/6285218483129"],
+    // 🔎 Cek Pengajuan -> data statis diambil dari statusModal (demo)
+    ["🔎","Cek Pengajuan","Pantau status usulan atau pendaftaran Anda.","Cek Status", "#statusModal"]
+  ],
+  // Produk: Lihat Produk -> arah ke link
+  products: [
+    ["Produk UMKM Muda","UMKM","https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80", "https://www.google.com"],
+    ["Kerajinan Lokal","Kreatif","https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=800&q=80", "https://www.google.com"],
+    ["Kopi Pemuda","UMKM","https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80", "https://www.google.com"],
+    ["Kuliner Desa","UMKM","https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80", "https://www.google.com"]
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80"
+  ],
+  faq: [
+    ["Bagaimana cara bergabung?","Pilih layanan Gabung Karang Taruna, isi data yang diminta, lalu tunggu verifikasi pengurus."],
+    ["Program apa saja yang tersedia?","Program dapat mencakup sosial, olahraga, seni budaya, pendidikan, lingkungan, teknologi, kewirausahaan dan kegiatan kepemudaan."],
+    ["Bagaimana mengusulkan kegiatan?","Gunakan layanan Usulkan Program dan jelaskan tujuan, sasaran, waktu serta kebutuhan kegiatan."],
+    ["Apakah UMKM dapat ikut dibina?","Ya. Program Bina UMKM dapat digunakan untuk mengajukan pendampingan branding, digitalisasi dan pemasaran."]
+  ],
+  // Data dokumen publik dengan link tujuan
+  docs: [
+    ["📄","Program Kerja 2026","Dokumen anggaran • PDF","https://www.google.com"],
+    ["⚖️","Peraturan Desa","Produk hukum • PDF","https://www.google.com"],
+    ["📊","Profil Organisasi","Data statistik • PDF","https://www.google.com"],
+    ["📋","Rencana Program","Rencana kerja • PDF","https://www.google.com"],
+    ["📑","Laporan Kegiatan","Laporan • PDF","https://www.google.com"],
+    ["📚","Arsip Dokumentasi","Dokumen publik • PDF","https://www.google.com"]
+  ]
 };
 
+// ===== RENDER FUNCTIONS =====
 function render(){
+  // Stats
   document.getElementById("stats").innerHTML = villageData.stats.map((x,i) => 
     `<div class="stat stat-card reveal"><div class="stat-icon">${x[0]}</div><strong>${x[1]}</strong><span>${x[2]}</span></div>`
   ).join("");
+
+  // News
   document.getElementById("news").innerHTML = villageData.news.map((x,i) =>
-    `<article class="news-card ${i===0?'featured':''} reveal"><img src="${x[4]}" alt="${x[0]}" loading="lazy"><div class="card-body"><span class="tag">${x[2]}</span><h3>${x[0]}</h3><p class="meta">${x[3]} • Karang Taruna</p><p>${x[1]}</p><a class="link" href="#" onclick="showToast('Detail berita demo');return false">Baca selengkapnya →</a></div></article>`
+    `<article class="news-card ${i===0?'featured':''} reveal">
+      <img src="${x[4]}" alt="${x[0]}" loading="lazy">
+      <div class="card-body">
+        <span class="tag">${x[2]}</span>
+        <h3>${x[0]}</h3>
+        <p class="meta">${x[3]} • Karang Taruna</p>
+        <p>${x[1]}</p>
+        <a class="link" href="${x[5]}" target="_blank">Baca selengkapnya →</a>
+      </div>
+    </article>`
   ).join("");
+
+  // Agenda
   document.getElementById("agendaList").innerHTML = villageData.agenda.map(x =>
     `<article class="agenda reveal"><div style="display:flex;gap:13px;align-items:center"><div class="date">${x[0]}<br><small>${x[1]}</small></div><div><h3 style="margin:0">${x[2]}</h3><p class="meta">${x[3]}</p></div></div></article>`
   ).join("");
+
+  // Officials
   document.getElementById("officials").innerHTML = villageData.officials.map(x =>
     `<article class="official reveal"><img src="${x[2]}" alt="${x[1]}" loading="lazy"><div class="card-body"><h3 style="margin:0">${x[1]}</h3><small>${x[0]}</small></div></article>`
   ).join("");
-  document.getElementById("services").innerHTML = villageData.services.map(x =>
-    `<article class="service-card reveal"><div class="service-icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><a class="mini-btn" href="#" onclick="openService('${x[3]}');return false">${x[3]==="Cek Status"?"Cek Status":"Ajukan"} →</a></article>`
-  ).join("");
+
+  // Services (Layanan Pemuda) 
+  document.getElementById("services").innerHTML = villageData.services.map(x => {
+    // Jika Cek Status, arahkan ke modal status
+    if (x[3] === "Cek Status") {
+      return `<article class="service-card reveal"><div class="service-icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><a class="mini-btn" href="#" onclick="openModal('statusModal');return false">Cek Status →</a></article>`;
+    }
+    // Lainnya: arahkan ke WhatsApp
+    return `<article class="service-card reveal"><div class="service-icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><a class="mini-btn" href="${x[4]}" target="_blank">Kirim Pengajuan →</a></article>`;
+  }).join("");
+
+  // Products
   document.getElementById("products").innerHTML = villageData.products.map(x =>
-    `<article class="product reveal"><img src="${x[2]}" alt="${x[0]}" loading="lazy"><div class="card-body"><span class="tag">${x[1]}</span><h3>${x[0]}</h3><a class="link" href="#" onclick="showToast('Detail produk demo');return false">Lihat produk →</a></div></article>`
+    `<article class="product reveal">
+      <img src="${x[2]}" alt="${x[0]}" loading="lazy">
+      <div class="card-body">
+        <span class="tag">${x[1]}</span>
+        <h3>${x[0]}</h3>
+        <a class="link" href="${x[3]}" target="_blank">Lihat produk →</a>
+      </div>
+    </article>`
   ).join("");
+
+  // Gallery
   document.getElementById("gallery").innerHTML = villageData.gallery.map((x,i) =>
     `<img class="reveal" src="${x}" alt="Galeri Desa ${i+1}" loading="lazy" onclick="openLightbox('${x}')">`
   ).join("");
+
+  // FAQ
   document.getElementById("faq").innerHTML = villageData.faq.map(x =>
     `<div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${x[0]} <span>＋</span></button><div class="faq-a">${x[1]}</div></div>`
   ).join("");
-  const select=document.getElementById("serviceSelect");
-  select.innerHTML = villageData.services.filter(x=>x[3]!=="Cek Status").map(x=>`<option>${x[3]}</option>`).join("");
+
+  // Docs (PPID & Dokumen Publik)
+  document.getElementById("docsContainer").innerHTML = villageData.docs.map(x =>
+    `<a class="doc" href="${x[3]}" target="_blank">
+      <span>${x[0]}</span>
+      <div><b>${x[1]}</b><small>${x[2]}</small></div>
+    </a>`
+  ).join("");
+
+  // Service select options (untuk modal layanan)
+  const select = document.getElementById("serviceSelect");
+  select.innerHTML = villageData.services.filter(x => x[3] !== "Cek Status").map(x => `<option>${x[3]}</option>`).join("");
+
   observe();
 }
 
-function openService(name){ if(name==="Cek Status"){ openModal("statusModal"); return; } document.getElementById("serviceTitle").textContent="Ajukan "+name; document.getElementById("serviceSelect").value=name; openModal("serviceModal"); }
-function openModal(id){ document.getElementById(id).classList.add("active"); document.body.style.overflow="hidden"; }
-function closeModal(id){ document.getElementById(id).classList.remove("active"); document.body.style.overflow=""; }
-function openDrawer(){ document.getElementById("drawer").classList.add("active"); document.body.style.overflow="hidden"; }
-function closeDrawer(){ document.getElementById("drawer").classList.remove("active"); document.body.style.overflow=""; }
-function openSearch(){ document.getElementById("searchOverlay").classList.add("active"); document.body.style.overflow="hidden"; setTimeout(()=>document.getElementById("searchInput").focus(),50); }
-function closeSearch(){ document.getElementById("searchOverlay").classList.remove("active"); document.body.style.overflow=""; }
-function performSearch(q){ const box=document.getElementById("searchResults"); if(!q.trim()){ box.innerHTML='<p class="meta">Ketik kata kunci untuk mencari informasi.</p>'; return; } const all=[...villageData.news.map(x=>[x[0],x[1],"Berita"]),...villageData.services.map(x=>[x[1],x[2],"Layanan"]),...villageData.products.map(x=>[x[0],x[1],"Potensi"])]; const r=all.filter(x=>(x.join(" ")).toLowerCase().includes(q.toLowerCase())); box.innerHTML=r.length?r.map(x=>`<div class="result"><span class="tag">${x[2]}</span><b>${x[0]}</b><div class="meta">${x[1]}</div></div>`).join(""):'<p class="meta">Tidak ditemukan hasil yang sesuai.</p>'; }
-function toggleTheme(){ const dark=document.documentElement.dataset.theme==="dark"; document.documentElement.dataset.theme=dark?"":"dark"; localStorage.setItem("theme",dark?"light":"dark"); document.getElementById("themeBtn").textContent=dark?"☾":"☀"; }
-function showToast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.classList.remove("show"),2800); }
-function submitService(e){ e.preventDefault(); closeModal("serviceModal"); showToast("✓ Permohonan berhasil dikirim. Nomor: DN-2026-"+String(Math.floor(Math.random()*900)+100)); }
-function submitComplaint(e){ e.preventDefault(); closeModal("aduanModal"); showToast("✓ Aduan berhasil diterima. Terima kasih atas partisipasi Anda."); }
-function checkStatus(){ const n=document.getElementById("statusNumber").value.trim(); if(!n){ showToast("Masukkan nomor permohonan."); return; } document.getElementById("statusResult").innerHTML='<div style="margin-top:18px;padding:17px;background:var(--surface2);border-radius:15px"><b>DN-2026-001</b><div style="margin-top:12px">Diterima → Verifikasi → <strong style="color:var(--primary)">Diproses</strong> → Selesai</div><p class="meta">Status demo. Hubungkan ke API untuk data nyata.</p></div>'; }
-function subscribe(e){ e.preventDefault(); document.getElementById("emailSubscribe").value=""; showToast("✓ Email berhasil didaftarkan."); }
-function openLightbox(src){ document.getElementById("lightboxImg").src=src; document.getElementById("lightbox").classList.add("active"); }
-function closeLightbox(){ document.getElementById("lightbox").classList.remove("active"); }
-function observe(){ const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible") }),{threshold:.08}); document.querySelectorAll(".reveal").forEach(e=>io.observe(e)); }
-window.addEventListener("scroll",()=>document.getElementById("header").classList.toggle("scrolled",scrollY>10));
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeDrawer(); closeSearch(); closeLightbox(); document.querySelectorAll(".modal.active").forEach(m=>closeModal(m.id)); } });
-if(localStorage.getItem("theme")==="dark") toggleTheme();
+// ===== UTILITY FUNCTIONS =====
+function openService(name){ 
+  if(name === "Cek Status"){ 
+    openModal("statusModal"); 
+    return; 
+  } 
+  document.getElementById("serviceTitle").textContent = "Ajukan "+name; 
+  document.getElementById("serviceSelect").value = name; 
+  openModal("serviceModal"); 
+}
+
+function openModal(id){ 
+  document.getElementById(id).classList.add("active"); 
+  document.body.style.overflow = "hidden"; 
+}
+
+function closeModal(id){ 
+  document.getElementById(id).classList.remove("active"); 
+  document.body.style.overflow = ""; 
+}
+
+function openDrawer(){ 
+  document.getElementById("drawer").classList.add("active"); 
+  document.body.style.overflow = "hidden"; 
+}
+
+function closeDrawer(){ 
+  document.getElementById("drawer").classList.remove("active"); 
+  document.body.style.overflow = ""; 
+}
+
+function openSearch(){ 
+  document.getElementById("searchOverlay").classList.add("active"); 
+  document.body.style.overflow = "hidden"; 
+  setTimeout(() => document.getElementById("searchInput").focus(), 50); 
+}
+
+function closeSearch(){ 
+  document.getElementById("searchOverlay").classList.remove("active"); 
+  document.body.style.overflow = ""; 
+}
+
+function performSearch(q){ 
+  const box = document.getElementById("searchResults"); 
+  if(!q.trim()){ 
+    box.innerHTML = '<p class="meta">Ketik kata kunci untuk mencari informasi.</p>'; 
+    return; 
+  } 
+  const all = [
+    ...villageData.news.map(x => [x[0], x[1], "Berita"]),
+    ...villageData.services.map(x => [x[1], x[2], "Layanan"]),
+    ...villageData.products.map(x => [x[0], x[1], "Potensi"])
+  ]; 
+  const r = all.filter(x => (x.join(" ")).toLowerCase().includes(q.toLowerCase())); 
+  box.innerHTML = r.length ? r.map(x => `<div class="result"><span class="tag">${x[2]}</span><b>${x[0]}</b><div class="meta">${x[1]}</div></div>`).join("") : '<p class="meta">Tidak ditemukan hasil yang sesuai.</p>'; 
+}
+
+function toggleTheme(){ 
+  const dark = document.documentElement.dataset.theme === "dark"; 
+  document.documentElement.dataset.theme = dark ? "" : "dark"; 
+  localStorage.setItem("theme", dark ? "light" : "dark"); 
+  document.getElementById("themeBtn").textContent = dark ? "☾" : "☀"; 
+}
+
+function showToast(msg){ 
+  const t = document.getElementById("toast"); 
+  t.textContent = msg; 
+  t.classList.add("show"); 
+  clearTimeout(window.toastTimer); 
+  window.toastTimer = setTimeout(() => t.classList.remove("show"), 2800); 
+}
+
+function submitService(e){ 
+  e.preventDefault(); 
+  closeModal("serviceModal"); 
+  showToast("✓ Permohonan berhasil dikirim. Nomor: DN-2026-"+String(Math.floor(Math.random()*900)+100)); 
+}
+
+function submitComplaint(e){ 
+  e.preventDefault(); 
+  closeModal("aduanModal"); 
+  showToast("✓ Aduan berhasil diterima. Terima kasih atas partisipasi Anda."); 
+}
+
+function checkStatus(){ 
+  const n = document.getElementById("statusNumber").value.trim(); 
+  if(!n){ 
+    showToast("Masukkan nomor permohonan."); 
+    return; 
+  } 
+  document.getElementById("statusResult").innerHTML = '<div style="margin-top:18px;padding:17px;background:var(--surface2);border-radius:15px"><b>DN-2026-001</b><div style="margin-top:12px">Diterima → Verifikasi → <strong style="color:var(--primary)">Diproses</strong> → Selesai</div><p class="meta">Status demo. Hubungkan ke API untuk data nyata.</p></div>'; 
+}
+
+function subscribe(e){ 
+  e.preventDefault(); 
+  document.getElementById("emailSubscribe").value = ""; 
+  showToast("✓ Email berhasil didaftarkan."); 
+}
+
+function openLightbox(src){ 
+  document.getElementById("lightboxImg").src = src; 
+  document.getElementById("lightbox").classList.add("active"); 
+}
+
+function closeLightbox(){ 
+  document.getElementById("lightbox").classList.remove("active"); 
+}
+
+function observe(){ 
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add("visible") }), {threshold:.08}); 
+  document.querySelectorAll(".reveal").forEach(e => io.observe(e)); 
+}
+
+// ===== EVENT LISTENERS =====
+window.addEventListener("scroll", () => document.getElementById("header").classList.toggle("scrolled", scrollY > 10));
+document.addEventListener("keydown", e => { 
+  if(e.key === "Escape"){ 
+    closeDrawer(); 
+    closeSearch(); 
+    closeLightbox(); 
+    document.querySelectorAll(".modal.active").forEach(m => closeModal(m.id)); 
+  } 
+});
+
+if(localStorage.getItem("theme") === "dark") toggleTheme();
 if(matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("no-motion");
+
+// Inisialisasi
 render();
 
-// Tambahan efek interaksi pada kartu stat
-document.addEventListener("DOMContentLoaded",function(){
+// Efek interaksi kartu stat
+document.addEventListener("DOMContentLoaded", function(){
   document.querySelectorAll(".stat-card").forEach(function(card){
-    card.addEventListener("pointerdown",function(){ card.classList.add("is-pressed"); });
+    card.addEventListener("pointerdown", function(){ card.classList.add("is-pressed"); });
     ["pointerup","pointercancel","pointerleave"].forEach(function(e){
-      card.addEventListener(e,function(){ card.classList.remove("is-pressed"); });
+      card.addEventListener(e, function(){ card.classList.remove("is-pressed"); });
     });
   });
 });
 </script>
-
 </body>
 </html>
