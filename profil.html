@@ -1132,8 +1132,11 @@ a{text-decoration:none;color:inherit}
      Backend Code.gs harus memvalidasi session/token untuk produksi.
    ============================================================ */
 
+// ===== KONFIGURASI API =====
+const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
+
 const CONFIG={
-  apiUrl:"",
+  apiUrl:API_URL,
   fallbackUserKey:"KT_USER",
   sessionKey:"KT_SESSION",
   apiStorageKey:"KT_API_URL",
@@ -1655,6 +1658,7 @@ window.addEventListener("keydown",event=>{
 (function boot(){
   const params=new URLSearchParams(location.search);
 
+  // Jika ada parameter api di URL, simpan ke localStorage
   if(params.get("api")){
     localStorage.setItem(CONFIG.apiStorageKey,params.get("api"));
     // Hapus parameter dari URL agar tidak terlihat
@@ -1663,6 +1667,11 @@ window.addEventListener("keydown",event=>{
     if (history.replaceState) {
       history.replaceState({}, "", newUrl);
     }
+  }
+
+  // Jika belum ada api di localStorage, set default dari API_URL
+  if(!localStorage.getItem(CONFIG.apiStorageKey)){
+    localStorage.setItem(CONFIG.apiStorageKey, API_URL);
   }
 
   if(params.get("nia")){
