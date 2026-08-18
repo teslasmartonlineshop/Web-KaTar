@@ -402,7 +402,10 @@
 <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()"><button onclick="closeLightbox()">×</button><img id="lightboxImg" alt=""></div><div class="toast" id="toast"></div>
 
 <script>
-// ===== DATA =====
+// ===== KONFIGURASI API =====
+const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
+
+// ===== DATA (fallback lokal jika API tidak tersedia) =====
 const villageData = {
   stats: [["👥","128","Anggota Aktif"],["🤝","24","Program Berjalan"],["❤️","36","Kegiatan Sosial"],["🌱","18","UMKM Binaan"]],
   news: [
@@ -417,7 +420,6 @@ const villageData = {
     ["Sekretaris","Nama Sekretaris","https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"],
     ["Bendahara","Nama Bendahara","https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"]
   ],
-  // Layanan Pemuda: tombol Kirim Pengajuan arah ke WA admin
   services: [
     ["🤝","Gabung Karang Taruna","Daftarkan diri sebagai anggota dan ikut berkontribusi.","Pendaftaran Anggota", "https://wa.me/6285218483129"],
     ["💡","Usulkan Program","Sampaikan ide kegiatan yang bermanfaat bagi pemuda dan warga.","Usulan Program", "https://wa.me/6285218483129"],
@@ -426,10 +428,8 @@ const villageData = {
     ["🎨","Kreativitas Pemuda","Komunitas seni, budaya, teknologi dan ekonomi kreatif.","Kreativitas Pemuda", "https://wa.me/6285218483129"],
     ["💼","Bina UMKM","Pendampingan usaha, branding dan pemasaran digital.","Bina UMKM", "https://wa.me/6285218483129"],
     ["📣","Aspirasi Pemuda","Sampaikan aspirasi, masukan dan kebutuhan pemuda.","Aspirasi Pemuda", "https://wa.me/6285218483129"],
-    // 🔎 Cek Pengajuan -> data statis diambil dari statusModal (demo)
     ["🔎","Cek Pengajuan","Pantau status usulan atau pendaftaran Anda.","Cek Status", "#statusModal"]
   ],
-  // Produk: Lihat Produk -> arah ke link
   products: [
     ["Produk UMKM Muda","UMKM","https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80", "https://www.google.com"],
     ["Kerajinan Lokal","Kreatif","https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=800&q=80", "https://www.google.com"],
@@ -452,7 +452,6 @@ const villageData = {
     ["Bagaimana mengusulkan kegiatan?","Gunakan layanan Usulkan Program dan jelaskan tujuan, sasaran, waktu serta kebutuhan kegiatan."],
     ["Apakah UMKM dapat ikut dibina?","Ya. Program Bina UMKM dapat digunakan untuk mengajukan pendampingan branding, digitalisasi dan pemasaran."]
   ],
-  // Data dokumen publik dengan link tujuan
   docs: [
     ["📄","Program Kerja 2026","Dokumen anggaran • PDF","https://www.google.com"],
     ["⚖️","Peraturan Desa","Produk hukum • PDF","https://www.google.com"],
@@ -463,15 +462,50 @@ const villageData = {
   ]
 };
 
-// ===== RENDER FUNCTIONS =====
-function render(){
+// ===== AMBIL DATA DARI API =====
+async function fetchDataFromAPI() {
+  try {
+    const response = await fetch(API_URL + '?action=getAll', {
+      method: 'GET',
+      cache: 'no-store'
+    });
+    
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    
+    const result = await response.json();
+    
+    if (result.success && result.data) {
+      return result.data;
+    } else {
+      console.warn('API response error:', result.message);
+      return null;
+    }
+  } catch (error) {
+    console.warn('API fetch error:', error.message);
+    return null;
+  }
+}
+
+// ===== RENDER DENGAN DATA DARI API ATAU FALLBACK =====
+function renderWithData(data) {
+  // Gunakan data dari API jika ada, jika tidak gunakan fallback
+  const stats = data?.stats || villageData.stats;
+  const news = data?.news || villageData.news;
+  const agenda = data?.agenda || villageData.agenda;
+  const officials = data?.officials || villageData.officials;
+  const services = data?.services || villageData.services;
+  const products = data?.products || villageData.products;
+  const gallery = data?.gallery || villageData.gallery;
+  const faq = data?.faq || villageData.faq;
+  const docs = data?.docs || villageData.docs;
+
   // Stats
-  document.getElementById("stats").innerHTML = villageData.stats.map((x,i) => 
+  document.getElementById("stats").innerHTML = stats.map((x,i) => 
     `<div class="stat stat-card reveal"><div class="stat-icon">${x[0]}</div><strong>${x[1]}</strong><span>${x[2]}</span></div>`
   ).join("");
 
   // News
-  document.getElementById("news").innerHTML = villageData.news.map((x,i) =>
+  document.getElementById("news").innerHTML = news.map((x,i) =>
     `<article class="news-card ${i===0?'featured':''} reveal">
       <img src="${x[4]}" alt="${x[0]}" loading="lazy">
       <div class="card-body">
@@ -485,27 +519,25 @@ function render(){
   ).join("");
 
   // Agenda
-  document.getElementById("agendaList").innerHTML = villageData.agenda.map(x =>
+  document.getElementById("agendaList").innerHTML = agenda.map(x =>
     `<article class="agenda reveal"><div style="display:flex;gap:13px;align-items:center"><div class="date">${x[0]}<br><small>${x[1]}</small></div><div><h3 style="margin:0">${x[2]}</h3><p class="meta">${x[3]}</p></div></div></article>`
   ).join("");
 
   // Officials
-  document.getElementById("officials").innerHTML = villageData.officials.map(x =>
+  document.getElementById("officials").innerHTML = officials.map(x =>
     `<article class="official reveal"><img src="${x[2]}" alt="${x[1]}" loading="lazy"><div class="card-body"><h3 style="margin:0">${x[1]}</h3><small>${x[0]}</small></div></article>`
   ).join("");
 
-  // Services (Layanan Pemuda) 
-  document.getElementById("services").innerHTML = villageData.services.map(x => {
-    // Jika Cek Status, arahkan ke modal status
+  // Services
+  document.getElementById("services").innerHTML = services.map(x => {
     if (x[3] === "Cek Status") {
       return `<article class="service-card reveal"><div class="service-icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><a class="mini-btn" href="#" onclick="openModal('statusModal');return false">Cek Status →</a></article>`;
     }
-    // Lainnya: arahkan ke WhatsApp
     return `<article class="service-card reveal"><div class="service-icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><a class="mini-btn" href="${x[4]}" target="_blank">Kirim Pengajuan →</a></article>`;
   }).join("");
 
   // Products
-  document.getElementById("products").innerHTML = villageData.products.map(x =>
+  document.getElementById("products").innerHTML = products.map(x =>
     `<article class="product reveal">
       <img src="${x[2]}" alt="${x[0]}" loading="lazy">
       <div class="card-body">
@@ -517,28 +549,45 @@ function render(){
   ).join("");
 
   // Gallery
-  document.getElementById("gallery").innerHTML = villageData.gallery.map((x,i) =>
+  document.getElementById("gallery").innerHTML = gallery.map((x,i) =>
     `<img class="reveal" src="${x}" alt="Galeri Desa ${i+1}" loading="lazy" onclick="openLightbox('${x}')">`
   ).join("");
 
   // FAQ
-  document.getElementById("faq").innerHTML = villageData.faq.map(x =>
+  document.getElementById("faq").innerHTML = faq.map(x =>
     `<div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${x[0]} <span>＋</span></button><div class="faq-a">${x[1]}</div></div>`
   ).join("");
 
-  // Docs (PPID & Dokumen Publik)
-  document.getElementById("docsContainer").innerHTML = villageData.docs.map(x =>
+  // Docs
+  document.getElementById("docsContainer").innerHTML = docs.map(x =>
     `<a class="doc" href="${x[3]}" target="_blank">
       <span>${x[0]}</span>
       <div><b>${x[1]}</b><small>${x[2]}</small></div>
     </a>`
   ).join("");
 
-  // Service select options (untuk modal layanan)
+  // Service select options
   const select = document.getElementById("serviceSelect");
-  select.innerHTML = villageData.services.filter(x => x[3] !== "Cek Status").map(x => `<option>${x[3]}</option>`).join("");
+  select.innerHTML = services.filter(x => x[3] !== "Cek Status").map(x => `<option>${x[3]}</option>`).join("");
 
   observe();
+}
+
+// ===== LOAD DATA =====
+async function loadData() {
+  // Tampilkan fallback terlebih dahulu
+  renderWithData(null);
+  
+  // Coba ambil data dari API
+  const apiData = await fetchDataFromAPI();
+  
+  if (apiData) {
+    // Jika berhasil, render ulang dengan data API
+    renderWithData(apiData);
+    showToast("Data berhasil disinkronkan dengan server.");
+  } else {
+    showToast("Mode offline — menampilkan data lokal.");
+  }
 }
 
 // ===== UTILITY FUNCTIONS =====
@@ -668,8 +717,9 @@ document.addEventListener("keydown", e => {
 if(localStorage.getItem("theme") === "dark") toggleTheme();
 if(matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("no-motion");
 
-// Inisialisasi
-render();
+// ===== INISIALISASI =====
+// Load data dari API
+loadData();
 
 // Efek interaksi kartu stat
 document.addEventListener("DOMContentLoaded", function(){
