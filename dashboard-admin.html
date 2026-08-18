@@ -35,9 +35,12 @@
 <div class="overlay" id="docModal"><div class="modal"><div class="modalhead"><h2>Dokumen</h2><button class="close" data-close>✕</button></div><form id="docForm"><div class="formgrid"><div class="field full"><label>Nama Dokumen</label><input name="name" required></div><div class="field"><label>Kategori</label><input name="category" value="Organisasi"></div><div class="field"><label>URL</label><input name="url" type="url"></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
 <div class="toast" id="toast"></div><div class="login" id="login"><div class="loginbox"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg"><h2>Dashboard Admin</h2><p class="muted">Karang Taruna (Putra Asmara)</p><form id="loginForm"><div class="field"><label>Username</label><input name="u" type="password" value="********"></div><div class="field" style="margin-top:10px"><label>Password</label><input name="p" type="password" value="********"></div><button class="btn primary" style="width:100%;margin-top:14px">Masuk</button></form></div></div>
 <script>
+// ===== KONFIGURASI API =====
+const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
+
 const LOGO='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg';
 const KEY='KT_PUTRA_ASMARA_DB_V1';
-const seed={management:{period:'Periode 2026–2029',ketua:{name:'Ketua Karang Taruna',photo:''},wakil:{name:'Wakil Ketua Karang Taruna',photo:''},sekretaris:{name:'Sekretaris Karang Taruna',photo:''},bendahara:{name:'Bendahara Karang Taruna',photo:''}},members:[{id:'m1',nia:'KT-001',name:'Ketua Karang Taruna',position:'Ketua',phone:'085218483129',status:'Aktif'},{id:'m2',nia:'KT-002',name:'Sekretaris Karang Taruna',position:'Sekretaris',phone:'',status:'Aktif'}],programs:[{id:'p1',name:'Gerakan Sosial Pemuda',category:'Sosial',status:'Berjalan',description:'Kegiatan sosial dan kepedulian masyarakat.'},{id:'p2',name:'Pemuda Peduli Lingkungan',category:'Lingkungan',status:'Berjalan',description:'Gotong royong dan penghijauan.'}],news:[{id:'n1',title:'Karang Taruna Gelar Aksi Sosial',category:'Sosial',date:'2026-08-12',status:'Published'}],agenda:[{id:'a1',date:'2026-08-20',time:'07:00',name:'Aksi Bersih Lingkungan',location:'Wilayah Desa'}],umkm:[{id:'u1',name:'Produk UMKM Muda',category:'UMKM',contact:'',description:'Produk unggulan pemuda.'}],gallery:[{id:'g1',url:'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=80',title:'Kegiatan Sosial'}],finance:[{id:'f1',date:'2026-08-01',type:'income',description:'Iuran anggota',amount:1500000},{id:'f2',date:'2026-08-05',type:'expense',description:'Kegiatan sosial',amount:350000}],aspirations:[{id:'as1',name:'Warga Desa',subject:'Kegiatan olahraga',message:'Usul olahraga rutin.',status:'Baru'}],documents:[{id:'d1',name:'SK Kepengurusan Karang Taruna',category:'Organisasi',date:'2026-01-10',url:''}],notifications:[{id:'n1',title:'Dashboard siap digunakan',body:'Data demo tersimpan lokal.',read:false}],settings:{apiUrl:''}};
+const seed={management:{period:'Periode 2026–2029',ketua:{name:'Ketua Karang Taruna',photo:''},wakil:{name:'Wakil Ketua Karang Taruna',photo:''},sekretaris:{name:'Sekretaris Karang Taruna',photo:''},bendahara:{name:'Bendahara Karang Taruna',photo:''}},members:[{id:'m1',nia:'KT-001',name:'Ketua Karang Taruna',position:'Ketua',phone:'085218483129',status:'Aktif'},{id:'m2',nia:'KT-002',name:'Sekretaris Karang Taruna',position:'Sekretaris',phone:'',status:'Aktif'}],programs:[{id:'p1',name:'Gerakan Sosial Pemuda',category:'Sosial',status:'Berjalan',description:'Kegiatan sosial dan kepedulian masyarakat.'},{id:'p2',name:'Pemuda Peduli Lingkungan',category:'Lingkungan',status:'Berjalan',description:'Gotong royong dan penghijauan.'}],news:[{id:'n1',title:'Karang Taruna Gelar Aksi Sosial',category:'Sosial',date:'2026-08-12',status:'Published'}],agenda:[{id:'a1',date:'2026-08-20',time:'07:00',name:'Aksi Bersih Lingkungan',location:'Wilayah Desa'}],umkm:[{id:'u1',name:'Produk UMKM Muda',category:'UMKM',contact:'',description:'Produk unggulan pemuda.'}],gallery:[{id:'g1',url:'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=80',title:'Kegiatan Sosial'}],finance:[{id:'f1',date:'2026-08-01',type:'income',description:'Iuran anggota',amount:1500000},{id:'f2',date:'2026-08-05',type:'expense',description:'Kegiatan sosial',amount:350000}],aspirations:[{id:'as1',name:'Warga Desa',subject:'Kegiatan olahraga',message:'Usul olahraga rutin.',status:'Baru'}],documents:[{id:'d1',name:'SK Kepengurusan Karang Taruna',category:'Organisasi',date:'2026-01-10',url:''}],notifications:[{id:'n1',title:'Dashboard siap digunakan',body:'Data demo tersimpan lokal.',read:false}],settings:{apiUrl:API_URL}};
 let DB=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||seed}catch(e){return seed}})();
 const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])), uid=p=>p+Date.now().toString(36), rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(+n||0), dt=s=>s?new Date(s+'T00:00:00').toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'-';
 function save(){localStorage.setItem(KEY,JSON.stringify(DB));render();}function toast(x){$('toast').textContent=x;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2500)}
@@ -59,10 +62,35 @@ $('managementForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new
 $('memberSearch').oninput=()=>{let q=$('memberSearch').value.toLowerCase();$('members').innerHTML=DB.members.filter(x=>(x.name+x.nia+x.position).toLowerCase().includes(q)).map(x=>`<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td>${esc(x.phone||'-')}</td><td><span class="badge ok">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="del('members','${x.id}')">Hapus</button></td></tr>`).join('')};
 $('export').onclick=()=>{let rows=[['NIA','Nama','Posisi','WhatsApp','Status'],...DB.members.map(x=>[x.nia,x.name,x.position,x.phone,x.status])];let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='anggota-karang-taruna.csv';a.click()};
 $('saveSet').onclick=()=>{DB.settings.apiUrl=$('sapi').value.trim();localStorage.setItem('KT_LOGO',$('slogo').value||LOGO);$('logo').src=$('slogo').value||LOGO;save();$('setStatus').textContent=DB.settings.apiUrl?'TERHUBUNG':'BELUM';$('setStatus').className='badge '+(DB.settings.apiUrl?'ok':'pending');toast('Pengaturan tersimpan')};
-async function sync(){if(!DB.settings.apiUrl){toast('API belum dikonfigurasi — mode lokal aktif');return}try{let r=await fetch(DB.settings.apiUrl+'?action=getAll',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);let d=await r.json();if(d.management&&typeof d.management==='object')DB.management=d.management;Object.keys(seed).forEach(k=>{if(Array.isArray(d[k]))DB[k]=d[k]});save();toast('Sinkronisasi berhasil')}catch(e){toast('Sinkronisasi gagal: '+e.message)}}$('sync').onclick=sync;
+async function sync(){
+  const apiUrl = DB.settings.apiUrl || API_URL;
+  if(!apiUrl){toast('API belum dikonfigurasi — mode lokal aktif');return}
+  try{
+    let r=await fetch(apiUrl+'?action=getAll',{cache:'no-store'});
+    if(!r.ok)throw Error('HTTP '+r.status);
+    let d=await r.json();
+    if(d.success && d.data){
+      if(d.data.management && typeof d.data.management==='object')DB.management=d.data.management;
+      Object.keys(seed).forEach(k=>{if(Array.isArray(d.data[k]))DB[k]=d.data[k]});
+      save();
+      toast('Sinkronisasi berhasil');
+    }else{
+      toast('Data dari API tidak valid');
+    }
+  }catch(e){toast('Sinkronisasi gagal: '+e.message)}
+}
+$('sync').onclick=sync;
 $('read').onclick=()=>{DB.notifications.forEach(x=>x.read=true);save();toast('Notifikasi dibaca')};$('logout').onclick=()=>{sessionStorage.removeItem('KT_AUTH');$('login').classList.add('show')};
 $('loginForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));if(d.u==='adminkatar'&&d.p==='admin014212'){sessionStorage.setItem('KT_AUTH','1');$('login').classList.remove('show');toast('Login berhasil')}else toast('Login salah')};
-(function init(){let l=localStorage.getItem('KT_LOGO')||LOGO;$('logo').src=l;$('sname').value='Karang Taruna (Putra Asmara)';$('slogo').value=l;$('sapi').value=DB.settings.apiUrl||'';render();if(sessionStorage.getItem('KT_AUTH')!=='1')$('login').classList.add('show')})();
+(function init(){
+  let l=localStorage.getItem('KT_LOGO')||LOGO;
+  $('logo').src=l;
+  $('sname').value='Karang Taruna (Putra Asmara)';
+  $('slogo').value=l;
+  $('sapi').value=DB.settings.apiUrl||API_URL;
+  render();
+  if(sessionStorage.getItem('KT_AUTH')!=='1')$('login').classList.add('show');
+})();
 </script>
 </body>
 </html>
