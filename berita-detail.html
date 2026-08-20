@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2c7a7b">
+  <meta name="description" content="Detail berita Karang Taruna (Putra Asmara)">
+  <title>Detail Berita — Karang Taruna (Putra Asmara)</title>
+  <style>
+    :root {
+      --primary: #2c7a7b;
+      --primary2: #245f60;
+      --green: #38b2ac;
+      --teal: #319795;
+      --bg: #f5f7f6;
+      --surface: #fff;
+      --surface2: #eef6f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --shadow: 0 12px 35px rgba(15,23,42,.08);
+      --radius: 16px;
+      --card-shadow: 0 10px 30px rgba(44,122,123,.12);
+      --transition: 0.35s cubic-bezier(.2,.8,.2,1);
+    }
+    [data-theme=dark] {
+      --bg: #07110c;
+      --surface: #0d1912;
+      --surface2: #112319;
+      --text: #e7f4eb;
+      --muted: #9bb0a1;
+      --line: #20352a;
+      --shadow: 0 15px 40px rgba(0,0,0,.28);
+      --card-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: 0; background: transparent; }
+    .container {
+      width: min(880px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+      transition: .25s;
+    }
+    .header.scrolled { box-shadow: var(--shadow); }
+    .header-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .back-btn {
+      border: 0;
+      background: var(--surface2);
+      color: var(--primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      transition: all .2s;
+    }
+    .back-btn:hover { background: var(--line); transform: scale(0.95); }
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .header-title span { display: block; font-size: 10px; font-weight: 400; color: var(--muted); opacity: .7; margin-top: 2px; }
+
+    /* ===== LOADING ===== */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+    }
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid var(--line);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-state p { color: var(--muted); font-size: 14px; }
+
+    /* ===== NOT FOUND ===== */
+    .not-found {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .not-found .icon { font-size: 56px; margin-bottom: 16px; }
+    .not-found h2 { font-size: 24px; margin-bottom: 8px; }
+    .not-found p { color: var(--muted); margin-bottom: 20px; }
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--green));
+      color: #fff;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: all .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(44,122,123,.3); }
+
+    /* ===== CONTENT ===== */
+    .content {
+      padding: 32px 0 48px;
+    }
+    .article {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px 40px;
+      border: 1px solid var(--line);
+    }
+
+    /* ===== ARTICLE HEADER ===== */
+    .article-category {
+      display: inline-block;
+      padding: 4px 14px;
+      background: var(--surface2);
+      color: var(--primary);
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 12px;
+    }
+    .article-title {
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 22px;
+    }
+    .article-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ===== MAIN IMAGE ===== */
+    .main-image {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      background: var(--surface2);
+    }
+
+    /* ===== GALLERY GRID ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 20px 0 24px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: all .3s;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.02);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(44,122,123,.2);
+    }
+
+    /* ===== BODY CONTENT ===== */
+    .article-body {
+      font-size: 17px;
+      line-height: 1.8;
+    }
+    .article-body p {
+      margin-bottom: 16px;
+    }
+    .article-body img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 16px 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+    }
+    .article-body h2,
+    .article-body h3,
+    .article-body h4 {
+      margin: 24px 0 12px;
+      line-height: 1.3;
+    }
+    .article-body ul,
+    .article-body ol {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    .article-body li { margin-bottom: 6px; }
+    .article-body blockquote {
+      border-left: 4px solid var(--primary);
+      padding-left: 18px;
+      margin: 16px 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .article-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .article-body th,
+    .article-body td {
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .article-body th { background: var(--surface2); font-weight: 800; }
+
+    /* ===== BACK BUTTON ===== */
+    .back-to-news {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--surface2);
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--primary);
+      transition: all .2s;
+      margin-top: 28px;
+    }
+    .back-to-news:hover {
+      background: var(--line);
+      transform: translateX(-4px);
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 100;
+      max-width: 340px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: .25s;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .toast.show { opacity: 1; transform: none; pointer-events: auto; }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+    }
+    .lightbox.active { display: grid; }
+    .lightbox img {
+      max-height: 85vh;
+      max-width: 92vw;
+      border-radius: 10px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      font-size: 26px;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,.25); transform: scale(0.92); }
+    .lightbox-nav {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+    .lightbox-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.3);
+      transition: all .2s;
+      cursor: pointer;
+    }
+    .lightbox-dot.active { background: #fff; transform: scale(1.2); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 720px) {
+      .article { padding: 20px 18px; }
+      .container { width: calc(100% - 16px); }
+      .article-title { font-size: 24px; }
+      .article-body { font-size: 15px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .header-inner { min-height: 56px; }
+      .back-btn { width: 36px; height: 36px; font-size: 18px; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .article { padding: 16px 12px; }
+      .article-title { font-size: 20px; }
+      .article-meta { font-size: 11px; gap: 10px; }
+      .main-image { max-height: 260px; }
+    }
+
+    /* ===== DARK MODE TOGGLE ===== */
+    .theme-toggle {
+      border: 0;
+      background: var(--surface2);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      color: var(--text);
+      transition: all .2s;
+    }
+    .theme-toggle:hover { background: var(--line); transform: scale(0.95); }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <button class="back-btn" onclick="goBack()" aria-label="Kembali">←</button>
+    <div class="header-title">
+      Detail Berita
+      <span>Karang Taruna (Putra Asmara)</span>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Tema" id="themeBtn">☾</button>
+  </div>
+</header>
+
+<main>
+  <div class="container content" id="mainContent">
+
+    <!-- LOADING STATE -->
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Memuat berita...</p>
+    </div>
+
+    <!-- NOT FOUND -->
+    <div class="not-found" id="notFound" style="display:none;">
+      <div class="icon">📰</div>
+      <h2>Berita Tidak Ditemukan</h2>
+      <p>Maaf, berita yang Anda cari tidak tersedia atau telah dihapus.</p>
+      <a href="index.html#berita" class="btn-primary">← Kembali ke Berita</a>
+    </div>
+
+    <!-- ARTICLE CONTENT -->
+    <div id="articleContent" style="display:none;">
+      <article class="article">
+
+        <!-- Category -->
+        <div class="article-category" id="articleCategory">Kategori</div>
+
+        <!-- Title -->
+        <h1 class="article-title" id="articleTitle">Judul Berita</h1>
+
+        <!-- Meta -->
+        <div class="article-meta">
+          <span>📅 <span id="articleDate">Tanggal</span></span>
+          <span>🏷️ <span id="articleCategoryLabel">Kategori</span></span>
+          <span>📖 <span id="articleStatus">Status</span></span>
+        </div>
+
+        <!-- Main Image -->
+        <img class="main-image" id="mainImage" src="" alt="Gambar utama berita" loading="lazy">
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid"></div>
+
+        <!-- Body Content -->
+        <div class="article-body" id="articleBody"></div>
+
+        <!-- Back Button -->
+        <a href="index.html#berita" class="back-to-news">← Kembali ke Berita</a>
+
+      </article>
+    </div>
+
+  </div>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" alt="Gambar berita">
+  <div class="lightbox-nav" id="lightboxNav"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== KONFIGURASI API =====
+const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
+
+// ===== UTILITY =====
+const $ = id => document.getElementById(id);
+const toast = msg => {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+};
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+}
+
+function formatDate(value) {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return String(value);
+  return d.toLocaleDateString('id-ID', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+}
+
+function toggleTheme() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = dark ? '' : 'dark';
+  localStorage.setItem('theme', dark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = dark ? '☾' : '☀';
+}
+
+// ===== GET PARAMETER FROM URL =====
+function getParameter(name) {
+  const params = new URLSearchParams(location.search);
+  return params.get(name);
+}
+
+// ===== LIGHTBOX =====
+let lightboxImages = [];
+let currentIndex = 0;
+
+function openLightbox(src, index, images) {
+  lightboxImages = images || [];
+  currentIndex = index || 0;
+  const img = $('lightboxImg');
+  img.src = src;
+  $('lightbox').classList.add('active');
+  renderLightboxDots();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  $('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function navigateLightbox(direction) {
+  if (lightboxImages.length === 0) return;
+  currentIndex = (currentIndex + direction + lightboxImages.length) % lightboxImages.length;
+  $('lightboxImg').src = lightboxImages[currentIndex];
+  renderLightboxDots();
+}
+
+function renderLightboxDots() {
+  const nav = $('lightboxNav');
+  nav.innerHTML = lightboxImages.map((_, i) =>
+    `<span class="lightbox-dot ${i === currentIndex ? 'active' : ''}" onclick="currentIndex=${i};$('lightboxImg').src=lightboxImages[${i}];renderLightboxDots();"></span>`
+  ).join('');
+}
+
+// Keyboard navigation for lightbox
+document.addEventListener('keydown', e => {
+  if (!$('lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navigateLightbox(-1);
+  if (e.key === 'ArrowRight') navigateLightbox(1);
+});
+
+// ===== GO BACK =====
+function goBack() {
+  if (history.length > 1) {
+    history.back();
+  } else {
+    location.href = 'index.html#berita';
+  }
+}
+
+// ===== FETCH NEWS DATA =====
+async function fetchNews() {
+  try {
+    const response = await fetch(API_URL + '?action=getAll', {
+      method: 'GET',
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const result = await response.json();
+    if (result && result.success && result.data && result.data.news) {
+      return result.data.news;
+    }
+    return null;
+  } catch (error) {
+    console.error('Fetch news error:', error);
+    return null;
+  }
+}
+
+// ===== PARSE BODY CONTENT =====
+function parseBodyContent(body, mode) {
+  if (!body) return '<p><em>Konten berita tidak tersedia.</em></p>';
+
+  if (mode === 'html') {
+    // Tampilkan langsung sebagai HTML
+    return body;
+  }
+
+  // Mode text: parse [gambar:URL] menjadi tag img
+  let html = esc(body).replace(/\n/g, '<br>');
+  html = html.replace(/\[gambar:([^\]]+)\]/g, (match, url) => {
+    const cleanUrl = url.trim();
+    return `<img src="${cleanUrl}" alt="Gambar berita" loading="lazy" onerror="this.style.display='none'">`;
+  });
+  return html;
+}
+
+// ===== RENDER NEWS =====
+function renderNews(newsItem) {
+  if (!newsItem) {
+    $('loadingState').style.display = 'none';
+    $('notFound').style.display = 'block';
+    return;
+  }
+
+  $('loadingState').style.display = 'none';
+  $('articleContent').style.display = 'block';
+
+  // Category
+  const category = newsItem.category || 'Umum';
+  $('articleCategory').textContent = category;
+  $('articleCategoryLabel').textContent = category;
+
+  // Title
+  $('articleTitle').textContent = newsItem.title || 'Berita Tanpa Judul';
+
+  // Date
+  $('articleDate').textContent = formatDate(newsItem.date);
+
+  // Status
+  $('articleStatus').textContent = newsItem.status || 'Published';
+
+  // Main Image
+  const mainImage = $('mainImage');
+  if (newsItem.image) {
+    mainImage.src = newsItem.image;
+    mainImage.style.display = 'block';
+    mainImage.onerror = () => { mainImage.style.display = 'none'; };
+  } else {
+    mainImage.style.display = 'none';
+  }
+
+  // Gallery Grid
+  const grid = $('galleryGrid');
+  grid.innerHTML = '';
+  let allImages = [];
+
+  if (newsItem.images && Array.isArray(newsItem.images) && newsItem.images.length > 0) {
+    // Filter URL yang valid
+    const validImages = newsItem.images.filter(url => url && url.trim().length > 0);
+    allImages = validImages;
+
+    if (validImages.length > 0) {
+      grid.innerHTML = validImages.map((url, idx) =>
+        `<img src="${url}" alt="Gambar berita ${idx+1}" loading="lazy" onclick="openLightbox('${url}', ${idx}, ['${validImages.join("','")}'])" onerror="this.style.display='none'">`
+      ).join('');
+    } else {
+      grid.innerHTML = '';
+    }
+  }
+
+  // Body Content
+  const bodyEl = $('articleBody');
+  const mode = newsItem.content_mode || 'html';
+  bodyEl.innerHTML = parseBodyContent(newsItem.body, mode);
+}
+
+// ===== MAIN LOAD =====
+async function loadNews() {
+  const newsId = getParameter('id');
+  if (!newsId) {
+    $('loadingState').style.display = 'none';
+    $('notFound').style.display = 'block';
+    return;
+  }
+
+  // Cek cache di localStorage
+  let cachedNews = null;
+  try {
+    const cached = localStorage.getItem('KT_NEWS_CACHE');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed && Array.isArray(parsed)) {
+        cachedNews = parsed.find(item => item.id === newsId);
+        if (cachedNews) {
+          renderNews(cachedNews);
+        }
+      }
+    }
+  } catch (e) {}
+
+  // Tetap fetch dari API untuk data terbaru
+  try {
+    const news = await fetchNews();
+    if (news && news.length > 0) {
+      // Simpan cache
+      localStorage.setItem('KT_NEWS_CACHE', JSON.stringify(news));
+
+      const found = news.find(item => item.id === newsId);
+      if (found) {
+        renderNews(found);
+        return;
+      }
+    }
+  } catch (error) {
+    console.warn('API fetch failed, using cached data:', error);
+  }
+
+  // Jika tidak ditemukan di API dan tidak ada cache
+  if (!cachedNews) {
+    $('loadingState').style.display = 'none';
+    $('notFound').style.display = 'block';
+  }
+}
+
+// ===== THEME =====
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+  document.getElementById('themeBtn').textContent = '☀';
+}
+
+// ===== HEADER SCROLL EFFECT =====
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// ===== INIT =====
+loadNews();
+</script>
+</body>
+</html>
