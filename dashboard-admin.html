@@ -46,7 +46,7 @@
     <div class="field full" id="htmlContentWrap"><label>Konten (HTML)</label><textarea name="body_html" rows="8" placeholder="<p>Tulis konten berita dengan kode HTML di sini...</p><img src='https://...'><p>...</p>"></textarea><small style="color:var(--muted);font-size:10px;">Masukkan kode HTML lengkap untuk tampilan berita. Bisa menyertakan gambar, tabel, dan elemen HTML lainnya.</small></div>
     <div class="field full" id="textContentWrap" style="display:none;"><label>Konten (Teks + Gambar)</label><textarea name="body_text" rows="8" placeholder="Tulis konten berita di sini...&#10;&#10;Gunakan format:&#10;[gambar:https://...] untuk menyisipkan gambar&#10;Contoh:&#10;Paragraf pertama...&#10;[gambar:https://images.unsplash.com/photo-xxx]&#10;Paragraf kedua..."></textarea><small style="color:var(--muted);font-size:10px;">Gunakan <b>[gambar:URL]</b> untuk menyisipkan gambar di antara teks.</small></div>
   </div>
-  <div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">💾 Simpan Berita</button></div>
+  <div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary" id="submitNewsBtn">💾 Simpan Berita</button></div>
 </form></div></div>
 
 <div class="overlay" id="agendaModal"><div class="modal"><div class="modalhead"><h2>Agenda</h2><button class="close" data-close>✕</button></div><form id="agendaForm"><div class="formgrid"><div class="field"><label>Tanggal</label><input name="date" type="date" required></div><div class="field"><label>Waktu</label><input name="time" type="time"></div><div class="field full"><label>Nama</label><input name="name" required></div><div class="field full"><label>Lokasi</label><input name="location"></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
@@ -91,12 +91,18 @@ let DB = (() => {
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const uid = p => p + Date.now().toString(36);
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 const rp = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(+n||0);
 const dt = s => s ? new Date(s+'T00:00:00').toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' }) : '-';
 
 function save() { localStorage.setItem('KT_PUTRA_ASMARA_DB_V1', JSON.stringify(DB)); render(); }
-function toast(x) { $('toast').textContent = x; $('toast').classList.add('show'); setTimeout(() => $('toast').classList.remove('show'), 2500); }
+function toast(x) { 
+  const el = $('toast');
+  el.textContent = x;
+  el.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
 
 function nav(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
@@ -136,7 +142,8 @@ async function callAPI(action, method = 'GET', body = null) {
       options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
       options.body = JSON.stringify({ action, ...body });
     }
-    const response = await fetch(apiUrl + (method === 'GET' ? '?action=' + action : ''), options);
+    const url = method === 'GET' ? apiUrl + '?action=' + action : apiUrl;
+    const response = await fetch(url, options);
     if (!response.ok) throw new Error('HTTP ' + response.status);
     return await response.json();
   } catch (e) {
@@ -160,15 +167,15 @@ function renderManagement() {
   }).join('');
   const f = $('managementForm');
   if(f) {
-    f.ketuaName.value = m.ketua.name;
-    f.ketuaPhoto.value = m.ketua.photo;
-    f.wakilName.value = m.wakil.name;
-    f.wakilPhoto.value = m.wakil.photo;
-    f.sekretarisName.value = m.sekretaris.name;
-    f.sekretarisPhoto.value = m.sekretaris.photo;
-    f.bendaharaName.value = m.bendahara.name;
-    f.bendaharaPhoto.value = m.bendahara.photo;
-    f.period.value = m.period;
+    f.ketuaName.value = m.ketua.name || '';
+    f.ketuaPhoto.value = m.ketua.photo || '';
+    f.wakilName.value = m.wakil.name || '';
+    f.wakilPhoto.value = m.wakil.photo || '';
+    f.sekretarisName.value = m.sekretaris.name || '';
+    f.sekretarisPhoto.value = m.sekretaris.photo || '';
+    f.bendaharaName.value = m.bendahara.name || '';
+    f.bendaharaPhoto.value = m.bendahara.photo || '';
+    f.period.value = m.period || '';
   }
 }
 
@@ -203,6 +210,7 @@ function render() {
     `<div class="card"><span class="badge info">${esc(x.category)}</span><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description||'')}</p><span class="badge ${x.status === 'Berjalan' ? 'ok' : 'pending'}">${esc(x.status)}</span> <button class="btn small danger" onclick="deleteData('programs','${x.id}')">Hapus</button></div>`
   ).join('');
 
+  // News table dengan link ke detail
   $('news').innerHTML = DB.news.map(x => {
     const link = x.id ? `berita-detail.html?id=${x.id}` : '#';
     return `<tr><td><b>${esc(x.title)}</b></td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td><span class="badge ${x.status === 'Published' ? 'ok' : 'pending'}">${esc(x.status)}</span></td><td><a href="${link}" target="_blank" class="btn small" style="background:#eaf4f4;color:var(--p);margin-right:4px;">🔗 Lihat</a><button class="btn small danger" onclick="deleteData('news','${x.id}')">Hapus</button></td></tr>`;
@@ -242,8 +250,11 @@ function render() {
     `<div class="item"><div><b>${esc(x.title)}</b><p class="muted">${esc(x.body)}</p></div><span class="badge ${x.read ? 'info' : 'pending'}">${x.read ? 'Dibaca' : 'Baru'}</span></div>`
   ).join('');
 
-  $('apiBadge').textContent = (DB.settings?.apiUrl || API_URL) ? 'TERHUBUNG' : 'BELUM';
-  $('apiBadge').className = 'badge ' + ((DB.settings?.apiUrl || API_URL) ? 'ok' : 'pending');
+  const apiUrl = DB.settings?.apiUrl || API_URL;
+  $('apiBadge').textContent = apiUrl ? 'TERHUBUNG' : 'BELUM';
+  $('apiBadge').className = 'badge ' + (apiUrl ? 'ok' : 'pending');
+  $('setStatus').textContent = apiUrl ? 'TERHUBUNG' : 'BELUM';
+  $('setStatus').className = 'badge ' + (apiUrl ? 'ok' : 'pending');
 }
 
 // ===== DELETE DATA =====
@@ -255,9 +266,10 @@ async function deleteData(collection, id) {
   data.splice(index, 1);
   DB[collection] = data;
   save();
+  
   const result = await callAPI('deleteData', 'POST', { collection, id, idField: 'id' });
-  if (result && result.success) toast('Data berhasil dihapus dari server');
-  else toast('Data dihapus lokal, gagal sinkron ke server');
+  if (result && result.success) toast('✓ Data berhasil dihapus dari server');
+  else toast('⚠️ Data dihapus lokal, gagal sinkron ke server');
 }
 
 // ===== UPDATE ASPIRATION =====
@@ -265,11 +277,11 @@ async function updateAspiration(id, status) {
   const x = DB.aspirations.find(x => x.id === id);
   if (x) { x.status = status; save(); }
   const result = await callAPI('updateAspiration', 'POST', { id, status });
-  if (result && result.success) toast('Status diperbarui di server');
-  else toast('Status diperbarui lokal, gagal sinkron');
+  if (result && result.success) toast('✓ Status diperbarui di server');
+  else toast('⚠️ Status diperbarui lokal, gagal sinkron');
 }
 
-// ===== FORM HANDLERS =====
+// ===== FORM HANDLERS UMUM =====
 function form(id, collection, mapFn) {
   $(id).onsubmit = async e => {
     e.preventDefault();
@@ -279,12 +291,11 @@ function form(id, collection, mapFn) {
     save();
     e.target.reset();
     e.target.closest('.overlay').classList.remove('show');
-    toast('Data berhasil disimpan lokal');
+    toast('✓ Data berhasil disimpan lokal');
 
     const actionMap = {
       'members': 'addMember',
       'programs': 'addProgram',
-      'news': 'addNews',
       'agenda': 'addAgenda',
       'umkm': 'addUmkm',
       'gallery': 'addGallery',
@@ -307,60 +318,81 @@ $('managementForm').onsubmit = async e => {
   const d = Object.fromEntries(new FormData(e.target));
   DB.management = {
     period: d.period || 'Periode 2026–2029',
-    ketua: { name: d.ketuaName, photo: d.ketuaPhoto },
-    wakil: { name: d.wakilName, photo: d.wakilPhoto },
-    sekretaris: { name: d.sekretarisName, photo: d.sekretarisPhoto },
-    bendahara: { name: d.bendaharaName, photo: d.bendaharaPhoto }
+    ketua: { name: d.ketuaName || '', photo: d.ketuaPhoto || '' },
+    wakil: { name: d.wakilName || '', photo: d.wakilPhoto || '' },
+    sekretaris: { name: d.sekretarisName || '', photo: d.sekretarisPhoto || '' },
+    bendahara: { name: d.bendaharaName || '', photo: d.bendaharaPhoto || '' }
   };
   save();
   e.target.closest('.overlay').classList.remove('show');
-  toast('Profil pengurus diperbarui lokal');
+  toast('✓ Profil pengurus diperbarui lokal');
+  
   const result = await callAPI('updateManagement', 'POST', { management: DB.management });
-  if (result && result.success) toast('Profil pengurus diperbarui di server');
-  else toast('Profil diperbarui lokal, gagal sinkron');
+  if (result && result.success) toast('✓ Profil pengurus diperbarui di server');
+  else toast('⚠️ Profil diperbarui lokal, gagal sinkron');
 };
 
-// ===== FORM NEWS KHUSUS DENGAN MODE KONTEN =====
-document.getElementById('newsForm').onsubmit = async e => {
+// ===== FORM BERITA KHUSUS =====
+document.getElementById('newsForm').onsubmit = async function(e) {
   e.preventDefault();
-  const formData = Object.fromEntries(new FormData(e.target));
-  const mode = document.getElementById('contentMode').value;
   
-  let body = '';
-  let contentMode = mode;
-  if (mode === 'html') {
-    body = formData.body_html || '';
-  } else {
-    body = formData.body_text || '';
+  try {
+    const formData = Object.fromEntries(new FormData(e.target));
+    const mode = document.getElementById('contentMode').value;
+    
+    let body = '';
+    if (mode === 'html') {
+      body = formData.body_html || '';
+    } else {
+      body = formData.body_text || '';
+    }
+    
+    const images = formData.images ? formData.images.split(',').map(s => s.trim()).filter(s => s) : [];
+    
+    const newItem = {
+      id: uid('n'),
+      title: formData.title || 'Berita Tanpa Judul',
+      category: formData.category || 'Umum',
+      date: formData.date || new Date().toISOString().slice(0,10),
+      status: formData.status || 'Published',
+      image: formData.image || '',
+      images: images,
+      content_mode: mode,
+      body: body,
+      excerpt: body ? body.replace(/<[^>]*>/g, '').slice(0, 200) : 'Klik untuk membaca selengkapnya...'
+    };
+    
+    // Simpan ke localStorage
+    DB.news.push(newItem);
+    save();
+    
+    // Reset form dan tutup modal
+    e.target.reset();
+    const modal = e.target.closest('.overlay');
+    if (modal) modal.classList.remove('show');
+    
+    toast('📰 Berita berhasil disimpan lokal');
+    
+    // Kirim ke API
+    try {
+      const result = await callAPI('addNews', 'POST', { news: newItem });
+      if (result && result.success) {
+        toast('✓ Berita berhasil disimpan ke server');
+      } else {
+        toast('⚠️ Berita tersimpan lokal, gagal sinkron ke server');
+      }
+    } catch (apiError) {
+      console.warn('API error:', apiError);
+      toast('⚠️ Berita tersimpan lokal, gagal sinkron ke server');
+    }
+    
+  } catch (error) {
+    console.error('Error saving news:', error);
+    toast('❌ Gagal menyimpan berita: ' + (error.message || 'Unknown error'));
   }
-  
-  const images = formData.images ? formData.images.split(',').map(s => s.trim()).filter(s => s) : [];
-  
-  const newItem = {
-    id: uid('n'),
-    title: formData.title,
-    category: formData.category,
-    date: formData.date || new Date().toISOString().slice(0,10),
-    status: formData.status,
-    image: formData.image || '',
-    images: images,
-    content_mode: contentMode,
-    body: body,
-    excerpt: formData.body_text ? formData.body_text.slice(0, 200) : 'Klik untuk membaca selengkapnya...'
-  };
-  
-  DB.news.push(newItem);
-  save();
-  e.target.reset();
-  e.target.closest('.overlay').classList.remove('show');
-  toast('Berita berhasil disimpan lokal');
-  
-  const result = await callAPI('addNews', 'POST', { news: newItem });
-  if (result && result.success) toast('✓ Berita berhasil disimpan ke server');
-  else toast('⚠️ Berita tersimpan lokal, gagal sinkron ke server');
 };
 
-// Register other form handlers
+// Register form handlers
 form('memberForm', 'members', d => ({ id: uid('m'), nia: d.nia, name: d.name, position: d.position, phone: d.phone, email: d.email, status: d.status, address: d.address }));
 form('programForm', 'programs', d => ({ id: uid('p'), name: d.name, category: d.category, status: d.status, description: d.description }));
 form('agendaForm', 'agenda', d => ({ id: uid('a'), date: d.date, time: d.time, name: d.name, location: d.location }));
@@ -391,19 +423,19 @@ $('export').onclick = () => {
 $('saveSet').onclick = () => {
   const apiUrl = $('sapi').value.trim() || API_URL;
   DB.settings = { apiUrl };
-  localStorage.setItem('KT_LOGO', $('slogo').value || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg');
-  $('logo').src = $('slogo').value || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg';
+  const logo = $('slogo').value.trim() || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg';
+  localStorage.setItem('KT_LOGO', logo);
+  $('logo').src = logo;
   save();
-  $('setStatus').textContent = apiUrl ? 'TERHUBUNG' : 'BELUM';
-  $('setStatus').className = 'badge ' + (apiUrl ? 'ok' : 'pending');
-  toast('Pengaturan tersimpan');
+  toast('✓ Pengaturan tersimpan');
 };
 
 // ===== SINKRONISASI =====
 async function syncData() {
   const apiUrl = DB.settings?.apiUrl || API_URL;
-  if (!apiUrl) { toast('API belum dikonfigurasi'); return; }
+  if (!apiUrl) { toast('⚠️ API belum dikonfigurasi'); return; }
   try {
+    toast('🔄 Sinkronisasi dimulai...');
     const result = await callAPI('getAll', 'GET');
     if (result && result.success && result.data) {
       const data = result.data;
@@ -418,26 +450,30 @@ async function syncData() {
       if (data.documents) DB.documents = data.documents;
       if (data.management) DB.management = data.management;
       save();
-      toast('Sinkronisasi berhasil! Data diambil dari server.');
+      toast('✓ Sinkronisasi berhasil! Data diambil dari server.');
     } else {
-      toast('Gagal sinkron: data tidak valid');
+      toast('⚠️ Gagal sinkron: data tidak valid');
     }
   } catch (e) {
-    toast('Sinkronisasi gagal: ' + e.message);
+    toast('❌ Sinkronisasi gagal: ' + e.message);
   }
 }
 
 $('sync').onclick = syncData;
-$('read').onclick = () => { DB.notifications.forEach(x => x.read = true); save(); toast('Notifikasi dibaca'); };
+$('read').onclick = () => { DB.notifications.forEach(x => x.read = true); save(); toast('✓ Notifikasi dibaca'); };
 $('logout').onclick = () => { sessionStorage.removeItem('KT_AUTH'); $('login').classList.add('show'); };
+
+// Login
 $('loginForm').onsubmit = e => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(e.target));
   if (d.u === 'adminkatar' && d.p === 'admin014212') {
     sessionStorage.setItem('KT_AUTH', '1');
     $('login').classList.remove('show');
-    toast('Login berhasil');
-  } else { toast('Login salah'); }
+    toast('✅ Login berhasil');
+  } else {
+    toast('❌ Login salah');
+  }
 };
 
 // ===== INIT =====
@@ -449,7 +485,8 @@ $('loginForm').onsubmit = e => {
   $('sapi').value = DB.settings?.apiUrl || API_URL;
   render();
   if (sessionStorage.getItem('KT_AUTH') !== '1') $('login').classList.add('show');
-  setTimeout(syncData, 500);
+  // Auto sync after 1 second
+  setTimeout(syncData, 1000);
 })();
 </script>
 </body></html>
