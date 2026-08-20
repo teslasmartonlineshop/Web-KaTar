@@ -1,6 +1,5 @@
 <!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#2c7a7b"><title>Dashboard Admin — Karang Taruna (Putra Asmara)</title><style>
 :root{--p:#2c7a7b;--p2:#245f60;--a:#38b2ac;--bg:#f3f8f8;--c:#fff;--t:#173f40;--m:#6c8080;--l:#deebeb;--ok:#168653;--bad:#d33b4b;--warn:#a96f00;--sh:0 12px 34px #17494b14;--r:18px}*{box-sizing:border-box;margin:0;padding:0}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;width:100%}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:flex;min-height:100vh}.side{position:fixed;z-index:20;width:260px;inset:0 auto 0 0;padding:18px 14px;color:#fff;background:linear-gradient(180deg,#173f40,#245f60);overflow:auto}.brand{display:flex;align-items:center;gap:10px;padding:8px 7px 20px}.brand img{width:46px;height:46px;object-fit:contain;background:#fff;padding:3px;border-radius:13px}.brand b,.brand small{display:block}.brand small{opacity:.7}.nav-title{font-size:10px;opacity:.55;letter-spacing:1.2px;padding:14px 9px 6px;text-transform:uppercase}.nav button{display:flex;width:100%;gap:10px;border:0;background:transparent;color:#fff;padding:11px 12px;border-radius:12px;text-align:left;margin:2px 0}.nav button:hover,.nav button.active{background:#ffffff1c}.badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:99px;font-size:10px;font-weight:800}.nav .badge{margin-left:auto;background:#ffd36a;color:#493500}.main{margin-left:260px;width:calc(100% - 260px);max-width:100%;overflow-x:hidden}.top{height:70px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:0 25px;background:#ffffffe8;backdrop-filter:blur(12px);border-bottom:1px solid var(--l)}.menu{display:none;border:0;background:#edf7f7;padding:9px;border-radius:10px}.search{width:min(390px,42vw);border:1px solid var(--l);background:#f6fafa;padding:10px 13px;border-radius:12px;outline:0}.user{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--a);color:#fff;font-weight:800;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.content{padding:25px;max-width:1550px;margin:auto;overflow-x:hidden;width:100%}.page{display:none}.page.active{display:block}.head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:18px}.head h1{margin:0 0 4px;font-size:27px}.muted{color:var(--m)}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:10px 13px;background:#eaf4f4;color:var(--p);font-weight:750}.btn.primary{color:#fff;background:linear-gradient(135deg,var(--p),var(--a));box-shadow:0 9px 22px #2c7a7b33}.btn.danger{color:var(--bad);background:#fff0f1}.btn.small{padding:7px 9px;font-size:11px}.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1.4fr 1fr;margin-top:15px}.three{grid-template-columns:repeat(3,1fr);margin-top:15px}.card{background:var(--c);border:1px solid var(--l);border-radius:var(--r);box-shadow:var(--sh);padding:19px;overflow:hidden}.stat{transition:.25s;animation:float 5s ease-in-out infinite;position:relative;overflow:hidden}.stat:hover{transform:translateY(-7px) scale(.965);box-shadow:0 23px 48px #2c7a7b2e;animation-play-state:paused}.stat:active{transform:translateY(-2px) scale(.925)}.stat:nth-child(2){animation-delay:.5s}.stat:nth-child(3){animation-delay:1s}.stat:nth-child(4){animation-delay:1.5s}@keyframes float{0%,100%{translate:0}50%{translate:0 -5px}}.num{font-size:29px;font-weight:900;margin:8px 0 2px}.icon{font-size:26px}.cardhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.cardhead h3{margin:0;font-size:16px}.tablewrap{overflow:auto}.table{width:100%;min-width:620px;border-collapse:collapse}.table th,.table td{padding:11px;border-bottom:1px solid var(--l);text-align:left;font-size:12px}.table th{font-size:10px;color:var(--m);text-transform:uppercase}.ok{background:#e8f8ef;color:#147747}.pending{background:#fff5dc;color:#916100}.off{background:#fbeaec;color:#b32635}.info{background:#e7f3fc;color:#17639a}.list{display:grid;gap:9px}.item{display:flex;justify-content:space-between;gap:10px;padding:11px;border:1px solid var(--l);border-radius:12px}.chart{height:220px;display:flex;align-items:end;gap:10px;padding:15px 5px 0}.barcol{flex:1;text-align:center}.barcol i{display:block;width:100%;max-width:42px;margin:auto;background:linear-gradient(var(--a),var(--p));border-radius:8px 8px 2px 2px}.barcol small{font-size:10px;color:var(--m)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:800}.field input,.field select,.field textarea{border:1px solid var(--l);border-radius:11px;padding:10px;outline:0;background:#fbfdfd}.field textarea{min-height:95px}.overlay,.login{position:fixed;inset:0;background:#103f4070;z-index:80;display:none;align-items:center;justify-content:center;padding:16px}.overlay.show,.login.show{display:flex}.modal,.loginbox{width:min(680px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:21px;box-shadow:0 30px 80px #0003}.modalhead{display:flex;justify-content:space-between;align-items:center}.close{border:0;border-radius:9px;padding:8px;background:#edf5f5}.toast{position:fixed;right:18px;bottom:18px;z-index:100;background:#173f40;color:#fff;padding:12px 15px;border-radius:12px;opacity:0;transform:translateY(15px);transition:.25s}.toast.show{opacity:1;transform:none}.loginbox img{width:68px;height:68px;object-fit:contain;background:#fff;padding:3px;border-radius:17px}.loginbox h2{margin-bottom:4px}.mobileback{display:none}
-/* ===== RESPONSIVE ===== */
 @media(max-width:1000px){.stats{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr 1fr}}
 @media(max-width:720px){.side{transform:translateX(-100%);transition:.25s}.side.open{transform:none}.mobileback.show{display:block;position:fixed;inset:0;background:#0005;z-index:15}.main{margin:0;width:100%}.menu{display:block}.top{padding:0 14px}.search{display:none}.content{padding:16px 12px;overflow-x:hidden;width:100%}.head{flex-direction:column}.three,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.user span{display:none}.stats{grid-template-columns:1fr 1fr;gap:10px}.grid{grid-template-columns:1fr}.two,.three{grid-template-columns:1fr}.card{padding:14px}.num{font-size:22px}.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.table{min-width:480px}.management-grid{grid-template-columns:1fr 1fr}.actions .btn{padding:8px 10px;font-size:12px}.head h1{font-size:21px}.stat{animation:none}}
 @media(max-width:430px){.stats{grid-template-columns:1fr 1fr;gap:8px}.stat .num{font-size:19px}.management-grid{grid-template-columns:1fr 1fr}.card{padding:12px}.top{padding:0 10px;height:60px}.avatar{width:32px;height:32px}.btn{padding:7px 9px;font-size:11px}}
@@ -34,63 +33,409 @@
 <div class="overlay" id="financeModal"><div class="modal"><div class="modalhead"><h2>Transaksi</h2><button class="close" data-close>✕</button></div><form id="financeForm"><div class="formgrid"><div class="field"><label>Tanggal</label><input name="date" type="date" required></div><div class="field"><label>Jenis</label><select name="type"><option value="income">Pemasukan</option><option value="expense">Pengeluaran</option></select></div><div class="field full"><label>Keterangan</label><input name="description" required></div><div class="field"><label>Nominal</label><input name="amount" type="number" min="0" required></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
 <div class="overlay" id="docModal"><div class="modal"><div class="modalhead"><h2>Dokumen</h2><button class="close" data-close>✕</button></div><form id="docForm"><div class="formgrid"><div class="field full"><label>Nama Dokumen</label><input name="name" required></div><div class="field"><label>Kategori</label><input name="category" value="Organisasi"></div><div class="field"><label>URL</label><input name="url" type="url"></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
 <div class="toast" id="toast"></div><div class="login" id="login"><div class="loginbox"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg"><h2>Dashboard Admin</h2><p class="muted">Karang Taruna (Putra Asmara)</p><form id="loginForm"><div class="field"><label>Username</label><input name="u" type="password" value="********"></div><div class="field" style="margin-top:10px"><label>Password</label><input name="p" type="password" value="********"></div><button class="btn primary" style="width:100%;margin-top:14px">Masuk</button></form></div></div>
+
 <script>
 // ===== KONFIGURASI API =====
 const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
 
-const LOGO='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg';
-const KEY='KT_PUTRA_ASMARA_DB_V1';
-const seed={management:{period:'Periode 2026–2029',ketua:{name:'Ketua Karang Taruna',photo:''},wakil:{name:'Wakil Ketua Karang Taruna',photo:''},sekretaris:{name:'Sekretaris Karang Taruna',photo:''},bendahara:{name:'Bendahara Karang Taruna',photo:''}},members:[{id:'m1',nia:'KT-001',name:'Ketua Karang Taruna',position:'Ketua',phone:'085218483129',status:'Aktif'},{id:'m2',nia:'KT-002',name:'Sekretaris Karang Taruna',position:'Sekretaris',phone:'',status:'Aktif'}],programs:[{id:'p1',name:'Gerakan Sosial Pemuda',category:'Sosial',status:'Berjalan',description:'Kegiatan sosial dan kepedulian masyarakat.'},{id:'p2',name:'Pemuda Peduli Lingkungan',category:'Lingkungan',status:'Berjalan',description:'Gotong royong dan penghijauan.'}],news:[{id:'n1',title:'Karang Taruna Gelar Aksi Sosial',category:'Sosial',date:'2026-08-12',status:'Published'}],agenda:[{id:'a1',date:'2026-08-20',time:'07:00',name:'Aksi Bersih Lingkungan',location:'Wilayah Desa'}],umkm:[{id:'u1',name:'Produk UMKM Muda',category:'UMKM',contact:'',description:'Produk unggulan pemuda.'}],gallery:[{id:'g1',url:'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=80',title:'Kegiatan Sosial'}],finance:[{id:'f1',date:'2026-08-01',type:'income',description:'Iuran anggota',amount:1500000},{id:'f2',date:'2026-08-05',type:'expense',description:'Kegiatan sosial',amount:350000}],aspirations:[{id:'as1',name:'Warga Desa',subject:'Kegiatan olahraga',message:'Usul olahraga rutin.',status:'Baru'}],documents:[{id:'d1',name:'SK Kepengurusan Karang Taruna',category:'Organisasi',date:'2026-01-10',url:''}],notifications:[{id:'n1',title:'Dashboard siap digunakan',body:'Data demo tersimpan lokal.',read:false}],settings:{apiUrl:API_URL}};
-let DB=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||seed}catch(e){return seed}})();
-const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])), uid=p=>p+Date.now().toString(36), rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(+n||0), dt=s=>s?new Date(s+'T00:00:00').toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'-';
-function save(){localStorage.setItem(KEY,JSON.stringify(DB));render();}function toast(x){$('toast').textContent=x;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2500)}
-function nav(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('page-'+p).classList.add('active');document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===p));$('side').classList.remove('open');$('back').classList.remove('show')}
-document.querySelectorAll('[data-page]').forEach(x=>x.onclick=()=>nav(x.dataset.page));document.querySelectorAll('[data-jump]').forEach(x=>x.onclick=()=>nav(x.dataset.jump));$('menub').onclick=()=>{$('side').classList.add('open');$('back').classList.add('show')};$('back').onclick=()=>{$('side').classList.remove('open');$('back').classList.remove('show')};
-document.querySelectorAll('[data-open]').forEach(x=>x.onclick=()=>$(x.dataset.open).classList.add('show'));document.querySelectorAll('[data-close]').forEach(x=>x.onclick=()=>x.closest('.overlay').classList.remove('show'));document.querySelectorAll('.overlay').forEach(x=>x.onclick=e=>{if(e.target===x)x.classList.remove('show')});
-function renderManagement(){const m=DB.management||seed.management;const roles=[['ketua','Ketua Karang Taruna','👑'],['wakil','Wakil Karang Taruna','🤝'],['sekretaris','Sekretaris Karang Taruna','📋'],['bendahara','Bendahara Karang Taruna','💰']];$('managementCards').innerHTML=roles.map(([k,l,i])=>{let x=m[k]||{};let visual=x.photo?`<img class="management-photo" src="${esc(x.photo)}" alt="${esc(x.name)}" onerror="this.outerHTML='<div class=\"management-fallback\">${i}</div>'">`:`<div class="management-fallback">${i}</div>`;return `<div class="management-person">${visual}<div class="management-label">${l}</div><h3 class="management-name">${esc(x.name||'-')}</h3><div class="management-period">${esc(m.period||'')}</div></div>`}).join('');$('managementList').innerHTML=roles.map(([k,l,i])=>{let x=m[k]||{};return `<div class="item"><div style="display:flex;align-items:center;gap:10px"><span>${i}</span><div><b>${l}</b><small class="muted" style="display:block">${esc(x.name||'-')}</small></div></div><span class="badge ok">PENGURUS</span></div>`}).join('');const f=$('managementForm');if(f){f.ketuaName.value=m.ketua.name;f.ketuaPhoto.value=m.ketua.photo;f.wakilName.value=m.wakil.name;f.wakilPhoto.value=m.wakil.photo;f.sekretarisName.value=m.sekretaris.name;f.sekretarisPhoto.value=m.sekretaris.photo;f.bendaharaName.value=m.bendahara.name;f.bendaharaPhoto.value=m.bendahara.photo;f.period.value=m.period}}
-function render(){
- renderManagement();
- const active=DB.members.filter(x=>x.status==='Aktif').length,bal=DB.finance.reduce((a,x)=>a+(x.type==='income'?+x.amount:-x.amount),0);$('k1').textContent=active;$('k2').textContent=DB.programs.filter(x=>x.status!=='Selesai').length;$('k3').textContent=DB.programs.filter(x=>x.category==='Sosial').length;$('k4').textContent=rp(bal);$('mb').textContent=active;$('ab').textContent=DB.aspirations.filter(x=>x.status==='Baru').length;
- $('recent').innerHTML=DB.members.slice(-5).reverse().map(x=>`<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td><span class="badge ${x.status==='Aktif'?'ok':'off'}">${esc(x.status)}</span></td></tr>`).join('');$('recentAsp').innerHTML=DB.aspirations.slice(-4).reverse().map(x=>`<div class="item"><div><b>${esc(x.subject)}</b><small class="muted" style="display:block">${esc(x.name)}</small></div><span class="badge ${x.status==='Baru'?'pending':'info'}">${esc(x.status)}</span></div>`).join('');$('chart').innerHTML=[45,65,52,78,68,92].map((v,i)=>`<div class="barcol"><i style="height:${v*1.7}px"></i><small>${['Mar','Apr','Mei','Jun','Jul','Agu'][i]}</small></div>`).join('');
- $('members').innerHTML=DB.members.map(x=>`<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td>${esc(x.phone||'-')}</td><td><span class="badge ${x.status==='Aktif'?'ok':'off'}">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="del('members','${x.id}')">Hapus</button></td></tr>`).join('');$('programList').innerHTML=DB.programs.map(x=>`<div class="card"><span class="badge info">${esc(x.category)}</span><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description||'')}</p><span class="badge ${x.status==='Berjalan'?'ok':'pending'}">${esc(x.status)}</span> <button class="btn small danger" onclick="del('programs','${x.id}')">Hapus</button></div>`).join('');$('news').innerHTML=DB.news.map(x=>`<tr><td><b>${esc(x.title)}</b></td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td><span class="badge ${x.status==='Published'?'ok':'pending'}">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="del('news','${x.id}')">Hapus</button></td></tr>`).join('');$('agenda').innerHTML=DB.agenda.map(x=>`<div class="card"><b>📅 ${dt(x.date)}</b><p>${esc(x.name)}</p><small class="muted">${esc(x.time||'')} • ${esc(x.location||'')}</small><br><button class="btn small danger" onclick="del('agenda','${x.id}')">Hapus</button></div>`).join('');$('umkm').innerHTML=DB.umkm.map(x=>`<div class="card"><span class="badge info">${esc(x.category)}</span><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description||'')}</p><button class="btn small danger" onclick="del('umkm','${x.id}')">Hapus</button></div>`).join('');$('gallery').innerHTML=DB.gallery.map(x=>`<div class="card"><img src="${esc(x.url)}" style="width:100%;height:180px;object-fit:cover;border-radius:13px"><p><b>${esc(x.title||'Dokumentasi')}</b> <button class="btn small danger" style="float:right" onclick="del('gallery','${x.id}')">Hapus</button></p></div>`).join('');
- let inc=0,exp=0;DB.finance.forEach(x=>x.type==='income'?inc+=+x.amount:exp+=+x.amount);$('inc').textContent=rp(inc);$('exp').textContent=rp(exp);$('bal').textContent=rp(inc-exp);$('trx').textContent=DB.finance.length;$('finance').innerHTML=DB.finance.slice().reverse().map(x=>`<tr><td>${dt(x.date)}</td><td><span class="badge ${x.type==='income'?'ok':'off'}">${x.type==='income'?'Pemasukan':'Pengeluaran'}</span></td><td>${esc(x.description)}</td><td>${rp(x.amount)}</td><td><button class="btn small danger" onclick="del('finance','${x.id}')">Hapus</button></td></tr>`).join('');
- $('asp').innerHTML=DB.aspirations.map(x=>`<tr><td>${esc(x.name)}</td><td><b>${esc(x.subject)}</b></td><td>${esc(x.message)}</td><td><select onchange="asp('${x.id}',this.value)"><option ${x.status==='Baru'?'selected':''}>Baru</option><option ${x.status==='Diproses'?'selected':''}>Diproses</option><option ${x.status==='Selesai'?'selected':''}>Selesai</option></select></td><td><button class="btn small danger" onclick="del('aspirations','${x.id}')">Hapus</button></td></tr>`).join('');$('docs').innerHTML=DB.documents.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td>${x.url?`<a class="btn small" target="_blank" href="${esc(x.url)}">Buka</a>`:''}<button class="btn small danger" onclick="del('documents','${x.id}')">Hapus</button></td></tr>`).join('');$('notes').innerHTML=DB.notifications.map(x=>`<div class="item"><div><b>${esc(x.title)}</b><p class="muted">${esc(x.body)}</p></div><span class="badge ${x.read?'info':'pending'}">${x.read?'Dibaca':'Baru'}</span></div>`).join('');$('apiBadge').textContent=DB.settings.apiUrl?'TERHUBUNG':'BELUM';$('apiBadge').className='badge '+(DB.settings.apiUrl?'ok':'pending');
-}
-function del(c,id){if(!confirm('Hapus data ini?'))return;DB[c]=DB[c].filter(x=>x.id!==id);save();toast('Data dihapus')}function asp(id,s){let x=DB.aspirations.find(x=>x.id===id);if(x){x.status=s;save();toast('Status diperbarui')}}
-function form(id,c,map){$(id).onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));DB[c].push(map(d));save();e.target.reset();e.target.closest('.overlay').classList.remove('show');toast('Data berhasil disimpan')}}
-$('managementForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));DB.management={period:d.period||'Periode 2026–2029',ketua:{name:d.ketuaName,photo:d.ketuaPhoto},wakil:{name:d.wakilName,photo:d.wakilPhoto},sekretaris:{name:d.sekretarisName,photo:d.sekretarisPhoto},bendahara:{name:d.bendaharaName,photo:d.bendaharaPhoto}};save();e.target.closest('.overlay').classList.remove('show');toast('Profil pengurus berhasil diperbarui')};form('memberForm','members',d=>({id:uid('m'),nia:d.nia,name:d.name,position:d.position,phone:d.phone,email:d.email,status:d.status,address:d.address}));form('programForm','programs',d=>({id:uid('p'),name:d.name,category:d.category,status:d.status,description:d.description}));form('newsForm','news',d=>({id:uid('n'),title:d.title,category:d.category,date:new Date().toISOString().slice(0,10),status:d.status,body:d.body}));form('agendaForm','agenda',d=>({id:uid('a'),date:d.date,time:d.time,name:d.name,location:d.location}));form('umkmForm','umkm',d=>({id:uid('u'),name:d.name,category:d.category,contact:d.contact,description:d.description}));form('galleryForm','gallery',d=>({id:uid('g'),url:d.url,title:d.title}));form('financeForm','finance',d=>({id:uid('f'),date:d.date,type:d.type,description:d.description,amount:+d.amount}));form('docForm','documents',d=>({id:uid('d'),name:d.name,category:d.category,date:new Date().toISOString().slice(0,10),url:d.url}));
-$('memberSearch').oninput=()=>{let q=$('memberSearch').value.toLowerCase();$('members').innerHTML=DB.members.filter(x=>(x.name+x.nia+x.position).toLowerCase().includes(q)).map(x=>`<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td>${esc(x.phone||'-')}</td><td><span class="badge ok">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="del('members','${x.id}')">Hapus</button></td></tr>`).join('')};
-$('export').onclick=()=>{let rows=[['NIA','Nama','Posisi','WhatsApp','Status'],...DB.members.map(x=>[x.nia,x.name,x.position,x.phone,x.status])];let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='anggota-karang-taruna.csv';a.click()};
-$('saveSet').onclick=()=>{DB.settings.apiUrl=$('sapi').value.trim();localStorage.setItem('KT_LOGO',$('slogo').value||LOGO);$('logo').src=$('slogo').value||LOGO;save();$('setStatus').textContent=DB.settings.apiUrl?'TERHUBUNG':'BELUM';$('setStatus').className='badge '+(DB.settings.apiUrl?'ok':'pending');toast('Pengaturan tersimpan')};
-async function sync(){
-  const apiUrl = DB.settings.apiUrl || API_URL;
-  if(!apiUrl){toast('API belum dikonfigurasi — mode lokal aktif');return}
-  try{
-    let r=await fetch(apiUrl+'?action=getAll',{cache:'no-store'});
-    if(!r.ok)throw Error('HTTP '+r.status);
-    let d=await r.json();
-    if(d.success && d.data){
-      if(d.data.management && typeof d.data.management==='object')DB.management=d.data.management;
-      Object.keys(seed).forEach(k=>{if(Array.isArray(d.data[k]))DB[k]=d.data[k]});
-      save();
-      toast('Sinkronisasi berhasil');
-    }else{
-      toast('Data dari API tidak valid');
+const KEY = 'KT_PUTRA_ASMARA_DB_V1';
+
+// ===== DATA AWAL KOSONG (TANPA DUMMY) =====
+const emptySeed = {
+  management: { period: '', ketua: { name: '', photo: '' }, wakil: { name: '', photo: '' }, sekretaris: { name: '', photo: '' }, bendahara: { name: '', photo: '' } },
+  members: [],
+  programs: [],
+  news: [],
+  agenda: [],
+  umkm: [],
+  gallery: [],
+  finance: [],
+  aspirations: [],
+  documents: [],
+  notifications: [{ id: 'n1', title: 'Dashboard siap digunakan', body: 'Data akan disinkronkan dengan API.', read: false }],
+  settings: { apiUrl: API_URL }
+};
+
+// Inisialisasi DB kosong
+let DB = (() => {
+  try {
+    const stored = localStorage.getItem(KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Jika ada data, gunakan, tapi pastikan tidak ada dummy
+      return parsed;
     }
-  }catch(e){toast('Sinkronisasi gagal: '+e.message)}
-}
-$('sync').onclick=sync;
-$('read').onclick=()=>{DB.notifications.forEach(x=>x.read=true);save();toast('Notifikasi dibaca')};$('logout').onclick=()=>{sessionStorage.removeItem('KT_AUTH');$('login').classList.add('show')};
-$('loginForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));if(d.u==='adminkatar'&&d.p==='admin014212'){sessionStorage.setItem('KT_AUTH','1');$('login').classList.remove('show');toast('Login berhasil')}else toast('Login salah')};
-(function init(){
-  let l=localStorage.getItem('KT_LOGO')||LOGO;
-  $('logo').src=l;
-  $('sname').value='Karang Taruna (Putra Asmara)';
-  $('slogo').value=l;
-  $('sapi').value=DB.settings.apiUrl||API_URL;
+    return JSON.parse(JSON.stringify(emptySeed));
+  } catch(e) {
+    return JSON.parse(JSON.stringify(emptySeed));
+  }
+})();
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const uid = p => p + Date.now().toString(36);
+const rp = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(+n||0);
+const dt = s => s ? new Date(s+'T00:00:00').toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' }) : '-';
+
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(DB));
   render();
-  if(sessionStorage.getItem('KT_AUTH')!=='1')$('login').classList.add('show');
+}
+
+function toast(x) {
+  $('toast').textContent = x;
+  $('toast').classList.add('show');
+  setTimeout(() => $('toast').classList.remove('show'), 2500);
+}
+
+function nav(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  $('page-'+p).classList.add('active');
+  document.querySelectorAll('[data-page]').forEach(x => x.classList.toggle('active', x.dataset.page === p));
+  $('side').classList.remove('open');
+  $('back').classList.remove('show');
+}
+
+document.querySelectorAll('[data-page]').forEach(x => x.onclick = () => nav(x.dataset.page));
+document.querySelectorAll('[data-jump]').forEach(x => x.onclick = () => nav(x.dataset.jump));
+$('menub').onclick = () => { $('side').classList.add('open'); $('back').classList.add('show'); };
+$('back').onclick = () => { $('side').classList.remove('open'); $('back').classList.remove('show'); };
+document.querySelectorAll('[data-open]').forEach(x => x.onclick = () => $(x.dataset.open).classList.add('show'));
+document.querySelectorAll('[data-close]').forEach(x => x.onclick = () => x.closest('.overlay').classList.remove('show'));
+document.querySelectorAll('.overlay').forEach(x => x.onclick = e => { if(e.target === x) x.classList.remove('show'); });
+
+// ===== FUNGSI API =====
+async function callAPI(action, method = 'GET', body = null) {
+  const apiUrl = DB.settings?.apiUrl || API_URL;
+  try {
+    const options = { method, cache: 'no-store' };
+    if (method === 'POST') {
+      options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+      options.body = JSON.stringify({ action, ...body });
+    }
+    const response = await fetch(apiUrl + (method === 'GET' ? '?action=' + action : ''), options);
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    return await response.json();
+  } catch (e) {
+    console.warn('API call failed:', e);
+    return null;
+  }
+}
+
+// ===== RENDER =====
+function renderManagement() {
+  const m = DB.management || emptySeed.management;
+  const roles = [['ketua','Ketua Karang Taruna','👑'],['wakil','Wakil Karang Taruna','🤝'],['sekretaris','Sekretaris Karang Taruna','📋'],['bendahara','Bendahara Karang Taruna','💰']];
+  $('managementCards').innerHTML = roles.map(([k,l,i]) => {
+    let x = m[k] || {};
+    let visual = x.photo ? `<img class="management-photo" src="${esc(x.photo)}" alt="${esc(x.name)}" onerror="this.outerHTML='<div class=\"management-fallback\">${i}</div>'">` : `<div class="management-fallback">${i}</div>`;
+    return `<div class="management-person">${visual}<div class="management-label">${l}</div><h3 class="management-name">${esc(x.name||'-')}</h3><div class="management-period">${esc(m.period||'')}</div></div>`;
+  }).join('');
+  $('managementList').innerHTML = roles.map(([k,l,i]) => {
+    let x = m[k] || {};
+    return `<div class="item"><div style="display:flex;align-items:center;gap:10px"><span>${i}</span><div><b>${l}</b><small class="muted" style="display:block">${esc(x.name||'-')}</small></div></div><span class="badge ok">PENGURUS</span></div>`;
+  }).join('');
+  const f = $('managementForm');
+  if(f) {
+    f.ketuaName.value = m.ketua.name;
+    f.ketuaPhoto.value = m.ketua.photo;
+    f.wakilName.value = m.wakil.name;
+    f.wakilPhoto.value = m.wakil.photo;
+    f.sekretarisName.value = m.sekretaris.name;
+    f.sekretarisPhoto.value = m.sekretaris.photo;
+    f.bendaharaName.value = m.bendahara.name;
+    f.bendaharaPhoto.value = m.bendahara.photo;
+    f.period.value = m.period;
+  }
+}
+
+function render() {
+  renderManagement();
+
+  const active = DB.members.filter(x => x.status === 'Aktif').length;
+  const bal = DB.finance.reduce((a,x) => a + (x.type === 'income' ? +x.amount : -x.amount), 0);
+  $('k1').textContent = active;
+  $('k2').textContent = DB.programs.filter(x => x.status !== 'Selesai').length;
+  $('k3').textContent = DB.programs.filter(x => x.category === 'Sosial').length;
+  $('k4').textContent = rp(bal);
+  $('mb').textContent = active;
+  $('ab').textContent = DB.aspirations.filter(x => x.status === 'Baru').length;
+
+  $('recent').innerHTML = DB.members.slice(-5).reverse().map(x => 
+    `<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td><span class="badge ${x.status === 'Aktif' ? 'ok' : 'off'}">${esc(x.status)}</span></td></tr>`
+  ).join('');
+
+  $('recentAsp').innerHTML = DB.aspirations.slice(-4).reverse().map(x => 
+    `<div class="item"><div><b>${esc(x.subject)}</b><small class="muted" style="display:block">${esc(x.name)}</small></div><span class="badge ${x.status === 'Baru' ? 'pending' : 'info'}">${esc(x.status)}</span></div>`
+  ).join('');
+
+  $('chart').innerHTML = [45,65,52,78,68,92].map((v,i) => 
+    `<div class="barcol"><i style="height:${v*1.7}px"></i><small>${['Mar','Apr','Mei','Jun','Jul','Agu'][i]}</small></div>`
+  ).join('');
+
+  $('members').innerHTML = DB.members.map(x => 
+    `<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td>${esc(x.phone||'-')}</td><td><span class="badge ${x.status === 'Aktif' ? 'ok' : 'off'}">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="deleteData('members','${x.id}')">Hapus</button></td></tr>`
+  ).join('');
+
+  $('programList').innerHTML = DB.programs.map(x => 
+    `<div class="card"><span class="badge info">${esc(x.category)}</span><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description||'')}</p><span class="badge ${x.status === 'Berjalan' ? 'ok' : 'pending'}">${esc(x.status)}</span> <button class="btn small danger" onclick="deleteData('programs','${x.id}')">Hapus</button></div>`
+  ).join('');
+
+  $('news').innerHTML = DB.news.map(x => 
+    `<tr><td><b>${esc(x.title)}</b></td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td><span class="badge ${x.status === 'Published' ? 'ok' : 'pending'}">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="deleteData('news','${x.id}')">Hapus</button></td></tr>`
+  ).join('');
+
+  $('agenda').innerHTML = DB.agenda.map(x => 
+    `<div class="card"><b>📅 ${dt(x.date)}</b><p>${esc(x.name)}</p><small class="muted">${esc(x.time||'')} • ${esc(x.location||'')}</small><br><button class="btn small danger" onclick="deleteData('agenda','${x.id}')">Hapus</button></div>`
+  ).join('');
+
+  $('umkm').innerHTML = DB.umkm.map(x => 
+    `<div class="card"><span class="badge info">${esc(x.category)}</span><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description||'')}</p><button class="btn small danger" onclick="deleteData('umkm','${x.id}')">Hapus</button></div>`
+  ).join('');
+
+  $('gallery').innerHTML = DB.gallery.map(x => 
+    `<div class="card"><img src="${esc(x.url)}" style="width:100%;height:180px;object-fit:cover;border-radius:13px"><p><b>${esc(x.title||'Dokumentasi')}</b> <button class="btn small danger" style="float:right" onclick="deleteData('gallery','${x.id}')">Hapus</button></p></div>`
+  ).join('');
+
+  let inc = 0, exp = 0;
+  DB.finance.forEach(x => x.type === 'income' ? inc += +x.amount : exp += +x.amount);
+  $('inc').textContent = rp(inc);
+  $('exp').textContent = rp(exp);
+  $('bal').textContent = rp(inc - exp);
+  $('trx').textContent = DB.finance.length;
+  $('finance').innerHTML = DB.finance.slice().reverse().map(x => 
+    `<tr><td>${dt(x.date)}</td><td><span class="badge ${x.type === 'income' ? 'ok' : 'off'}">${x.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}</span></td><td>${esc(x.description)}</td><td>${rp(x.amount)}</td><td><button class="btn small danger" onclick="deleteData('finance','${x.id}')">Hapus</button></td></tr>`
+  ).join('');
+
+  $('asp').innerHTML = DB.aspirations.map(x => 
+    `<tr><td>${esc(x.name)}</td><td><b>${esc(x.subject)}</b></td><td>${esc(x.message)}</td><td><select onchange="updateAspiration('${x.id}',this.value)"><option ${x.status === 'Baru' ? 'selected' : ''}>Baru</option><option ${x.status === 'Diproses' ? 'selected' : ''}>Diproses</option><option ${x.status === 'Selesai' ? 'selected' : ''}>Selesai</option></select></td><td><button class="btn small danger" onclick="deleteData('aspirations','${x.id}')">Hapus</button></td></tr>`
+  ).join('');
+
+  $('docs').innerHTML = DB.documents.map(x => 
+    `<tr><td>${esc(x.name)}</td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td>${x.url ? `<a class="btn small" target="_blank" href="${esc(x.url)}">Buka</a>` : ''}<button class="btn small danger" onclick="deleteData('documents','${x.id}')">Hapus</button></td></tr>`
+  ).join('');
+
+  $('notes').innerHTML = DB.notifications.map(x => 
+    `<div class="item"><div><b>${esc(x.title)}</b><p class="muted">${esc(x.body)}</p></div><span class="badge ${x.read ? 'info' : 'pending'}">${x.read ? 'Dibaca' : 'Baru'}</span></div>`
+  ).join('');
+
+  $('apiBadge').textContent = (DB.settings?.apiUrl || API_URL) ? 'TERHUBUNG' : 'BELUM';
+  $('apiBadge').className = 'badge ' + ((DB.settings?.apiUrl || API_URL) ? 'ok' : 'pending');
+}
+
+// ===== DELETE DATA =====
+async function deleteData(collection, id) {
+  if (!confirm('Hapus data ini?')) return;
+  
+  const data = DB[collection] || [];
+  const index = data.findIndex(x => x.id === id);
+  if (index === -1) return;
+  
+  const item = data[index];
+  data.splice(index, 1);
+  DB[collection] = data;
+  save();
+
+  // Kirim ke API
+  const result = await callAPI('deleteData', 'POST', { collection, id, idField: 'id' });
+  if (result && result.success) {
+    toast('Data berhasil dihapus dari server');
+  } else {
+    toast('Data dihapus lokal, gagal sinkron ke server');
+  }
+}
+
+// ===== UPDATE ASPIRATION =====
+async function updateAspiration(id, status) {
+  const x = DB.aspirations.find(x => x.id === id);
+  if (x) {
+    x.status = status;
+    save();
+    const result = await callAPI('updateAspiration', 'POST', { id, status });
+    if (result && result.success) {
+      toast('Status diperbarui di server');
+    } else {
+      toast('Status diperbarui lokal, gagal sinkron');
+    }
+  }
+}
+
+// ===== FORM HANDLERS =====
+function form(id, collection, mapFn) {
+  $(id).onsubmit = async e => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const newItem = mapFn(formData);
+    DB[collection].push(newItem);
+    save();
+    e.target.reset();
+    e.target.closest('.overlay').classList.remove('show');
+    toast('Data berhasil disimpan lokal');
+
+    // Kirim ke API
+    const actionMap = {
+      'members': 'addMember',
+      'programs': 'addProgram',
+      'news': 'addNews',
+      'agenda': 'addAgenda',
+      'umkm': 'addUmkm',
+      'gallery': 'addGallery',
+      'finance': 'addFinance',
+      'documents': 'addDocument'
+    };
+    const action = actionMap[collection];
+    if (action) {
+      const payload = { [collection.slice(0, -1)]: newItem };
+      const result = await callAPI(action, 'POST', payload);
+      if (result && result.success) {
+        toast('Data berhasil disimpan ke server');
+      } else {
+        toast('Data tersimpan lokal, gagal sinkron ke server');
+      }
+    }
+  };
+}
+
+// Management form
+$('managementForm').onsubmit = async e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  DB.management = {
+    period: d.period || 'Periode 2026–2029',
+    ketua: { name: d.ketuaName, photo: d.ketuaPhoto },
+    wakil: { name: d.wakilName, photo: d.wakilPhoto },
+    sekretaris: { name: d.sekretarisName, photo: d.sekretarisPhoto },
+    bendahara: { name: d.bendaharaName, photo: d.bendaharaPhoto }
+  };
+  save();
+  e.target.closest('.overlay').classList.remove('show');
+  toast('Profil pengurus diperbarui lokal');
+
+  const result = await callAPI('updateManagement', 'POST', { management: DB.management });
+  if (result && result.success) {
+    toast('Profil pengurus diperbarui di server');
+  } else {
+    toast('Profil diperbarui lokal, gagal sinkron');
+  }
+};
+
+// Register form handlers
+form('memberForm', 'members', d => ({ id: uid('m'), nia: d.nia, name: d.name, position: d.position, phone: d.phone, email: d.email, status: d.status, address: d.address }));
+form('programForm', 'programs', d => ({ id: uid('p'), name: d.name, category: d.category, status: d.status, description: d.description }));
+form('newsForm', 'news', d => ({ id: uid('n'), title: d.title, category: d.category, date: new Date().toISOString().slice(0,10), status: d.status, body: d.body }));
+form('agendaForm', 'agenda', d => ({ id: uid('a'), date: d.date, time: d.time, name: d.name, location: d.location }));
+form('umkmForm', 'umkm', d => ({ id: uid('u'), name: d.name, category: d.category, contact: d.contact, description: d.description }));
+form('galleryForm', 'gallery', d => ({ id: uid('g'), url: d.url, title: d.title }));
+form('financeForm', 'finance', d => ({ id: uid('f'), date: d.date, type: d.type, description: d.description, amount: +d.amount }));
+form('docForm', 'documents', d => ({ id: uid('d'), name: d.name, category: d.category, date: new Date().toISOString().slice(0,10), url: d.url }));
+
+// Search
+$('memberSearch').oninput = () => {
+  const q = $('memberSearch').value.toLowerCase();
+  $('members').innerHTML = DB.members.filter(x => (x.name + x.nia + x.position).toLowerCase().includes(q)).map(x => 
+    `<tr><td>${esc(x.nia)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.position)}</td><td>${esc(x.phone||'-')}</td><td><span class="badge ok">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="deleteData('members','${x.id}')">Hapus</button></td></tr>`
+  ).join('');
+};
+
+// Export CSV
+$('export').onclick = () => {
+  const rows = [['NIA','Nama','Posisi','WhatsApp','Status'], ...DB.members.map(x => [x.nia, x.name, x.position, x.phone, x.status])];
+  const csv = rows.map(r => r.map(v => '"' + String(v??'').replaceAll('"','""') + '"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' }));
+  a.download = 'anggota-karang-taruna.csv';
+  a.click();
+};
+
+// Settings
+$('saveSet').onclick = () => {
+  const apiUrl = $('sapi').value.trim() || API_URL;
+  DB.settings = { apiUrl };
+  localStorage.setItem('KT_LOGO', $('slogo').value || LOGO);
+  $('logo').src = $('slogo').value || LOGO;
+  save();
+  $('setStatus').textContent = apiUrl ? 'TERHUBUNG' : 'BELUM';
+  $('setStatus').className = 'badge ' + (apiUrl ? 'ok' : 'pending');
+  toast('Pengaturan tersimpan');
+};
+
+// ===== SINKRONISASI =====
+async function syncData() {
+  const apiUrl = DB.settings?.apiUrl || API_URL;
+  if (!apiUrl) { toast('API belum dikonfigurasi'); return; }
+  
+  try {
+    const result = await callAPI('getAll', 'GET');
+    if (result && result.success && result.data) {
+      const data = result.data;
+      // Update semua koleksi dari API
+      if (data.members) DB.members = data.members;
+      if (data.programs) DB.programs = data.programs;
+      if (data.news) DB.news = data.news;
+      if (data.agenda) DB.agenda = data.agenda;
+      if (data.umkm) DB.umkm = data.umkm;
+      if (data.gallery) DB.gallery = data.gallery;
+      if (data.finance) DB.finance = data.finance;
+      if (data.aspirations) DB.aspirations = data.aspirations;
+      if (data.documents) DB.documents = data.documents;
+      if (data.management) DB.management = data.management;
+      
+      save();
+      toast('Sinkronisasi berhasil! Data diambil dari server.');
+    } else {
+      toast('Gagal sinkron: data tidak valid');
+    }
+  } catch (e) {
+    toast('Sinkronisasi gagal: ' + e.message);
+  }
+}
+
+$('sync').onclick = syncData;
+
+// Read notifications
+$('read').onclick = () => {
+  DB.notifications.forEach(x => x.read = true);
+  save();
+  toast('Notifikasi dibaca');
+};
+
+// Logout
+$('logout').onclick = () => {
+  sessionStorage.removeItem('KT_AUTH');
+  $('login').classList.add('show');
+};
+
+// Login
+$('loginForm').onsubmit = e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  if (d.u === 'adminkatar' && d.p === 'admin014212') {
+    sessionStorage.setItem('KT_AUTH', '1');
+    $('login').classList.remove('show');
+    toast('Login berhasil');
+  } else {
+    toast('Login salah');
+  }
+};
+
+// ===== INIT =====
+(function init() {
+  const logo = localStorage.getItem('KT_LOGO') || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg';
+  $('logo').src = logo;
+  $('sname').value = 'Karang Taruna (Putra Asmara)';
+  $('slogo').value = logo;
+  $('sapi').value = DB.settings?.apiUrl || API_URL;
+  
+  // Kosongkan semua data jika masih ada dummy dari localStorage
+  // Tapi pertahankan jika user sudah punya data
+  render();
+  
+  if (sessionStorage.getItem('KT_AUTH') !== '1') {
+    $('login').classList.add('show');
+  }
+  
+  // Auto sync on load
+  setTimeout(syncData, 500);
 })();
 </script>
-</body>
-</html>
+</body></html>
