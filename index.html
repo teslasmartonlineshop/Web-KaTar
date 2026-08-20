@@ -18,15 +18,8 @@
   <meta property="og:description" content="Informasi dan pelayanan publik Karang Taruna (Putra Asmara).">
   <title>Karang Taruna (Putra Asmara) — Portal Pemuda & Masyarakat</title>
   <style>
-    /* ===== RESET & ROOT ===== */
     *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --primary:#2c7a7b; --primary2:#245f60; --green:#38b2ac; --teal:#319795;
-      --accent:#f59e0b; --bg:#f5f7f6; --surface:#fff; --surface2:#eef6f0;
-      --text:#0f172a; --muted:#64748b; --line:#e2e8f0; --shadow:0 12px 35px rgba(15,23,42,.08);
-      --radius:20px; --card-shadow:0 10px 30px rgba(44,122,123,.12);
-      --transition:0.35s cubic-bezier(.2,.8,.2,1);
-    }
+    :root{--primary:#2c7a7b;--primary2:#245f60;--green:#38b2ac;--teal:#319795;--accent:#f59e0b;--bg:#f5f7f6;--surface:#fff;--surface2:#eef6f0;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--shadow:0 12px 35px rgba(15,23,42,.08);--radius:20px;--card-shadow:0 10px 30px rgba(44,122,123,.12);--transition:0.35s cubic-bezier(.2,.8,.2,1)}
     [data-theme=dark]{--bg:#07110c;--surface:#0d1912;--surface2:#112319;--text:#e7f4eb;--muted:#9bb0a1;--line:#20352a;--shadow:0 15px 40px rgba(0,0,0,.28);--card-shadow:0 10px 25px rgba(0,0,0,.35)}
     html{scroll-behavior:smooth;scroll-padding-top:80px}
     body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background var(--transition),color var(--transition)}
@@ -368,18 +361,27 @@ let appData = {
 // ===== AMBIL DATA DARI API =====
 async function fetchDataFromAPI() {
   try {
+    console.log('📡 Mengambil data dari API...');
     const response = await fetch(API_URL + '?action=getAll', {
       method: 'GET',
       cache: 'no-store'
     });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    const result = await response.json();
-    if (result.success && result.data) {
-      return result.data;
+    
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status + ' ' + response.statusText);
     }
-    return null;
+    
+    const result = await response.json();
+    console.log('📥 Response API:', result);
+    
+    if (result && result.success && result.data) {
+      return result.data;
+    } else {
+      console.warn('⚠️ API response error:', result?.message || 'Unknown error');
+      return null;
+    }
   } catch (error) {
-    console.warn('API fetch error:', error.message);
+    console.error('❌ API fetch error:', error.message);
     return null;
   }
 }
@@ -476,9 +478,9 @@ async function loadData() {
   const apiData = await fetchDataFromAPI();
   if (apiData) {
     renderWithData(apiData);
-    showToast("Data berhasil disinkronkan dengan server.");
+    showToast("✓ Data berhasil disinkronkan dengan server.");
   } else {
-    showToast("Mode offline — menampilkan data lokal.");
+    showToast("⚠️ Mode offline — menampilkan data lokal.");
   }
 }
 
