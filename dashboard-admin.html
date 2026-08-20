@@ -26,7 +26,29 @@
 <div class="overlay" id="managementModal"><div class="modal"><div class="modal-head"><h2>Profil Pengurus Karang Taruna</h2><button class="close" data-close>✕</button></div><form id="managementForm"><div class="form-grid"><div class="field"><label>Nama Ketua Karang Taruna</label><input name="ketuaName" required></div><div class="field"><label>Foto Ketua — URL</label><input name="ketuaPhoto" type="url"></div><div class="field"><label>Nama Wakil Karang Taruna</label><input name="wakilName" required></div><div class="field"><label>Foto Wakil — URL</label><input name="wakilPhoto" type="url"></div><div class="field"><label>Nama Sekretaris Karang Taruna</label><input name="sekretarisName" required></div><div class="field"><label>Foto Sekretaris — URL</label><input name="sekretarisPhoto" type="url"></div><div class="field"><label>Nama Bendahara Karang Taruna</label><input name="bendaharaName" required></div><div class="field"><label>Foto Bendahara — URL</label><input name="bendaharaPhoto" type="url"></div><div class="field full"><label>Periode Kepengurusan</label><input name="period" placeholder="Contoh: Periode 2026–2029"></div></div><div class="actions" style="justify-content:flex-end;margin-top:16px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">💾 Simpan Pengurus</button></div></form></div></div>
 <div class="overlay" id="memberModal"><div class="modal"><div class="modalhead"><h2>Tambah Anggota</h2><button class="close" data-close>✕</button></div><form id="memberForm"><div class="formgrid"><div class="field"><label>NIA</label><input name="nia" required></div><div class="field"><label>Nama</label><input name="name" required></div><div class="field"><label>Posisi</label><input name="position" value="Anggota"></div><div class="field"><label>WhatsApp</label><input name="phone"></div><div class="field"><label>Email</label><input name="email"></div><div class="field"><label>Status</label><select name="status"><option>Aktif</option><option>Nonaktif</option></select></div><div class="field full"><label>Alamat</label><textarea name="address"></textarea></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
 <div class="overlay" id="programModal"><div class="modal"><div class="modalhead"><h2>Program Baru</h2><button class="close" data-close>✕</button></div><form id="programForm"><div class="formgrid"><div class="field full"><label>Nama Program</label><input name="name" required></div><div class="field"><label>Kategori</label><select name="category"><option>Sosial</option><option>Lingkungan</option><option>Olahraga</option><option>Kreativitas</option><option>UMKM</option><option>Pendidikan</option></select></div><div class="field"><label>Status</label><select name="status"><option>Berjalan</option><option>Direncanakan</option><option>Selesai</option></select></div><div class="field full"><label>Deskripsi</label><textarea name="description"></textarea></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
-<div class="overlay" id="newsModal"><div class="modal"><div class="modalhead"><h2>Berita</h2><button class="close" data-close>✕</button></div><form id="newsForm"><div class="formgrid"><div class="field full"><label>Judul</label><input name="title" required></div><div class="field"><label>Kategori</label><select name="category"><option>Kepemudaan</option><option>Sosial</option><option>UMKM</option><option>Pengumuman</option></select></div><div class="field"><label>Status</label><select name="status"><option>Published</option><option>Draft</option></select></div><div class="field full"><label>Isi</label><textarea name="body" required></textarea></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
+
+<!-- ===== MODAL BERITA DENGAN DROPDOWN KONTEN ===== -->
+<div class="overlay" id="newsModal"><div class="modal"><div class="modalhead"><h2>📰 Tambah / Edit Berita</h2><button class="close" data-close>✕</button></div>
+<form id="newsForm">
+  <div class="formgrid">
+    <div class="field full"><label>Judul Berita</label><input name="title" required placeholder="Masukkan judul berita..."></div>
+    <div class="field"><label>Kategori</label><select name="category"><option>Kepemudaan</option><option>Sosial</option><option>UMKM</option><option>Pengumuman</option><option>Kegiatan</option><option>Olahraga</option><option>Seni & Budaya</option></select></div>
+    <div class="field"><label>Status</label><select name="status"><option>Published</option><option>Draft</option></select></div>
+    <div class="field"><label>Tanggal</label><input name="date" type="date" value=""></div>
+    <div class="field"><label>Gambar Utama (URL)</label><input name="image" type="url" placeholder="https://..."></div>
+    <div class="field"><label>Gambar Tambahan (pisahkan dengan koma)</label><input name="images" placeholder="https://..., https://..., https://..."></div>
+    <div class="field full"><label>Mode Konten</label>
+      <select id="contentMode" onchange="toggleContentMode()">
+        <option value="html">🌐 Tampilan HTML <> (Kode HTML)</option>
+        <option value="text">📝 Tampilan Tulisan (Teks + Gambar)</option>
+      </select>
+    </div>
+    <div class="field full" id="htmlContentWrap"><label>Konten (HTML)</label><textarea name="body_html" rows="8" placeholder="<p>Tulis konten berita dengan kode HTML di sini...</p><img src='https://...'><p>...</p>"></textarea><small style="color:var(--muted);font-size:10px;">Masukkan kode HTML lengkap untuk tampilan berita. Bisa menyertakan gambar, tabel, dan elemen HTML lainnya.</small></div>
+    <div class="field full" id="textContentWrap" style="display:none;"><label>Konten (Teks + Gambar)</label><textarea name="body_text" rows="8" placeholder="Tulis konten berita di sini...&#10;&#10;Gunakan format:&#10;[gambar:https://...] untuk menyisipkan gambar&#10;Contoh:&#10;Paragraf pertama...&#10;[gambar:https://images.unsplash.com/photo-xxx]&#10;Paragraf kedua..."></textarea><small style="color:var(--muted);font-size:10px;">Gunakan <b>[gambar:URL]</b> untuk menyisipkan gambar di antara teks.</small></div>
+  </div>
+  <div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">💾 Simpan Berita</button></div>
+</form></div></div>
+
 <div class="overlay" id="agendaModal"><div class="modal"><div class="modalhead"><h2>Agenda</h2><button class="close" data-close>✕</button></div><form id="agendaForm"><div class="formgrid"><div class="field"><label>Tanggal</label><input name="date" type="date" required></div><div class="field"><label>Waktu</label><input name="time" type="time"></div><div class="field full"><label>Nama</label><input name="name" required></div><div class="field full"><label>Lokasi</label><input name="location"></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
 <div class="overlay" id="umkmModal"><div class="modal"><div class="modalhead"><h2>UMKM</h2><button class="close" data-close>✕</button></div><form id="umkmForm"><div class="formgrid"><div class="field full"><label>Nama/Produk</label><input name="name" required></div><div class="field"><label>Kategori</label><input name="category" value="UMKM"></div><div class="field"><label>Kontak</label><input name="contact"></div><div class="field full"><label>Deskripsi</label><textarea name="description"></textarea></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
 <div class="overlay" id="galleryModal"><div class="modal"><div class="modalhead"><h2>Foto</h2><button class="close" data-close>✕</button></div><form id="galleryForm"><div class="formgrid"><div class="field full"><label>URL Foto</label><input name="url" type="url" required></div><div class="field full"><label>Judul</label><input name="title"></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn" data-close type="button">Batal</button><button class="btn primary">Simpan</button></div></form></div></div>
@@ -38,9 +60,7 @@
 // ===== KONFIGURASI API =====
 const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
 
-const KEY = 'KT_PUTRA_ASMARA_DB_V1';
-
-// ===== DATA AWAL KOSONG (TANPA DUMMY) =====
+// ===== DATA AWAL KOSONG =====
 const emptySeed = {
   management: { period: '', ketua: { name: '', photo: '' }, wakil: { name: '', photo: '' }, sekretaris: { name: '', photo: '' }, bendahara: { name: '', photo: '' } },
   members: [],
@@ -56,13 +76,11 @@ const emptySeed = {
   settings: { apiUrl: API_URL }
 };
 
-// Inisialisasi DB kosong
 let DB = (() => {
   try {
-    const stored = localStorage.getItem(KEY);
+    const stored = localStorage.getItem('KT_PUTRA_ASMARA_DB_V1');
     if (stored) {
       const parsed = JSON.parse(stored);
-      // Jika ada data, gunakan, tapi pastikan tidak ada dummy
       return parsed;
     }
     return JSON.parse(JSON.stringify(emptySeed));
@@ -77,23 +95,14 @@ const uid = p => p + Date.now().toString(36);
 const rp = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(+n||0);
 const dt = s => s ? new Date(s+'T00:00:00').toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' }) : '-';
 
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(DB));
-  render();
-}
-
-function toast(x) {
-  $('toast').textContent = x;
-  $('toast').classList.add('show');
-  setTimeout(() => $('toast').classList.remove('show'), 2500);
-}
+function save() { localStorage.setItem('KT_PUTRA_ASMARA_DB_V1', JSON.stringify(DB)); render(); }
+function toast(x) { $('toast').textContent = x; $('toast').classList.add('show'); setTimeout(() => $('toast').classList.remove('show'), 2500); }
 
 function nav(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
   $('page-'+p).classList.add('active');
   document.querySelectorAll('[data-page]').forEach(x => x.classList.toggle('active', x.dataset.page === p));
-  $('side').classList.remove('open');
-  $('back').classList.remove('show');
+  $('side').classList.remove('open'); $('back').classList.remove('show');
 }
 
 document.querySelectorAll('[data-page]').forEach(x => x.onclick = () => nav(x.dataset.page));
@@ -103,6 +112,20 @@ $('back').onclick = () => { $('side').classList.remove('open'); $('back').classL
 document.querySelectorAll('[data-open]').forEach(x => x.onclick = () => $(x.dataset.open).classList.add('show'));
 document.querySelectorAll('[data-close]').forEach(x => x.onclick = () => x.closest('.overlay').classList.remove('show'));
 document.querySelectorAll('.overlay').forEach(x => x.onclick = e => { if(e.target === x) x.classList.remove('show'); });
+
+// ===== FUNGSI TOGGLE MODE KONTEN BERITA =====
+function toggleContentMode() {
+  const mode = document.getElementById('contentMode').value;
+  const htmlWrap = document.getElementById('htmlContentWrap');
+  const textWrap = document.getElementById('textContentWrap');
+  if (mode === 'html') {
+    htmlWrap.style.display = 'block';
+    textWrap.style.display = 'none';
+  } else {
+    htmlWrap.style.display = 'none';
+    textWrap.style.display = 'block';
+  }
+}
 
 // ===== FUNGSI API =====
 async function callAPI(action, method = 'GET', body = null) {
@@ -151,7 +174,6 @@ function renderManagement() {
 
 function render() {
   renderManagement();
-
   const active = DB.members.filter(x => x.status === 'Aktif').length;
   const bal = DB.finance.reduce((a,x) => a + (x.type === 'income' ? +x.amount : -x.amount), 0);
   $('k1').textContent = active;
@@ -181,9 +203,10 @@ function render() {
     `<div class="card"><span class="badge info">${esc(x.category)}</span><h3>${esc(x.name)}</h3><p class="muted">${esc(x.description||'')}</p><span class="badge ${x.status === 'Berjalan' ? 'ok' : 'pending'}">${esc(x.status)}</span> <button class="btn small danger" onclick="deleteData('programs','${x.id}')">Hapus</button></div>`
   ).join('');
 
-  $('news').innerHTML = DB.news.map(x => 
-    `<tr><td><b>${esc(x.title)}</b></td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td><span class="badge ${x.status === 'Published' ? 'ok' : 'pending'}">${esc(x.status)}</span></td><td><button class="btn small danger" onclick="deleteData('news','${x.id}')">Hapus</button></td></tr>`
-  ).join('');
+  $('news').innerHTML = DB.news.map(x => {
+    const link = x.id ? `berita-detail.html?id=${x.id}` : '#';
+    return `<tr><td><b>${esc(x.title)}</b></td><td>${esc(x.category)}</td><td>${dt(x.date)}</td><td><span class="badge ${x.status === 'Published' ? 'ok' : 'pending'}">${esc(x.status)}</span></td><td><a href="${link}" target="_blank" class="btn small" style="background:#eaf4f4;color:var(--p);margin-right:4px;">🔗 Lihat</a><button class="btn small danger" onclick="deleteData('news','${x.id}')">Hapus</button></td></tr>`;
+  }).join('');
 
   $('agenda').innerHTML = DB.agenda.map(x => 
     `<div class="card"><b>📅 ${dt(x.date)}</b><p>${esc(x.name)}</p><small class="muted">${esc(x.time||'')} • ${esc(x.location||'')}</small><br><button class="btn small danger" onclick="deleteData('agenda','${x.id}')">Hapus</button></div>`
@@ -226,38 +249,24 @@ function render() {
 // ===== DELETE DATA =====
 async function deleteData(collection, id) {
   if (!confirm('Hapus data ini?')) return;
-  
   const data = DB[collection] || [];
   const index = data.findIndex(x => x.id === id);
   if (index === -1) return;
-  
-  const item = data[index];
   data.splice(index, 1);
   DB[collection] = data;
   save();
-
-  // Kirim ke API
   const result = await callAPI('deleteData', 'POST', { collection, id, idField: 'id' });
-  if (result && result.success) {
-    toast('Data berhasil dihapus dari server');
-  } else {
-    toast('Data dihapus lokal, gagal sinkron ke server');
-  }
+  if (result && result.success) toast('Data berhasil dihapus dari server');
+  else toast('Data dihapus lokal, gagal sinkron ke server');
 }
 
 // ===== UPDATE ASPIRATION =====
 async function updateAspiration(id, status) {
   const x = DB.aspirations.find(x => x.id === id);
-  if (x) {
-    x.status = status;
-    save();
-    const result = await callAPI('updateAspiration', 'POST', { id, status });
-    if (result && result.success) {
-      toast('Status diperbarui di server');
-    } else {
-      toast('Status diperbarui lokal, gagal sinkron');
-    }
-  }
+  if (x) { x.status = status; save(); }
+  const result = await callAPI('updateAspiration', 'POST', { id, status });
+  if (result && result.success) toast('Status diperbarui di server');
+  else toast('Status diperbarui lokal, gagal sinkron');
 }
 
 // ===== FORM HANDLERS =====
@@ -272,7 +281,6 @@ function form(id, collection, mapFn) {
     e.target.closest('.overlay').classList.remove('show');
     toast('Data berhasil disimpan lokal');
 
-    // Kirim ke API
     const actionMap = {
       'members': 'addMember',
       'programs': 'addProgram',
@@ -287,11 +295,8 @@ function form(id, collection, mapFn) {
     if (action) {
       const payload = { [collection.slice(0, -1)]: newItem };
       const result = await callAPI(action, 'POST', payload);
-      if (result && result.success) {
-        toast('Data berhasil disimpan ke server');
-      } else {
-        toast('Data tersimpan lokal, gagal sinkron ke server');
-      }
+      if (result && result.success) toast('✓ Data berhasil disimpan ke server');
+      else toast('⚠️ Data tersimpan lokal, gagal sinkron ke server');
     }
   };
 }
@@ -310,19 +315,54 @@ $('managementForm').onsubmit = async e => {
   save();
   e.target.closest('.overlay').classList.remove('show');
   toast('Profil pengurus diperbarui lokal');
-
   const result = await callAPI('updateManagement', 'POST', { management: DB.management });
-  if (result && result.success) {
-    toast('Profil pengurus diperbarui di server');
-  } else {
-    toast('Profil diperbarui lokal, gagal sinkron');
-  }
+  if (result && result.success) toast('Profil pengurus diperbarui di server');
+  else toast('Profil diperbarui lokal, gagal sinkron');
 };
 
-// Register form handlers
+// ===== FORM NEWS KHUSUS DENGAN MODE KONTEN =====
+document.getElementById('newsForm').onsubmit = async e => {
+  e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target));
+  const mode = document.getElementById('contentMode').value;
+  
+  let body = '';
+  let contentMode = mode;
+  if (mode === 'html') {
+    body = formData.body_html || '';
+  } else {
+    body = formData.body_text || '';
+  }
+  
+  const images = formData.images ? formData.images.split(',').map(s => s.trim()).filter(s => s) : [];
+  
+  const newItem = {
+    id: uid('n'),
+    title: formData.title,
+    category: formData.category,
+    date: formData.date || new Date().toISOString().slice(0,10),
+    status: formData.status,
+    image: formData.image || '',
+    images: images,
+    content_mode: contentMode,
+    body: body,
+    excerpt: formData.body_text ? formData.body_text.slice(0, 200) : 'Klik untuk membaca selengkapnya...'
+  };
+  
+  DB.news.push(newItem);
+  save();
+  e.target.reset();
+  e.target.closest('.overlay').classList.remove('show');
+  toast('Berita berhasil disimpan lokal');
+  
+  const result = await callAPI('addNews', 'POST', { news: newItem });
+  if (result && result.success) toast('✓ Berita berhasil disimpan ke server');
+  else toast('⚠️ Berita tersimpan lokal, gagal sinkron ke server');
+};
+
+// Register other form handlers
 form('memberForm', 'members', d => ({ id: uid('m'), nia: d.nia, name: d.name, position: d.position, phone: d.phone, email: d.email, status: d.status, address: d.address }));
 form('programForm', 'programs', d => ({ id: uid('p'), name: d.name, category: d.category, status: d.status, description: d.description }));
-form('newsForm', 'news', d => ({ id: uid('n'), title: d.title, category: d.category, date: new Date().toISOString().slice(0,10), status: d.status, body: d.body }));
 form('agendaForm', 'agenda', d => ({ id: uid('a'), date: d.date, time: d.time, name: d.name, location: d.location }));
 form('umkmForm', 'umkm', d => ({ id: uid('u'), name: d.name, category: d.category, contact: d.contact, description: d.description }));
 form('galleryForm', 'gallery', d => ({ id: uid('g'), url: d.url, title: d.title }));
@@ -351,8 +391,8 @@ $('export').onclick = () => {
 $('saveSet').onclick = () => {
   const apiUrl = $('sapi').value.trim() || API_URL;
   DB.settings = { apiUrl };
-  localStorage.setItem('KT_LOGO', $('slogo').value || LOGO);
-  $('logo').src = $('slogo').value || LOGO;
+  localStorage.setItem('KT_LOGO', $('slogo').value || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg');
+  $('logo').src = $('slogo').value || 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg';
   save();
   $('setStatus').textContent = apiUrl ? 'TERHUBUNG' : 'BELUM';
   $('setStatus').className = 'badge ' + (apiUrl ? 'ok' : 'pending');
@@ -363,12 +403,10 @@ $('saveSet').onclick = () => {
 async function syncData() {
   const apiUrl = DB.settings?.apiUrl || API_URL;
   if (!apiUrl) { toast('API belum dikonfigurasi'); return; }
-  
   try {
     const result = await callAPI('getAll', 'GET');
     if (result && result.success && result.data) {
       const data = result.data;
-      // Update semua koleksi dari API
       if (data.members) DB.members = data.members;
       if (data.programs) DB.programs = data.programs;
       if (data.news) DB.news = data.news;
@@ -379,7 +417,6 @@ async function syncData() {
       if (data.aspirations) DB.aspirations = data.aspirations;
       if (data.documents) DB.documents = data.documents;
       if (data.management) DB.management = data.management;
-      
       save();
       toast('Sinkronisasi berhasil! Data diambil dari server.');
     } else {
@@ -391,21 +428,8 @@ async function syncData() {
 }
 
 $('sync').onclick = syncData;
-
-// Read notifications
-$('read').onclick = () => {
-  DB.notifications.forEach(x => x.read = true);
-  save();
-  toast('Notifikasi dibaca');
-};
-
-// Logout
-$('logout').onclick = () => {
-  sessionStorage.removeItem('KT_AUTH');
-  $('login').classList.add('show');
-};
-
-// Login
+$('read').onclick = () => { DB.notifications.forEach(x => x.read = true); save(); toast('Notifikasi dibaca'); };
+$('logout').onclick = () => { sessionStorage.removeItem('KT_AUTH'); $('login').classList.add('show'); };
 $('loginForm').onsubmit = e => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(e.target));
@@ -413,9 +437,7 @@ $('loginForm').onsubmit = e => {
     sessionStorage.setItem('KT_AUTH', '1');
     $('login').classList.remove('show');
     toast('Login berhasil');
-  } else {
-    toast('Login salah');
-  }
+  } else { toast('Login salah'); }
 };
 
 // ===== INIT =====
@@ -425,16 +447,8 @@ $('loginForm').onsubmit = e => {
   $('sname').value = 'Karang Taruna (Putra Asmara)';
   $('slogo').value = logo;
   $('sapi').value = DB.settings?.apiUrl || API_URL;
-  
-  // Kosongkan semua data jika masih ada dummy dari localStorage
-  // Tapi pertahankan jika user sudah punya data
   render();
-  
-  if (sessionStorage.getItem('KT_AUTH') !== '1') {
-    $('login').classList.add('show');
-  }
-  
-  // Auto sync on load
+  if (sessionStorage.getItem('KT_AUTH') !== '1') $('login').classList.add('show');
   setTimeout(syncData, 500);
 })();
 </script>
