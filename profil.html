@@ -1096,8 +1096,9 @@ async function requestAPI(action, options = {}) {
 // ============================================================
 async function loadUser() {
   const nia = getUserNia();
+  
+  // Tampilkan cache dulu (optimistic UI)
   let cached = getCachedUser(nia);
-
   if (cached) {
     renderUser(normalizeUser(cached, nia));
   } else {
@@ -1132,34 +1133,66 @@ async function loadUser() {
 
   } catch (error) {
     console.warn('getUser error:', error);
-    showToast('⚠️ API tidak tersedia. Menampilkan data cache.');
+    if (!cached) {
+      showToast('⚠️ API tidak tersedia. Menampilkan data default.');
+    } else {
+      showToast('⚠️ API tidak tersedia. Menampilkan data cache.');
+    }
   } finally {
     setLoading(false);
   }
 }
 
 // ============================================================
-// UPDATE USER
+// UPDATE USER (DIPERBAIKI)
 // ============================================================
 async function updateUser(data) {
   const current = window.currentUser || {};
   const nia = current.nia || getUserNia();
 
-  const updated = { ...current, ...data, nia };
+  // Pastikan data yang dikirim sesuai dengan yang diharapkan API
+  const updated = {
+    ...current,
+    nama_lengkap: data.nama_lengkap || data.name || current.nama_lengkap,
+    email: data.email || current.email,
+    whatsapp: data.whatsapp || data.phone || current.whatsapp,
+    jenis_kelamin: data.jenis_kelamin || data.gender || current.jenis_kelamin,
+    alamat_lengkap: data.alamat_lengkap || data.address || current.alamat_lengkap,
+    foto: data.foto || current.foto,
+    posisi: data.posisi || data.position || current.posisi,
+    status: data.status || current.status || 'Aktif',
+    nia: nia
+  };
+
+  // Optimistic UI - tampilkan perubahan langsung
   cacheUser(updated);
   renderUser(updated);
 
   const api = getApiUrl();
   if (!api) {
-    showToast('✓ Profil disimpan di perangkat ini. Hubungkan API untuk sinkronisasi server.');
+    showToast('✓ Profil disimpan di perangkat ini.');
     return;
   }
 
   try {
     setLoading(true, 'Menyimpan perubahan profil...');
+    
+    // Kirim data dengan format yang benar
     const result = await requestAPI('updateUser', {
       method: 'POST',
-      body: { nia, data }
+      body: { 
+        nia: nia, 
+        data: {
+          nama_lengkap: updated.nama_lengkap,
+          email: updated.email,
+          whatsapp: updated.whatsapp,
+          jenis_kelamin: updated.jenis_kelamin,
+          alamat_lengkap: updated.alamat_lengkap,
+          foto: updated.foto,
+          posisi: updated.posisi,
+          status: updated.status
+        }
+      }
     });
 
     if (result && result.success === false) {
@@ -1169,8 +1202,8 @@ async function updateUser(data) {
     cacheUser(updated);
     showToast('✓ Profil berhasil diperbarui dan disinkronkan.');
   } catch (error) {
-    console.warn('updateUser:', error);
-    showToast('⚠️ Perubahan tersimpan lokal, tetapi gagal dikirim ke server.');
+    console.warn('updateUser error:', error);
+    showToast('⚠️ ' + (error.message || 'Gagal menyimpan ke server. Data tersimpan lokal.'));
   } finally {
     setLoading(false);
   }
@@ -1231,7 +1264,7 @@ $('editForm').addEventListener('submit', async event => {
   event.preventDefault();
   const form = new FormData(event.target);
   const data = Object.fromEntries(form.entries());
-  delete data.username;
+  delete data.username; // Username tidak boleh diubah user
   await updateUser(data);
   $('editOverlay').classList.remove('show');
 });
