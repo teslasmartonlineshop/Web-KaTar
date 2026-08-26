@@ -859,7 +859,7 @@ a{text-decoration:none;color:inherit}
 // ============================================================
 // KONFIGURASI API
 // ============================================================
-const API_URL = 'https://script.google.com/macros/s/AKfycbypyvZw2CG6jSiE6G7ishdYmO-BiAYFN7ejsMBapyeTK5Zyt2aiOvAWNd5GW1T7jmhWhw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbz2xDxGq1IM1eOC3XRe8B95p4e8CYpHn2nj1n51auY3TUHOEidmwRKSK3tlWfbx7pwgGA/exec';
 
 const CONFIG = {
   apiUrl: API_URL,
@@ -1066,31 +1066,65 @@ function cacheUser(user) {
 }
 
 // ============================================================
-// API REQUESTS
+// API REQUESTS (DIPERBAIKI DENGAN ERROR DETAIL)
 // ============================================================
 async function requestAPI(action, options = {}) {
   const api = getApiUrl();
-  if (!api) throw new Error('API belum dikonfigurasi');
-
-  if (options.method === 'POST') {
-    const response = await fetch(api, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action, ...options.body })
-    });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    return response.json();
+  if (!api) {
+    showToast('❌ API belum dikonfigurasi.');
+    throw new Error('API belum dikonfigurasi');
   }
 
-  const query = new URLSearchParams({ action, ...(options.params || {}) });
-  const response = await fetch(api + '?' + query.toString(), {
-    method: 'GET',
-    cache: 'no-store'
-  });
-  if (!response.ok) throw new Error('HTTP ' + response.status);
-  return response.json();
-}
+  console.log('📡 Request API:', { action, options, api });
 
+  try {
+    if (options.method === 'POST') {
+      // ===== INI LOKASI KODE YANG ANDA TANYAKAN =====
+      const response = await fetch(api, {
+        method: 'POST',
+        mode: 'cors', // <-- Tambahkan ini
+        headers: { 
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({ action, ...options.body })
+      });
+      // =================================================
+
+      console.log('📥 Response status:', response.status);
+
+      if (!response.ok) {
+        const text = await response.text();
+        console.error('❌ Response error:', text);
+        throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log('✅ Response data:', result);
+      return result;
+    }
+
+    // GET request
+    const query = new URLSearchParams({ action, ...(options.params || {}) });
+    const url = api + '?' + query.toString();
+
+    const response = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('❌ API request failed:', error);
+    showToast('❌ Gagal terhubung ke server: ' + error.message);
+    throw error;
+  }
+}
 // ============================================================
 // LOAD USER
 // ============================================================
@@ -1150,7 +1184,11 @@ async function updateUser(data) {
   const current = window.currentUser || {};
   const nia = current.nia || getUserNia();
 
-  // Pastikan data yang dikirim sesuai dengan yang diharapkan API
+  if (!nia) {
+    showToast('❌ NIA tidak ditemukan. Silakan login ulang.');
+    return;
+  }
+
   const updated = {
     ...current,
     nama_lengkap: data.nama_lengkap || data.name || current.nama_lengkap,
@@ -1164,7 +1202,7 @@ async function updateUser(data) {
     nia: nia
   };
 
-  // Optimistic UI - tampilkan perubahan langsung
+  // Optimistic UI
   cacheUser(updated);
   renderUser(updated);
 
@@ -1177,23 +1215,30 @@ async function updateUser(data) {
   try {
     setLoading(true, 'Menyimpan perubahan profil...');
     
-    // Kirim data dengan format yang benar
+    // === FORMAT DATA YANG DIKIRIM ===
+    const payload = {
+      action: 'updateUser',
+      nia: nia,
+      data: {
+        nama_lengkap: updated.nama_lengkap,
+        email: updated.email,
+        whatsapp: updated.whatsapp,
+        jenis_kelamin: updated.jenis_kelamin,
+        alamat_lengkap: updated.alamat_lengkap,
+        foto: updated.foto,
+        posisi: updated.posisi,
+        status: updated.status
+      }
+    };
+
+    console.log('📤 Sending payload:', payload);
+
     const result = await requestAPI('updateUser', {
       method: 'POST',
-      body: { 
-        nia: nia, 
-        data: {
-          nama_lengkap: updated.nama_lengkap,
-          email: updated.email,
-          whatsapp: updated.whatsapp,
-          jenis_kelamin: updated.jenis_kelamin,
-          alamat_lengkap: updated.alamat_lengkap,
-          foto: updated.foto,
-          posisi: updated.posisi,
-          status: updated.status
-        }
-      }
+      body: payload
     });
+
+    console.log('📥 Result:', result);
 
     if (result && result.success === false) {
       throw new Error(result.message || 'Gagal menyimpan');
