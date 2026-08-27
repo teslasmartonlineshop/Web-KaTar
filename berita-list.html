@@ -389,7 +389,7 @@
 
 <script>
 // ===== KONFIGURASI API =====
-const API_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycby84WBap43KN8kDYHvvwPWC2zQ3-vPA6GZOsDBhbPhIs9AxEyTBk8LYXoNvTM2BD27zRg/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby84WBap43KN8kDYHvvwPWC2zQ3-vPA6GZOsDBhbPhIs9AxEyTBk8LYXoNvTM2BD27zRg/exec';
 
 // ===== STATE =====
 let allNews = [];
@@ -445,99 +445,246 @@ function goBack() {
 // ===== FETCH NEWS =====
 async function fetchNews() {
   try {
-    const response = await fetch(API_URL + '?action=getAll', {
-      method: 'GET',
-      cache: 'no-store'
-    });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
+    console.log('📡 Mengambil berita dari API...');
+
+    const response = await fetch(
+      API_URL + '?action=getAll',
+      {
+        method: 'GET',
+        cache: 'no-store'
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        'HTTP ' + response.status + ' ' + response.statusText
+      );
+    }
+
     const result = await response.json();
-    if (result && result.success && result.data && result.data.news) {
+
+    console.log('📥 Response API:', result);
+
+    if (
+      result &&
+      result.success &&
+      result.data &&
+      Array.isArray(result.data.news)
+    ) {
       return result.data.news;
     }
+
+    console.warn('⚠️ Data news tidak ditemukan dalam response API.');
+
     return null;
+
   } catch (error) {
-    console.warn('Fetch news error:', error);
+    console.error('❌ Fetch news error:', error);
     return null;
   }
 }
 
+
 // ===== RENDER NEWS LIST =====
 function renderNewsList(news) {
+
   const list = $('newsList');
   const count = $('newsCount');
-  
-  // Filter berita yang statusnya Published
+
+  // Pastikan news berupa array
+  if (!Array.isArray(news)) {
+    news = [];
+  }
+
+  // ===== FILTER STATUS =====
   const published = news.filter(item => {
-  const status = String(item.status || '').trim().toLowerCase();
-  return status === 'publish' || status === 'published' || status === '';
-});
-  
+
+    const status = String(
+      item.status || ''
+    ).trim().toLowerCase();
+
+    return (
+      status === 'publish' ||
+      status === 'published' ||
+      status === ''
+    );
+
+  });
+
+  // ===== JIKA TIDAK ADA BERITA =====
   if (published.length === 0) {
+
     list.innerHTML = `
       <div class="empty-state">
         <div class="icon">📰</div>
         <h3>Belum Ada Berita</h3>
-        <p>Belum ada berita yang dipublikasikan. Silakan cek kembali nanti.</p>
+        <p>
+          Belum ada berita yang dipublikasikan.
+          Silakan cek kembali nanti.
+        </p>
       </div>
     `;
-    count.innerHTML = 'Menampilkan <strong>0</strong> berita';
+
+    count.innerHTML =
+      'Menampilkan <strong>0</strong> berita';
+
     return;
   }
 
-  // Urutkan dari yang terbaru
-  const sorted = published.sort((a, b) => {
+
+  // ===== SORT TERBARU =====
+  const sorted = [...published].sort((a, b) => {
+
     const dateA = new Date(a.date || 0);
     const dateB = new Date(b.date || 0);
+
     return dateB - dateA;
+
   });
 
-  count.innerHTML = `Menampilkan <strong>${sorted.length}</strong> berita`;
 
+  // ===== JUMLAH BERITA =====
+  count.innerHTML =
+    `Menampilkan <strong>${sorted.length}</strong> berita`;
+
+
+  // ===== RENDER =====
   list.innerHTML = sorted.map(item => {
-    const imageUrl = item.image || 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80';
-    const excerpt = item.excerpt || item.body?.slice(0, 150) || 'Klik untuk membaca selengkapnya...';
-    const dateFull = formatDateFull(item.date);
-    const time = formatTime(item.date);
-    
+
+    const newsId =
+      encodeURIComponent(item.id || '');
+
+    const imageUrl =
+      item.image ||
+      (
+        Array.isArray(item.images) &&
+        item.images.length
+          ? item.images[0]
+          : ''
+      ) ||
+      'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80';
+
+
+    const cleanBody =
+      item.body
+        ? String(item.body)
+            .replace(/<[^>]*>/g, '')
+            .trim()
+        : '';
+
+
+    const excerpt =
+      item.excerpt ||
+      (
+        cleanBody
+          ? cleanBody.slice(0, 150) +
+            (cleanBody.length > 150 ? '...' : '')
+          : 'Klik untuk membaca selengkapnya...'
+      );
+
+
+    const dateFull =
+      formatDateFull(item.date);
+
+
+    const time =
+      formatTime(item.date);
+
+
     return `
-      <div class="news-card" onclick="location.href='berita-detail.html?id=${item.id}'">
+      <article
+        class="news-card"
+        onclick="location.href='berita-detail.html?id=${newsId}'"
+      >
+
         <div class="news-card-image">
-          <img src="${imageUrl}" alt="${esc(item.title)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80'">
+
+          <img
+            src="${esc(imageUrl)}"
+            alt="${esc(item.title || 'Berita')}"
+            loading="lazy"
+            onerror="
+              this.src='https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80'
+            "
+          >
+
         </div>
+
+
         <div class="news-card-body">
-          <span class="news-card-category">${esc(item.category || 'Umum')}</span>
-          <h2 class="news-card-title">${esc(item.title || 'Berita Tanpa Judul')}</h2>
-          <p class="news-card-excerpt">${esc(excerpt)}...</p>
+
+          <span class="news-card-category">
+            ${esc(item.category || 'Umum')}
+          </span>
+
+
+          <h2 class="news-card-title">
+            ${esc(item.title || 'Berita Tanpa Judul')}
+          </h2>
+
+
+          <p class="news-card-excerpt">
+            ${esc(excerpt)}
+          </p>
+
+
           <div class="news-card-meta">
-            <span>📅 ${dateFull}</span>
-            ${time ? `<span>🕐 ${time}</span>` : ''}
+
+            <span>
+              📅 ${esc(dateFull)}
+            </span>
+
+            ${
+              time
+                ? `<span>🕐 ${esc(time)}</span>`
+                : ''
+            }
+
           </div>
-          <a class="news-card-link" href="berita-detail.html?id=${item.id}">Baca Selengkapnya →</a>
+
+
+          <a
+            class="news-card-link"
+            href="berita-detail.html?id=${newsId}"
+            onclick="event.stopPropagation()"
+          >
+            Baca Selengkapnya →
+          </a>
+
         </div>
-      </div>
+
+      </article>
     `;
+
   }).join('');
 }
 
 // ===== FILTER NEWS =====
 function filterNews(category) {
+
   currentFilter = category;
-  
-  // Update active button
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.filter === category);
+    btn.classList.toggle(
+      'active',
+      btn.dataset.filter === category
+    );
   });
 
-  // Filter data
   let filtered = allNews;
+
   if (category !== 'all') {
-    filtered = allNews.filter(item => item.category === category);
+    filtered = allNews.filter(
+      item => item.category === category
+    );
   }
 
   renderNewsList(filtered);
-  
-  // Scroll ke atas setelah filter
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
 // ===== LOAD DATA =====
