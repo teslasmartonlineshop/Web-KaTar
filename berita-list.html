@@ -467,7 +467,10 @@ function renderNewsList(news) {
   const count = $('newsCount');
   
   // Filter berita yang statusnya Published
-  const published = news.filter(item => item.status === 'Published' || !item.status);
+  const published = news.filter(item => {
+  const status = String(item.status || '').trim().toLowerCase();
+  return status === 'publish' || status === 'published' || status === '';
+});
   
   if (published.length === 0) {
     list.innerHTML = `
