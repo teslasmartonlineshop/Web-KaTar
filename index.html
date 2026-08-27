@@ -403,20 +403,74 @@ function renderWithData(data) {
     `<div class="stat stat-card reveal"><div class="stat-icon">${x[0]}</div><strong>${x[1]}</strong><span>${x[2]}</span></div>`
   ).join("");
 
-  // News
-  document.getElementById("news").innerHTML = news.length ? news.map((x,i) =>
-    `<article class="news-card ${i===0?'featured':''} reveal">
-      <img src="${x[4] || ''}" alt="${x[0] || ''}" loading="lazy">
-      <div class="card-body">
-        <span class="tag">${x[2] || 'Umum'}</span>
-        <h3>${x[0] || 'Berita'}</h3>
-        <p class="meta">${x[3] || ''} • Karang Taruna</p>
-        <p>${x[1] || ''}</p>
-        <a class="link" href="berita-detail.html" target="_blank">Baca selengkapnya →</a>
-      </div>
-    </article>`
-  ).join("") : '<p class="meta" style="text-align:center;padding:30px 0;">Belum ada berita. Silakan tambahkan melalui dashboard admin.</p>';
+// ===== NEWS =====
+const publishedNews = news.filter(x => {
+  const status = String(x.status || '').trim().toLowerCase();
+  return status === 'publish' || status === 'published' || status === '';
+});
 
+document.getElementById("news").innerHTML = publishedNews.length
+  ? publishedNews
+      .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+      .slice(0, 6)
+      .map((x, i) => {
+
+        const image = x.image ||
+          (Array.isArray(x.images) && x.images.length ? x.images[0] : '') ||
+          'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80';
+
+        const title = x.title || 'Berita';
+        const category = x.category || 'Umum';
+        const excerpt = x.excerpt || x.body || 'Klik untuk membaca selengkapnya...';
+        const date = x.date
+          ? new Date(x.date).toLocaleDateString('id-ID', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric'
+            })
+          : '';
+
+        return `
+          <article class="news-card ${i === 0 ? 'featured' : ''} reveal">
+
+            <img
+              src="${image}"
+              alt="${title}"
+              loading="lazy"
+              onerror="this.src='https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80'"
+            >
+
+            <div class="card-body">
+
+              <span class="tag">${category}</span>
+
+              <h3>${title}</h3>
+
+              <p class="meta">
+                ${date} • Karang Taruna
+              </p>
+
+              <p>
+                ${excerpt}
+              </p>
+
+              <a
+                class="link"
+                href="berita-detail.html?id=${encodeURIComponent(x.id)}"
+              >
+                Baca selengkapnya →
+              </a>
+
+            </div>
+          </article>
+        `;
+      })
+      .join("")
+  : `
+      <p class="meta" style="text-align:center;padding:30px 0;">
+        Belum ada berita. Silakan tambahkan melalui dashboard admin.
+      </p>
+    `;
   // Agenda
   document.getElementById("agendaList").innerHTML = agenda.length ? agenda.map(x =>
     `<article class="agenda reveal"><div style="display:flex;gap:13px;align-items:center"><div class="date">${x[0] || '-'}<br><small>${x[1] || '-'}</small></div><div><h3 style="margin:0">${x[2] || 'Agenda'}</h3><p class="meta">${x[3] || ''}</p></div></div></article>`
@@ -512,7 +566,11 @@ function performSearch(q){
   const box = document.getElementById("searchResults"); 
   if(!q.trim()){ box.innerHTML = '<p class="meta">Ketik kata kunci untuk mencari informasi.</p>'; return; } 
   const all = [
-    ...appData.news.map(x => [x[0], x[1], "Berita"]),
+    ...appData.news.map(x => [
+  x.title || '',
+  x.excerpt || x.body || '',
+  "Berita"
+]),
     ...appData.services.map(x => [x[1], x[2], "Layanan"]),
     ...appData.products.map(x => [x[0], x[1], "Potensi"])
   ]; 
