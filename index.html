@@ -260,7 +260,7 @@
 
 <section class="section"><div class="container"><div class="section-head"><div><div class="eyebrow">Data Desa</div><h2>Karang Taruna dalam Angka</h2></div><p>Ringkasan statistik yang dapat dikembangkan menjadi dashboard data desa terintegrasi.</p></div><div class="stats" id="stats"></div></div></section>
 
-<section class="section alt" id="berita"><div class="container"><div class="section-head"><div><div class="eyebrow">Informasi Terkini</div><h2>Berita Desa</h2></div><a class="link" href="#berita">Lihat semua →</a></div><div class="news-grid" id="news"></div></div></section>
+<section class="section alt" id="berita"><div class="container"><div class="section-head"><div><div class="eyebrow">Informasi Terkini</div><h2>Info Karang Taruna</h2></div><a class="link" href="berita-list.html">Lihat semua →</a></div><div class="news-grid" id="news"></div></div></section>
 
 <section class="section"><div class="container"><div class="section-head"><div><div class="eyebrow">Pemberitahuan</div><h2>Pengumuman</h2></div></div><div class="notice" id="notice"></div></div></section>
 
@@ -412,7 +412,7 @@ function renderWithData(data) {
         <h3>${x[0] || 'Berita'}</h3>
         <p class="meta">${x[3] || ''} • Karang Taruna</p>
         <p>${x[1] || ''}</p>
-        <a class="link" href="${x[5] || '#'}" target="_blank">Baca selengkapnya →</a>
+        <a class="link" href="berita-detail.html" target="_blank">Baca selengkapnya →</a>
       </div>
     </article>`
   ).join("") : '<p class="meta" style="text-align:center;padding:30px 0;">Belum ada berita. Silakan tambahkan melalui dashboard admin.</p>';
