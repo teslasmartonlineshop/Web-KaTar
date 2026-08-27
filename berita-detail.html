@@ -617,34 +617,70 @@ function renderNews(newsItem) {
   // Status
   $('articleStatus').textContent = newsItem.status || 'Published';
 
-  // Main Image
-  const mainImage = $('mainImage');
-  if (newsItem.image) {
-    mainImage.src = newsItem.image;
-    mainImage.style.display = 'block';
-    mainImage.onerror = () => { mainImage.style.display = 'none'; };
-  } else {
+  // ===== IMAGES =====
+const mainImage = $('mainImage');
+const grid = $('galleryGrid');
+
+// Ambil gambar utama
+const mainImageUrl = String(newsItem.image || '').trim();
+
+// Ambil gallery
+const galleryImages = Array.isArray(newsItem.images)
+  ? newsItem.images
+      .map(url => String(url || '').trim())
+      .filter(Boolean)
+  : [];
+
+// Gabungkan untuk lightbox, tanpa duplikat
+const allImages = [
+  ...(mainImageUrl ? [mainImageUrl] : []),
+  ...galleryImages
+].filter((url, index, arr) => arr.indexOf(url) === index);
+
+// ===== MAIN IMAGE =====
+if (mainImageUrl) {
+  mainImage.src = mainImageUrl;
+  mainImage.alt = newsItem.title || 'Gambar utama berita';
+  mainImage.style.display = 'block';
+
+  mainImage.onclick = () => {
+    const index = allImages.indexOf(mainImageUrl);
+    openLightbox(mainImageUrl, index >= 0 ? index : 0, allImages);
+  };
+
+  mainImage.style.cursor = 'pointer';
+
+  mainImage.onerror = () => {
     mainImage.style.display = 'none';
-  }
+  };
+} else {
+  mainImage.src = '';
+  mainImage.style.display = 'none';
+  mainImage.onclick = null;
+}
 
-  // Gallery Grid
-  const grid = $('galleryGrid');
-  grid.innerHTML = '';
-  let allImages = [];
+// ===== GALLERY =====
+grid.innerHTML = '';
 
-  if (newsItem.images && Array.isArray(newsItem.images) && newsItem.images.length > 0) {
-    // Filter URL yang valid
-    const validImages = newsItem.images.filter(url => url && url.trim().length > 0);
-    allImages = validImages;
+if (galleryImages.length > 0) {
+  grid.innerHTML = galleryImages.map((url, idx) => {
+    const globalIndex = allImages.indexOf(url);
 
-    if (validImages.length > 0) {
-      grid.innerHTML = validImages.map((url, idx) =>
-        `<img src="${url}" alt="Gambar berita ${idx+1}" loading="lazy" onclick="openLightbox('${url}', ${idx}, ['${validImages.join("','")}'])" onerror="this.style.display='none'">`
-      ).join('');
-    } else {
-      grid.innerHTML = '';
-    }
-  }
+    return `
+      <img
+        src="${esc(url)}"
+        alt="Gambar berita ${idx + 1}"
+        loading="lazy"
+        onclick="openLightbox(
+          '${esc(url)}',
+          ${globalIndex},
+          ${JSON.stringify(allImages)}
+        )"
+        onerror="this.style.display='none'"
+      >
+    `;
+  }).join('');
+}
 
   // Body Content
   const bodyEl = $('articleBody');
@@ -683,7 +719,9 @@ async function loadNews() {
       // Simpan cache
       localStorage.setItem('KT_NEWS_CACHE', JSON.stringify(news));
 
-      const found = news.find(item => item.id === newsId);
+      const found = news.find(item =>
+  String(item.id || '').trim() === String(newsId || '').trim()
+);
       if (found) {
         renderNews(found);
         return;
