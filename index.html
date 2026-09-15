@@ -48,9 +48,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-img,
-svg,
-video {
+img, svg, video {
   max-width: 100%;
   height: auto;
   display: block;
@@ -69,9 +67,7 @@ button {
   color: inherit;
 }
 
-input,
-select,
-textarea {
+input, select, textarea {
   font: inherit;
   max-width: 100%;
 }
@@ -97,12 +93,8 @@ textarea {
   --radius: 16px;
   --radius-sm: 12px;
   --radius-lg: 20px;
-  --transition: .25s cubic-bezier(.2, .8, .2, 1);
-
-  /* Fluid spacing & font */
   --pad-x: clamp(14px, 4vw, 32px);
   --section-y: clamp(40px, 7vw, 78px);
-  --gap: clamp(10px, 2vw, 16px);
 }
 
 [data-theme="dark"] {
@@ -116,9 +108,6 @@ textarea {
   --shadow-lg: 0 18px 45px rgba(0, 0, 0, .4);
 }
 
-/* =========================================================
-   CONTAINER
-   ========================================================= */
 .container {
   width: 100%;
   max-width: 1180px;
@@ -232,6 +221,7 @@ textarea {
   align-items: center;
   gap: 10px;
   padding-block: 8px;
+  position: relative;
 }
 
 .brand {
@@ -288,7 +278,7 @@ textarea {
   text-overflow: ellipsis;
 }
 
-/* Desktop menu — sembunyi di mobile */
+/* Desktop menu */
 .desktop-menu {
   display: none;
   align-items: center;
@@ -436,12 +426,30 @@ textarea {
   font-size: 13px;
   flex: none;
   overflow: hidden;
+  position: relative;
 }
 
 .user-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Badge Admin di avatar */
+.user-avatar.is-admin::after {
+  content: "🔐";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  font-size: 11px;
+  background: #f59e0b;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--surface);
+  font-size: 8px;
 }
 
 .user-name {
@@ -487,6 +495,11 @@ textarea {
 .user-dropdown .u-head small {
   color: var(--muted);
   font-size: 11px;
+}
+
+.user-dropdown .u-head .role-admin {
+  color: #b45309;
+  font-weight: 900;
 }
 
 .user-dropdown a,
@@ -631,7 +644,6 @@ textarea {
   transform: translateY(-2px);
 }
 
-/* Hero card — muncul hanya di tablet ke atas */
 .hero-card {
   display: none;
   background: rgba(255, 255, 255, .1);
@@ -1014,7 +1026,7 @@ textarea {
 }
 
 /* =========================================================
-   STRUKTUR ORGANISASI
+   STRUKTUR
    ========================================================= */
 .org {
   padding: 20px;
@@ -1053,12 +1065,6 @@ textarea {
   border: 1px solid var(--line);
   border-radius: 11px;
   font-size: clamp(11px, 2.8vw, 13px);
-  transition: transform .25s, border-color .25s;
-}
-
-.org-row div:hover {
-  transform: translateY(-2px);
-  border-color: var(--primary);
 }
 
 /* =========================================================
@@ -1328,11 +1334,6 @@ textarea {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   margin-bottom: 8px;
-  transition: border-color .25s;
-}
-
-.faq-item:hover {
-  border-color: var(--primary);
 }
 
 .faq-q {
@@ -1409,11 +1410,6 @@ textarea {
   padding: 12px;
   font-weight: 800;
   font-size: 14px;
-  transition: background .2s;
-}
-
-.newsletter-form button:hover {
-  background: var(--primary2);
 }
 
 /* =========================================================
@@ -1468,7 +1464,7 @@ textarea {
 }
 
 /* =========================================================
-   BOTTOM NAV (MOBILE ONLY)
+   BOTTOM NAV
    ========================================================= */
 .bottom-nav {
   position: fixed;
@@ -1478,7 +1474,6 @@ textarea {
   z-index: 1500;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid var(--line);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1500,11 +1495,6 @@ textarea {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-}
-
-.bottom-nav a:hover,
-.bottom-nav button:hover {
-  color: var(--primary);
 }
 
 .bottom-nav span {
@@ -1714,7 +1704,6 @@ textarea {
   border-radius: 10px;
   outline: 0;
   font-size: 14px;
-  transition: border-color .2s;
 }
 
 .field input:focus,
@@ -1809,10 +1798,11 @@ textarea {
   transform: none;
 }
 
-.no-motion *,
-@media (prefers-reduced-motion: reduce) * {
-  animation-duration: .01ms !important;
-  transition-duration: .01ms !important;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }
 
 /* =========================================================
@@ -2054,9 +2044,6 @@ textarea {
   }
 }
 
-/* =========================================================
-   SAFE AREA (iPhone notch)
-   ========================================================= */
 @supports (padding: max(0px)) {
   .header .container {
     padding-left: max(var(--pad-x), env(safe-area-inset-left));
@@ -2067,9 +2054,7 @@ textarea {
 </head>
 <body>
 
-<!-- =========================================================
-     BANNER READ-ONLY (GUEST)
-     ========================================================= -->
+<!-- BANNER READ-ONLY (GUEST) -->
 <div class="readonly-banner" id="readonlyBanner">
   <div class="container">
     <span><b>READ-ONLY</b> Anda melihat mode terbatas. Login untuk akses penuh.</span>
@@ -2077,9 +2062,7 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     TOPBAR
-     ========================================================= -->
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="container">
     <span>📢 Selamat Datang Di Website Resmi Karang Taruna</span>
@@ -2087,9 +2070,7 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     HEADER
-     ========================================================= -->
+<!-- HEADER -->
 <header class="header" id="header">
   <div class="container nav">
     <a class="brand" href="#home">
@@ -2163,9 +2144,7 @@ textarea {
 
 <main>
 
-<!-- =========================================================
-     HERO
-     ========================================================= -->
+<!-- HERO -->
 <section class="hero" id="home">
   <div class="container hero-inner">
     <div>
@@ -2191,9 +2170,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     QUICK CARDS
-     ========================================================= -->
+<!-- QUICK -->
 <section class="quick">
   <div class="container quick-grid">
     <a class="quick-card" href="#profil"><div class="ico">🏛️</div><strong>Tentang</strong></a>
@@ -2205,9 +2182,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     PROGRAM UNGGULAN
-     ========================================================= -->
+<!-- PROGRAM -->
 <section class="section" id="program">
   <div class="container">
     <div class="section-head">
@@ -2221,9 +2196,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     STATS
-     ========================================================= -->
+<!-- STATS -->
 <section class="section">
   <div class="container">
     <div class="section-head">
@@ -2237,9 +2210,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     BERITA
-     ========================================================= -->
+<!-- BERITA -->
 <section class="section alt" id="berita">
   <div class="container">
     <div class="section-head">
@@ -2253,9 +2224,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     PENGUMUMAN
-     ========================================================= -->
+<!-- PENGUMUMAN -->
 <section class="section">
   <div class="container">
     <div class="section-head">
@@ -2268,9 +2237,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     AGENDA
-     ========================================================= -->
+<!-- AGENDA -->
 <section class="section alt" id="agenda">
   <div class="container">
     <div class="section-head">
@@ -2283,9 +2250,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     PROFIL / TENTANG
-     ========================================================= -->
+<!-- PROFIL / TENTANG -->
 <section class="section" id="profil">
   <div class="container profile">
     <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=900&q=85" alt="Lanskap wilayah desa" loading="lazy">
@@ -2304,9 +2269,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     PERANGKAT DESA
-     ========================================================= -->
+<!-- PERANGKAT DESA -->
 <section class="section alt" id="pemerintah">
   <div class="container">
     <div class="section-head">
@@ -2319,9 +2282,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     STRUKTUR ORGANISASI
-     ========================================================= -->
+<!-- STRUKTUR -->
 <section class="section" id="struktur">
   <div class="container">
     <div class="section-head">
@@ -2347,9 +2308,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     LAYANAN
-     ========================================================= -->
+<!-- LAYANAN -->
 <section class="section alt" id="layanan">
   <div class="container">
     <div class="section-head">
@@ -2363,9 +2322,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     TRANSPARANSI
-     ========================================================= -->
+<!-- TRANSPARANSI -->
 <section class="section" id="transparansi">
   <div class="container transparency">
     <div>
@@ -2392,9 +2349,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     DOKUMEN
-     ========================================================= -->
+<!-- DOKUMEN -->
 <section class="section alt" id="dokumen">
   <div class="container">
     <div class="section-head">
@@ -2407,9 +2362,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     PRODUK / UMKM
-     ========================================================= -->
+<!-- PRODUK / UMKM -->
 <section class="section" id="potensi">
   <div class="container">
     <div class="section-head">
@@ -2422,9 +2375,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     WILAYAH
-     ========================================================= -->
+<!-- WILAYAH -->
 <section class="section alt" id="wilayah">
   <div class="container profile">
     <div>
@@ -2445,8 +2396,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================     GALERI
-     ========================================================= -->
+<!-- GALERI -->
 <section class="section" id="galeri">
   <div class="container">
     <div class="section-head">
@@ -2459,9 +2409,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     KONTAK DARURAT
-     ========================================================= -->
+<!-- KONTAK DARURAT -->
 <section class="section alt">
   <div class="container">
     <div class="section-head">
@@ -2480,9 +2428,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     FAQ
-     ========================================================= -->
+<!-- FAQ -->
 <section class="section">
   <div class="container">
     <div class="section-head">
@@ -2495,9 +2441,7 @@ textarea {
   </div>
 </section>
 
-<!-- =========================================================
-     NEWSLETTER
-     ========================================================= -->
+<!-- NEWSLETTER -->
 <section class="section">
   <div class="container">
     <div class="newsletter">
@@ -2516,9 +2460,7 @@ textarea {
 
 </main>
 
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
+<!-- FOOTER -->
 <footer class="footer" id="kontak">
   <div class="container">
     <div class="footer-grid">
@@ -2563,9 +2505,7 @@ textarea {
   </div>
 </footer>
 
-<!-- =========================================================
-     BOTTOM NAV (MOBILE ONLY)
-     ========================================================= -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav" aria-label="Navigasi mobile">
   <a href="#home"><span>⌂</span>Home</a>
   <a href="#berita"><span>📰</span>Berita</a>
@@ -2574,9 +2514,7 @@ textarea {
   <a href="profil.html"><span>👤</span>Profil</a>
 </nav>
 
-<!-- =========================================================
-     DRAWER
-     ========================================================= -->
+<!-- DRAWER -->
 <div class="drawer" id="drawer" onclick="if(event.target===this)closeDrawer()">
   <div class="drawer-panel">
     <div class="drawer-head">
@@ -2599,9 +2537,7 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     SEARCH OVERLAY
-     ========================================================= -->
+<!-- SEARCH -->
 <div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
   <div class="search-box">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
@@ -2613,9 +2549,7 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     MODAL SERVICE
-     ========================================================= -->
+<!-- MODAL SERVICE -->
 <div class="modal" id="serviceModal">
   <div class="modal-card">
     <div class="modal-head">
@@ -2637,9 +2571,7 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     MODAL STATUS
-     ========================================================= -->
+<!-- MODAL STATUS -->
 <div class="modal" id="statusModal">
   <div class="modal-card">
     <div class="modal-head">
@@ -2655,9 +2587,7 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     MODAL ADUAN
-     ========================================================= -->
+<!-- MODAL ADUAN -->
 <div class="modal" id="aduanModal">
   <div class="modal-card">
     <div class="modal-head">
@@ -2685,17 +2615,13 @@ textarea {
   </div>
 </div>
 
-<!-- =========================================================
-     LIGHTBOX
-     ========================================================= -->
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
   <button onclick="closeLightbox()">×</button>
   <img id="lightboxImg" alt="">
 </div>
 
-<!-- =========================================================
-     TOAST
-     ========================================================= -->
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -2707,41 +2633,87 @@ const SESSION_KEY = 'kt_user';
 const LOGIN_URL = 'login-register.html';
 const ADMIN_URL = 'dashboard-admin.html';
 
+/* Session expiry: 30 hari */
+const SESSION_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+
 /* =========================================================
-   SESSION HELPER
+   SESSION MANAGEMENT (expiry + fallback korup)
    ========================================================= */
 function getSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) { return null; }
+    if (!raw) return null;
+
+    let user;
+    try {
+      user = JSON.parse(raw);
+    } catch (parseError) {
+      console.warn('⚠️ Session korup, dihapus:', parseError.message);
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+
+    if (!user || typeof user !== 'object') {
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+
+    // Cek expiry 30 hari
+    if (user._loginAt && (Date.now() - user._loginAt > SESSION_MAX_AGE_MS)) {
+      console.warn('⚠️ Session expired (30 hari), dihapus.');
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+
+    return user;
+  } catch (e) {
+    console.warn('⚠️ getSession error:', e.message);
+    return null;
+  }
 }
+
 function saveSession(user) {
-  try { localStorage.setItem(SESSION_KEY, JSON.stringify(user)); } catch (e) {}
+  try {
+    const payload = {
+      ...user,
+      _loginAt: user._loginAt || Date.now()
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+  } catch (e) {
+    console.warn('⚠️ saveSession error:', e.message);
+  }
 }
+
 function clearSession() {
-  try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+  try {
+    localStorage.removeItem(SESSION_KEY);
+  } catch (e) {}
 }
+
 function isLoggedIn() {
   const u = getSession();
   return !!(u && (u.NIA || u.nia || u.Username || u.username));
 }
+
 function isAdmin() {
   const u = getSession();
   if (!u) return false;
   const pos = String(u.Posisi || u.position || '').trim().toLowerCase();
   return pos === 'admin';
 }
+
 function getUserName() {
   const u = getSession();
   if (!u) return 'User';
   return u.NamaLengkap || u.fullName || u.Username || u.username || 'User';
 }
+
 function getUserAvatar() {
   const u = getSession();
   if (!u) return '';
   return u.Foto || u.profilePicture || u.foto || '';
 }
+
 function getUserInitial() {
   return getUserName().charAt(0).toUpperCase();
 }
@@ -2767,9 +2739,18 @@ function applyAuthUI() {
   if (logged) {
     document.getElementById('userName').textContent = getUserName();
     document.getElementById('dropdownName').textContent = getUserName();
-    document.getElementById('dropdownRole').textContent =
-      (getSession()?.Posisi || getSession()?.position || 'Anggota');
 
+    // Role display
+    const roleEl = document.getElementById('dropdownRole');
+    const session = getSession();
+    const pos = session?.Posisi || session?.position || 'Anggota';
+    if (admin) {
+      roleEl.innerHTML = '🔐 <span class="role-admin">Admin</span>';
+    } else {
+      roleEl.textContent = pos;
+    }
+
+    // Avatar + badge admin
     const avatarEl = document.getElementById('userAvatar');
     const av = getUserAvatar();
     if (av) {
@@ -2777,7 +2758,9 @@ function applyAuthUI() {
     } else {
       avatarEl.textContent = getUserInitial();
     }
+    avatarEl.classList.toggle('is-admin', admin);
 
+    // Admin links
     if (adminDropdownLink) adminDropdownLink.style.display = admin ? '' : 'none';
     if (drawerAdminLink) drawerAdminLink.style.display = admin ? '' : 'none';
     if (drawerLoginLink) drawerLoginLink.style.display = 'none';
@@ -2796,12 +2779,14 @@ document.addEventListener('click', () => {
   const dd = document.getElementById('userDropdown');
   if (dd) dd.classList.remove('show');
 });
+
 function doLogout() {
   clearSession();
   showToast('✓ Berhasil logout.');
   applyAuthUI();
   setTimeout(() => window.location.reload(), 600);
 }
+
 function goAdmin(e) {
   if (e) e.preventDefault();
   if (!isAdmin()) { showToast('⚠️ Anda bukan Admin.'); return; }
@@ -2820,6 +2805,64 @@ function guestGuard(e, callback) {
   }
   if (typeof callback === 'function') callback();
   return true;
+}
+
+/* =========================================================
+   AUTO-REFRESH SESSION DARI SERVER
+   ========================================================= */
+async function refreshSessionFromServer() {
+  const session = getSession();
+  if (!session) return;
+
+  const nia = session.NIA || session.nia;
+  const username = session.Username || session.username;
+
+  if (!nia && !username) return;
+
+  try {
+    let result;
+    if (nia) {
+      result = await fetch(API_URL + '?action=getUser&nia=' + encodeURIComponent(nia), { cache: 'no-store' })
+        .then(r => r.json());
+    } else {
+      result = await fetch(API_URL + '?action=get_user&username=' + encodeURIComponent(username), { cache: 'no-store' })
+        .then(r => r.json());
+    }
+
+    if (!result || !result.success) return;
+
+    const fresh = result.user || result.data;
+    if (!fresh) {
+      // User dihapus dari server → auto-logout
+      console.warn('⚠️ User tidak ditemukan di server, auto-logout.');
+      clearSession();
+      applyAuthUI();
+      showToast('⚠️ Sesi berakhir. Silakan login ulang.', 4000);
+      return;
+    }
+
+    // Deteksi perubahan role
+    const wasAdmin = String(session.Posisi || session.position || '').toLowerCase() === 'admin';
+    const isNowAdmin = String(fresh.Posisi || fresh.position || '').toLowerCase() === 'admin';
+
+    // Update session dengan data fresh (pertahankan _loginAt)
+    saveSession({
+      ...session,
+      ...fresh,
+      _loginAt: session._loginAt || Date.now()
+    });
+
+    // Re-apply UI
+    applyAuthUI();
+
+    // Notifikasi kalau role berubah
+    if (!wasAdmin && isNowAdmin) {
+      showToast('🎉 Selamat! Anda sekarang Admin.', 4500);
+    }
+  } catch (e) {
+    // Gagal refresh — pakai session yang ada (tidak ganggu UX)
+    console.warn('⚠️ Gagal refresh session:', e.message);
+  }
 }
 
 /* =========================================================
@@ -2866,7 +2909,6 @@ async function fetchDataFromAPI() {
     const result = await response.json();
     console.log('📥 Response API:', result);
     if (result && result.success && result.data) return result.data;
-    console.warn('⚠️ API response error:', result?.message || 'Unknown');
     return null;
   } catch (error) {
     console.error('❌ API fetch error:', error.message);
@@ -2885,6 +2927,7 @@ function esc(s) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
 function fmtDate(d) {
   if (!d) return '';
   try {
@@ -2951,7 +2994,7 @@ function renderWithData(data) {
       }).join("")
     : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada agenda.</p>';
 
-  /* OFFICIALS — 3 kartu */
+  /* OFFICIALS */
   const latestMgt = Array.isArray(management) && management.length ? management[0] : (management || null);
   let officialCards = [];
   if (latestMgt) {
@@ -2989,7 +3032,7 @@ function renderWithData(data) {
   const layananList = document.getElementById("layananList");
   if (layananList) layananList.innerHTML = servicesHTML;
 
-  /* PRODUCTS / UMKM */
+  /* PRODUCTS */
   document.getElementById("products").innerHTML = products.length
     ? products.map(x => {
         const img = x.image || 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80';
@@ -3201,8 +3244,9 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
    ========================================================= */
 applyAuthUI();
 loadData();
+refreshSessionFromServer();  // background refresh
 
-/* Service Worker (guard) */
+/* Service Worker */
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   window.addEventListener("load", function () {
     navigator.serviceWorker.register("./sw.js", { scope: "./" })
