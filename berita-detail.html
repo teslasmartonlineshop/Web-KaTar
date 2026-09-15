@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2c7a7b">
+  <meta name="description" content="Detail berita Karang Taruna (Putra Asmara)">
+  <title>Detail Berita — Karang Taruna (Putra Asmara)</title>
+
+  <!-- Open Graph (dinamis di-update via JS) -->
+  <meta property="og:title" content="Detail Berita — Karang Taruna (Putra Asmara)">
+  <meta property="og:description" content="Baca berita lengkap dari Karang Taruna (Putra Asmara)">
+  <meta property="og:type" content="article">
+
+  <style>
+    :root {
+      --primary: #2c7a7b;
+      --primary2: #245f60;
+      --green: #38b2ac;
+      --teal: #319795;
+      --bg: #f5f7f6;
+      --surface: #fff;
+      --surface2: #eef6f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --shadow: 0 12px 35px rgba(15,23,42,.08);
+      --radius: 16px;
+      --card-shadow: 0 10px 30px rgba(44,122,123,.12);
+      --transition: 0.35s cubic-bezier(.2,.8,.2,1);
+      --pad-x: clamp(12px, 4vw, 32px);
+    }
+    [data-theme=dark] {
+      --bg: #07110c;
+      --surface: #0d1912;
+      --surface2: #112319;
+      --text: #e7f4eb;
+      --muted: #9bb0a1;
+      --line: #20352a;
+      --shadow: 0 15px 40px rgba(0,0,0,.28);
+      --card-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background var(--transition), color var(--transition);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: 0; background: transparent; font: inherit; color: inherit; }
+
+    .container {
+      width: 100%;
+      max-width: 880px;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+      transition: .25s;
+    }
+    .header.scrolled { box-shadow: var(--shadow); }
+    .header-inner {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-block: 6px;
+    }
+    .back-btn, .theme-toggle {
+      border: 0;
+      background: var(--surface2);
+      color: var(--primary);
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      transition: all .2s;
+    }
+    .back-btn:hover, .theme-toggle:hover {
+      background: var(--line);
+    }
+    .header-title {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+      font-size: clamp(11px, 3vw, 13px);
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .header-title span {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      opacity: .7;
+      margin-top: 2px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    /* ===== LOADING ===== */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+      padding: 20px;
+    }
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid var(--line);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-state p { color: var(--muted); font-size: 14px; }
+
+    /* ===== NOT FOUND ===== */
+    .not-found {
+      text-align: center;
+      padding: clamp(50px, 10vw, 80px) 20px;
+    }
+    .not-found .icon { font-size: clamp(44px, 12vw, 56px); margin-bottom: 16px; display: block; }
+    .not-found h2 { font-size: clamp(18px, 5vw, 24px); margin-bottom: 8px; }
+    .not-found p { color: var(--muted); margin-bottom: 20px; font-size: clamp(13px, 3.4vw, 14px); }
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 22px;
+      background: linear-gradient(135deg, var(--primary), var(--green));
+      color: #fff;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: all .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(44,122,123,.3); }
+
+    /* ===== CONTENT ===== */
+    .content {
+      padding: clamp(20px, 5vw, 32px) 0 clamp(40px, 8vw, 48px);
+    }
+    .article {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: clamp(18px, 5vw, 40px);
+      border: 1px solid var(--line);
+    }
+
+    /* ===== ARTICLE HEADER ===== */
+    .article-category {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--surface2);
+      color: var(--primary);
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 12px;
+    }
+    .article-title {
+      font-size: clamp(22px, 6vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      word-break: break-word;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--muted);
+      font-size: clamp(11px, 3vw, 13px);
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+    .article-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ===== MAIN IMAGE ===== */
+    .main-image {
+      width: 100%;
+      max-height: 480px;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      background: var(--surface2);
+      cursor: pointer;
+      transition: transform .3s;
+    }
+    .main-image:hover { transform: scale(1.01); }
+
+    /* ===== GALLERY GRID ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: all .3s;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.02);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(44,122,123,.2);
+    }
+
+    /* ===== BODY CONTENT ===== */
+    .article-body {
+      font-size: clamp(15px, 3.6vw, 17px);
+      line-height: 1.8;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    .article-body p { margin-bottom: 16px; }
+    .article-body img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 16px 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+      height: auto;
+    }
+    .article-body h2,
+    .article-body h3,
+    .article-body h4 {
+      margin: 24px 0 12px;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+    .article-body h2 { font-size: clamp(19px, 5vw, 24px); }
+    .article-body h3 { font-size: clamp(17px, 4.4vw, 20px); }
+    .article-body h4 { font-size: clamp(15px, 4vw, 17px); }
+    .article-body ul,
+    .article-body ol {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+    .article-body li { margin-bottom: 6px; }
+    .article-body blockquote {
+      border-left: 4px solid var(--primary);
+      padding-left: 16px;
+      margin: 16px 0;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .article-body a {
+      color: var(--primary);
+      text-decoration: underline;
+      word-break: break-word;
+    }
+    .article-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .article-body th,
+    .article-body td {
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .article-body th { background: var(--surface2); font-weight: 800; }
+    .article-body pre {
+      background: var(--surface2);
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+    .article-body iframe {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 16px 0;
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-to-news {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 18px;
+      background: var(--surface2);
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--primary);
+      transition: all .2s;
+      margin-top: 28px;
+    }
+    .back-to-news:hover {
+      background: var(--line);
+      transform: translateX(-4px);
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(15px);
+      z-index: 100;
+      width: max-content;
+      max-width: calc(100vw - 24px);
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 20px;
+    }
+    .lightbox.active { display: grid; }
+    .lightbox img {
+      max-height: 85vh;
+      max-width: 92vw;
+      border-radius: 10px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      font-size: 24px;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,.25); }
+    .lightbox-nav {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+    .lightbox-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      font-size: 22px;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+    }
+    .lightbox-arrow:hover { background: rgba(255,255,255,.3); }
+    .lightbox-arrow.prev { left: 16px; }
+    .lightbox-arrow.next { right: 16px; }
+    .lightbox-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.3);
+      transition: all .2s;
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+    }
+    .lightbox-dot.active { background: #fff; transform: scale(1.2); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 640px) {
+      .header-inner { min-height: 64px; }
+      .back-btn, .theme-toggle { width: 40px; height: 40px; }
+    }
+
+    @media (max-width: 480px) {
+      .article-meta { font-size: 11px; gap: 8px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .toast { left: 12px; right: 12px; transform: translateY(15px); width: auto; max-width: none; }
+      .toast.show { transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <button class="back-btn" onclick="goBack()" aria-label="Kembali">←</button>
+    <div class="header-title" id="headerTitle">
+      Detail Berita
+      <span>Karang Taruna (Putra Asmara)</span>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Tema" id="themeBtn">☾</button>
+  </div>
+</header>
+
+<main>
+  <div class="container content" id="mainContent">
+
+    <!-- LOADING STATE -->
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Memuat berita...</p>
+    </div>
+
+    <!-- NOT FOUND -->
+    <div class="not-found" id="notFound" style="display:none;">
+      <span class="icon">📰</span>
+      <h2>Berita Tidak Ditemukan</h2>
+      <p>Maaf, berita yang Anda cari tidak tersedia atau telah dihapus.</p>
+      <a href="index.html#berita" class="btn-primary">← Kembali ke Berita</a>
+    </div>
+
+    <!-- ARTICLE CONTENT -->
+    <div id="articleContent" style="display:none;">
+      <article class="article">
+
+        <div class="article-category" id="articleCategory">Kategori</div>
+
+        <h1 class="article-title" id="articleTitle">Judul Berita</h1>
+
+        <div class="article-meta">
+          <span>📅 <span id="articleDate">Tanggal</span></span>
+          <span>🏷️ <span id="articleCategoryLabel">Kategori</span></span>
+          <span>📖 <span id="articleStatus">Status</span></span>
+        </div>
+
+        <img class="main-image" id="mainImage" src="" alt="Gambar utama berita" loading="lazy">
+
+        <div class="gallery-grid" id="galleryGrid"></div>
+
+        <div class="article-body" id="articleBody"></div>
+
+        <a href="index.html#berita" class="back-to-news">← Kembali ke Berita</a>
+
+      </article>
+    </div>
+
+  </div>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Tutup">✕</button>
+  <button class="lightbox-arrow prev" id="lbPrev" aria-label="Sebelumnya">‹</button>
+  <img id="lightboxImg" alt="Gambar berita">
+  <button class="lightbox-arrow next" id="lbNext" aria-label="Berikutnya">›</button>
+  <div class="lightbox-nav" id="lightboxNav"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   KONFIGURASI
+   ========================================================= */
+const API_URL = 'https://script.google.com/macros/s/AKfycbxAck8UdHXSyeBtybGpFQyiamwgMC0O4mDfvrZ2EtAUzJ1YaaEXZcEuxlAPdFWUCW4V7A/exec';
+const CACHE_KEY = 'KT_NEWS_CACHE';
+const INDEX_URL = 'index.html';
+
+const $ = id => document.getElementById(id);
+
+/* =========================================================
+   UTILITY
+   ========================================================= */
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function formatDate(value) {
+  if (!value) return '—';
+  try {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return String(value);
+    return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+  } catch (e) { return '—'; }
+}
+
+function toast(msg, ms = 2800) {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+function toggleTheme() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = dark ? '' : 'dark';
+  localStorage.setItem('theme', dark ? 'light' : 'dark');
+  $('themeBtn').textContent = dark ? '☾' : '☀';
+}
+
+function goBack() {
+  if (history.length > 1) history.back();
+  else location.href = INDEX_URL + '#berita';
+}
+
+function getParameter(name) {
+  const params = new URLSearchParams(location.search);
+  return params.get(name);
+}
+
+/* =========================================================
+   CACHE
+   ========================================================= */
+function getCachedNews() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : null;
+  } catch (e) { return null; }
+}
+
+function setCachedNews(news) {
+  try {
+    if (Array.isArray(news)) {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(news));
+    }
+  } catch (e) { /* ignore quota errors */ }
+}
+
+function findNewsById(list, id) {
+  if (!Array.isArray(list) || !id) return null;
+  const target = String(id).trim();
+  return list.find(item => String(item.id || '').trim() === target) || null;
+}
+
+/* =========================================================
+   FETCH — pakai action=getNews&id=xxx (efisien)
+   ========================================================= */
+async function fetchNewsById(id) {
+  if (!id) return null;
+  try {
+    const url = API_URL + '?action=getNews&id=' + encodeURIComponent(id);
+    const response = await fetch(url, { method: 'GET', cache: 'no-store' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const result = await response.json();
+    if (result && result.success) {
+      // Backend bisa return single object atau null
+      if (result.data && (result.data.id || result.data.title)) {
+        return result.data;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.warn('Fetch news by id error:', error.message);
+    return null;
+  }
+}
+
+/* =========================================================
+   PARSE BODY CONTENT
+   ========================================================= */
+function parseBodyContent(body, mode) {
+  if (!body) return '<p><em>Konten berita tidak tersedia.</em></p>';
+
+  if (mode === 'html') {
+    // HTML mode — tampilkan langsung
+    return body;
+  }
+
+  // Text mode — parse [gambar:URL]
+  let html = esc(body).replace(/\n/g, '<br>');
+  html = html.replace(/\[gambar:([^\]]+)\]/g, (match, url) => {
+    const cleanUrl = String(url).trim();
+    if (!cleanUrl) return '';
+    return `<img src="${esc(cleanUrl)}" alt="Gambar berita" loading="lazy" onerror="this.style.display='none'">`;
+  });
+  return html;
+}
+
+/* =========================================================
+   LIGHTBOX
+   ========================================================= */
+let lightboxImages = [];
+let currentIndex = 0;
+
+function openLightbox(index, images) {
+  lightboxImages = Array.isArray(images) ? images : [];
+  currentIndex = Number(index) || 0;
+  if (!lightboxImages.length) return;
+
+  $('lightboxImg').src = lightboxImages[currentIndex];
+  $('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderLightboxDots();
+  updateLightboxArrows();
+}
+
+function closeLightbox() {
+  $('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function navigateLightbox(direction) {
+  if (lightboxImages.length === 0) return;
+  currentIndex = (currentIndex + direction + lightboxImages.length) % lightboxImages.length;
+  $('lightboxImg').src = lightboxImages[currentIndex];
+  renderLightboxDots();
+  updateLightboxArrows();
+}
+
+function renderLightboxDots() {
+  const nav = $('lightboxNav');
+  if (lightboxImages.length <= 1) {
+    nav.innerHTML = '';
+    return;
+  }
+  nav.innerHTML = lightboxImages.map((_, i) =>
+    `<button class="lightbox-dot ${i === currentIndex ? 'active' : ''}" data-index="${i}" aria-label="Gambar ${i + 1}"></button>`
+  ).join('');
+}
+
+function updateLightboxArrows() {
+  const prev = $('lbPrev');
+  const next = $('lbNext');
+  const show = lightboxImages.length > 1;
+  prev.style.display = show ? 'grid' : 'none';
+  next.style.display = show ? 'grid' : 'none';
+}
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function renderNews(newsItem) {
+  if (!newsItem) {
+    $('loadingState').style.display = 'none';
+    $('notFound').style.display = 'block';
+    return;
+  }
+
+  $('loadingState').style.display = 'none';
+  $('articleContent').style.display = 'block';
+
+  const category = newsItem.category || 'Umum';
+  const title = newsItem.title || 'Berita Tanpa Judul';
+
+  $('articleCategory').textContent = category;
+  $('articleCategoryLabel').textContent = category;
+  $('articleTitle').textContent = title;
+  $('articleDate').textContent = formatDate(newsItem.date);
+  $('articleStatus').textContent = newsItem.status || 'Published';
+
+  // Update document title + OG meta
+  document.title = title + ' — Karang Taruna (Putra Asmara)';
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', title);
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc) {
+    ogDesc.setAttribute('content', String(newsItem.excerpt || newsItem.body || '').replace(/<[^>]*>/g, '').slice(0, 160));
+  }
+  if (newsItem.image) {
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (!ogImage) {
+      ogImage = document.createElement('meta');
+      ogImage.setAttribute('property', 'og:image');
+      document.head.appendChild(ogImage);
+    }
+    ogImage.setAttribute('content', newsItem.image);
+  }
+
+  // ===== IMAGES =====
+  const mainImage = $('mainImage');
+  const grid = $('galleryGrid');
+
+  const mainImageUrl = String(newsItem.image || '').trim();
+  const galleryImages = Array.isArray(newsItem.images)
+    ? newsItem.images.map(u => String(u || '').trim()).filter(Boolean)
+    : [];
+
+  // Gabung semua gambar unik
+  const allImages = [
+    ...(mainImageUrl ? [mainImageUrl] : []),
+    ...galleryImages
+  ].filter((url, index, arr) => arr.indexOf(url) === index);
+
+  // MAIN IMAGE
+  if (mainImageUrl) {
+    mainImage.src = mainImageUrl;
+    mainImage.alt = title;
+    mainImage.style.display = 'block';
+    mainImage.dataset.imgIndex = allImages.indexOf(mainImageUrl);
+    mainImage.onerror = () => { mainImage.style.display = 'none'; };
+  } else {
+    mainImage.removeAttribute('src');
+    mainImage.style.display = 'none';
+  }
+
+  // GALLERY
+  grid.innerHTML = '';
+  if (galleryImages.length > 0) {
+    grid.innerHTML = galleryImages.map((url) => {
+      const globalIndex = allImages.indexOf(url);
+      return `<img src="${esc(url)}" alt="Gambar berita" loading="lazy" data-img-index="${globalIndex}" onerror="this.style.display='none'">`;
+    }).join('');
+  }
+
+  // BODY
+  const mode = newsItem.content_mode || 'html';
+  $('articleBody').innerHTML = parseBodyContent(newsItem.body, mode);
+}
+
+/* =========================================================
+   MAIN LOAD
+   ========================================================= */
+async function loadNews() {
+  const newsId = getParameter('id');
+
+  // Guard: tidak ada id
+  if (!newsId) {
+    $('loadingState').style.display = 'none';
+    $('notFound').style.display = 'block';
+    return;
+  }
+
+  // 1) Cek cache dulu — render instant
+  let cached = getCachedNews();
+  let cachedItem = findNewsById(cached, newsId);
+
+  if (cachedItem) {
+    renderNews(cachedItem);
+  }
+
+  // 2) Fetch dari server — update kalau ada data baru
+  try {
+    const fresh = await fetchNewsById(newsId);
+
+    if (fresh) {
+      // Update cache (gabung/replace)
+      if (cached && Array.isArray(cached)) {
+        const idx = cached.findIndex(x => String(x.id) === String(newsId));
+        if (idx >= 0) cached[idx] = fresh;
+        else cached.push(fresh);
+        setCachedNews(cached);
+      } else {
+        setCachedNews([fresh]);
+      }
+
+      // Render fresh
+      renderNews(fresh);
+    } else if (!cachedItem) {
+      // Tidak ada di cache maupun server
+      $('loadingState').style.display = 'none';
+      $('notFound').style.display = 'block';
+    }
+    // Kalau cachedItem ada tapi fresh null → biarkan tampil cache
+  } catch (error) {
+    console.warn('Fetch error, using cache if available:', error);
+    if (!cachedItem) {
+      $('loadingState').style.display = 'none';
+      $('notFound').style.display = 'block';
+    }
+  }
+}
+
+/* =========================================================
+   EVENT LISTENERS
+   ========================================================= */
+// Klik gambar (main + gallery) via event delegation
+document.addEventListener('click', e => {
+  const img = e.target.closest('img[data-img-index]');
+  if (img && img.dataset.imgIndex !== undefined) {
+    const idx = parseInt(img.dataset.imgIndex, 10);
+    const allImgs = [];
+    const mainImg = $('mainImage');
+    if (mainImg && mainImg.src && mainImg.style.display !== 'none') {
+      allImgs.push(mainImg.src);
+    }
+    document.querySelectorAll('#galleryGrid img').forEach(g => {
+      if (g.src && g.style.display !== 'none') allImgs.push(g.src);
+    });
+    // Deduplicate
+    const unique = allImgs.filter((url, i, arr) => arr.indexOf(url) === i);
+    const finalIndex = unique.findIndex(u => u === img.src);
+    openLightbox(finalIndex >= 0 ? finalIndex : 0, unique);
+  }
+
+  // Lightbox dot
+  const dot = e.target.closest('.lightbox-dot');
+  if (dot) {
+    const i = parseInt(dot.dataset.index, 10);
+    if (!isNaN(i)) {
+      currentIndex = i;
+      $('lightboxImg').src = lightboxImages[currentIndex];
+      renderLightboxDots();
+      updateLightboxArrows();
+    }
+  }
+});
+
+// Lightbox navigation
+$('lbPrev').addEventListener('click', () => navigateLightbox(-1));
+$('lbNext').addEventListener('click', () => navigateLightbox(1));
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (!$('lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navigateLightbox(-1);
+  if (e.key === 'ArrowRight') navigateLightbox(1);
+});
+
+// Header scroll
+window.addEventListener('scroll', () => {
+  $('header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+/* =========================================================
+   THEME
+   ========================================================= */
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+  $('themeBtn').textContent = '☀';
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+loadNews();
+</script>
+</body>
+</html>
