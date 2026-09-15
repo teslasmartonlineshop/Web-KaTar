@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071226">
 <meta name="description" content="Karang Taruna — Futuristic Community Digital Portal">
 <title>Karang Taruna • Community Digital Portal</title>
@@ -220,19 +220,19 @@ button{cursor:pointer}
         <span class="mini">Pemandu</span>
         <span class="speech-text" id="speechText"></span>
       </div>
-      <div class="character-wrap" id="characterWrap">
-        <img class="character" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgwTFaPccz12LYM-UFBp47AHvk8LuADqeSp-fTJ7qpyJZdl-oGsuPp96buk_bm76lSfm7X7PgeCPeh1MfMwfYdJiDYHWrVPsFk6FI6TpTYQr6oUphNcPlC6LT1H4l4j0KTg-CoVuKlQRidGhh2R2183YTk6kiH_CtMnDPHjSMklAETfYyRli5no90neO7s/s1280/1000983528.png" alt="Ilustrasi komunitas">
-      </div>
-      <span class="guide-badge">Portal Resmi • Karang Taruna</span>
-    </section>
-
-    <!-- KANAN: Auth Card -->
-    <section class="auth-section">
-      <div class="auth-card" id="authCard">
-        <div class="brand">
-          <div class="logo-box">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBKnaWBTIFZ9RC_C6Dk8RnXG5G4G5LvxEgZhuAmjmnYQvXuwd5kCjHMpCNTQsOHzM_Wnp9WqajtniOxqfqw2dmD01tpB1_X-tpDMPnzpzgO_3FcAd4yQe-Ey2QwnBkp3ruml4yoBQhK4hqegfgQ0olfB51G-vFjcf_NB2SYWQvP9xNSgnKGTjgBM7gY3o/s512/1000007259.png" alt="Logo Karang Taruna">
-          </div>
+      ‎<div class="character-wrap" id="characterWrap">
+‎        <img class="character" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgwTFaPccz12LYM-UFBp47AHvk8LuADqeSp-fTJ7qpyJZdl-oGsuPp96buk_bm76lSfm7X7PgeCPeh1MfMwfYdJiDYHWrVPsFk6FI6TpTYQr6oUphNcPlC6LT1H4l4j0KTg-CoVuKlQRidGhh2R2183YTk6kiH_CtMnDPHjSMklAETfYyRli5no90neO7s/s1280/1000983528.png" alt="Ilustrasi komunitas">
+‎      </div>
+‎      <span class="guide-badge">Portal Resmi • Karang Taruna</span>
+‎    </section>
+‎
+‎    <!-- KANAN: Auth Card -->
+‎    <section class="auth-section">
+‎      <div class="auth-card" id="authCard">
+‎        <div class="brand">
+‎          <div class="logo-box">
+‎            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBKnaWBTIFZ9RC_C6Dk8RnXG5G4G5LvxEgZhuAmjmnYQvXuwd5kCjHMpCNTQsOHzM_Wnp9WqajtniOxqfqw2dmD01tpB1_X-tpDMPnzpzgO_3FcAd4yQe-Ey2QwnBkp3ruml4yoBQhK4hqegfgQ0olfB51G-vFjcf_NB2SYWQvP9xNSgnKGTjgBM7gY3o/s512/1000007259.png" alt="Logo Karang Taruna">
+‎          </div>
           <div>
             <strong>KARANG TARUNA</strong>
             <span>Putra Asmara • Digital Portal</span>
@@ -388,11 +388,12 @@ button{cursor:pointer}
   const CONFIG = {
     API_URL: "https://script.google.com/macros/s/AKfycbxAck8UdHXSyeBtybGpFQyiamwgMC0O4mDfvrZ2EtAUzJ1YaaEXZcEuxlAPdFWUCW4V7A/exec",
     SESSION_KEY: "kt_user",
-    REDIRECT_AFTER_LOGIN: "beranda.html",
+    REDIRECT_AFTER_LOGIN: "index.html",
     MIN_PASSWORD_LENGTH: 6,
     MAX_PHOTO_INPUT_BYTES: 2 * 1024 * 1024,   // 2 MB input
-    MAX_PHOTO_OUTPUT_BYTES: 30 * 1024,        // ~30 KB output base64 (aman untuk Sheets)
-    PHOTO_MAX_DIMENSION: 320                  // resize ke 320px sisi terpanjang
+    MAX_PHOTO_OUTPUT_BYTES: 30 * 1024,        // ~30 KB output base64
+    PHOTO_MAX_DIMENSION: 320,                 // resize ke 320px sisi terpanjang
+    SESSION_MAX_AGE_MS: 30 * 24 * 60 * 60 * 1000  // 30 hari
   };
 
   /* =========================================================
@@ -415,7 +416,7 @@ button{cursor:pointer}
   let toastTimer = null;
   let bubbleTimer = null;
   let currentMode = "login";
-  let photoBase64 = "";   // foto profil hasil kompresi
+  let photoBase64 = "";
 
   const messages = {
     login: [
@@ -429,6 +430,66 @@ button{cursor:pointer}
       "Aku siap menemanimu bergabung."
     ]
   };
+
+  /* =========================================================
+   * SESSION MANAGEMENT (expiry + fallback korup)
+   * ========================================================= */
+  function getSession() {
+    try {
+      const raw = localStorage.getItem(CONFIG.SESSION_KEY);
+      if (!raw) return null;
+
+      let user;
+      try {
+        user = JSON.parse(raw);
+      } catch (parseError) {
+        console.warn("⚠️ Session korup, dihapus:", parseError.message);
+        localStorage.removeItem(CONFIG.SESSION_KEY);
+        return null;
+      }
+
+      if (!user || typeof user !== "object") {
+        localStorage.removeItem(CONFIG.SESSION_KEY);
+        return null;
+      }
+
+      // Cek expiry 30 hari
+      if (user._loginAt && (Date.now() - user._loginAt > CONFIG.SESSION_MAX_AGE_MS)) {
+        console.warn("⚠️ Session expired (30 hari), dihapus.");
+        localStorage.removeItem(CONFIG.SESSION_KEY);
+        return null;
+      }
+
+      return user;
+    } catch (e) {
+      console.warn("⚠️ getSession error:", e.message);
+      return null;
+    }
+  }
+
+  function saveSession(user) {
+    try {
+      // ⭐ PATCH: Tambah _loginAt saat pertama kali login
+      const payload = {
+        ...user,
+        _loginAt: user._loginAt || Date.now()
+      };
+      localStorage.setItem(CONFIG.SESSION_KEY, JSON.stringify(payload));
+    } catch (e) {
+      console.warn("⚠️ saveSession error:", e.message);
+    }
+  }
+
+  function clearSession() {
+    try {
+      localStorage.removeItem(CONFIG.SESSION_KEY);
+    } catch (e) {}
+  }
+
+  function isLoggedIn() {
+    const u = getSession();
+    return !!(u && (u.NIA || u.nia || u.Username || u.username));
+  }
 
   /* =========================================================
    * SPEECH BUBBLE
@@ -459,7 +520,7 @@ button{cursor:pointer}
   }
 
   /* =========================================================
-   * MODE SWITCH (LOGIN ↔ REGISTER)
+   * MODE SWITCH
    * ========================================================= */
   function setMode(mode) {
     if (mode === currentMode) return;
@@ -616,8 +677,8 @@ button{cursor:pointer}
 
   $("#forgotLink").addEventListener("click", e => {
     e.preventDefault();
-    showToast("Info", "Fitur pemulihan password siap dihubungkan ke backend.", "success");
-    setSpeech("Nanti kita siapkan jalur pemulihan password 🔐", 2600);
+    showToast("Info", "Fitur pemulihan password belum tersedia. Hubungi admin.", "success");
+    setSpeech("Hubungi admin untuk reset password 🔐", 2600);
   });
 
   /* =========================================================
@@ -653,7 +714,7 @@ button{cursor:pointer}
   async function apiPost(payload) {
     const res = await fetch(CONFIG.API_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" }, // hindari preflight CORS
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload),
       redirect: "follow"
     });
@@ -664,28 +725,10 @@ button{cursor:pointer}
   }
 
   /* =========================================================
-   * SESSION
-   * ========================================================= */
-  function saveSession(user) {
-    try { localStorage.setItem(CONFIG.SESSION_KEY, JSON.stringify(user)); } catch (e) {}
-  }
-  function getSession() {
-    try {
-      const raw = localStorage.getItem(CONFIG.SESSION_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
-  }
-  function clearSession() {
-    try { localStorage.removeItem(CONFIG.SESSION_KEY); } catch (e) {}
-  }
-
-  /* =========================================================
    * AUTO-REDIRECT JIKA SUDAH LOGIN
    * ========================================================= */
   (function autoRedirect() {
-    const user = getSession();
-    if (user && (user.NIA || user.nia || user.Username || user.username)) {
-      // Sudah login → langsung ke beranda
+    if (isLoggedIn()) {
       window.location.replace(CONFIG.REDIRECT_AFTER_LOGIN);
     }
   })();
@@ -740,7 +783,6 @@ button{cursor:pointer}
     msg.textContent = "Memproses foto..."; msg.style.color = "var(--muted)";
     try {
       let dataUrl = await compressImage(file, CONFIG.PHOTO_MAX_DIMENSION, 0.72);
-      // kalau masih > 30KB, turunkan kualitas
       let q = 0.72;
       while (dataUrl.length > CONFIG.MAX_PHOTO_OUTPUT_BYTES && q > 0.3) {
         q -= 0.1;
@@ -783,6 +825,7 @@ button{cursor:pointer}
       const user = res.data || res.user;
       if (!user) throw new Error("Data user tidak diterima dari server.");
 
+      // ⭐ PATCH: saveSession sudah menambahkan _loginAt otomatis
       saveSession(user);
 
       const nama = user.NamaLengkap || user.fullName || user.Username || "Pengguna";
@@ -836,7 +879,10 @@ button{cursor:pointer}
       }
 
       const user = res.data || res.user;
-      if (user) saveSession(user);
+      if (user) {
+        // ⭐ PATCH: saveSession sudah menambahkan _loginAt otomatis
+        saveSession(user);
+      }
 
       clearLoading(btn);
       showToast("Registrasi berhasil", "Akun Anda berhasil dibuat. Mengalihkan...", "success");
@@ -922,6 +968,7 @@ button{cursor:pointer}
         throw new Error("Akun ini bukan Admin. Gunakan form login biasa.");
       }
 
+      // ⭐ PATCH: saveSession sudah menambahkan _loginAt otomatis
       saveSession(user);
       clearLoading(btn);
       showToast("Login Admin berhasil", "Mengalihkan ke dashboard...", "success");
