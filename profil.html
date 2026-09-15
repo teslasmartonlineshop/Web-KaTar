@@ -8,238 +8,1112 @@
 <title>Profil Saya — Karang Taruna (Putra Asmara)</title>
 
 <style>
-:root{
-  --primary:#2c7a7b;
-  --primary2:#38b2ac;
-  --primary-soft:#e8f5f4;
-  --bg:#f4f8f8;
-  --card:#ffffff;
-  --text:#183a3c;
-  --muted:#718486;
-  --line:#dcebea;
-  --success:#15966d;
-  --warning:#d68b18;
-  --danger:#d84b4b;
-  --shadow:0 14px 38px rgba(25,80,82,.10);
-  --radius:20px;
+/* =========================================================
+   RESET & BASE (MOBILE-FIRST)
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-[data-theme=dark]{
-  --bg:#07110c;
-  --card:#0d1912;
-  --card2:#112319;
-  --text:#e7f4eb;
-  --muted:#9bb0a1;
-  --line:#20352a;
-  --primary-soft:#1a3a3b;
-  --shadow:0 15px 40px rgba(0,0,0,.35);
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  color:var(--text);
-  background:var(--bg);
-  min-height:100vh;
-  transition:background .35s,color .35s;
+
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background .35s, color .35s;
+  -webkit-tap-highlight-color: transparent;
 }
-button,input{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
 
-.container{width:min(1120px,calc(100% - 28px));margin:auto}
-
-/* HEADER */
-.header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);transition:.25s}
-.header.scrolled{box-shadow:var(--shadow)}
-.header-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.back-btn,.header-action{border:0;background:var(--primary-soft);color:var(--primary);width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:19px;transition:all .2s}
-.back-btn:hover,.header-action:hover{transform:scale(0.92);background:var(--line)}
-.page-title{flex:1;text-align:center}
-.page-title strong{display:block;font-size:15px}
-.page-title small{display:block;margin-top:2px;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
-
-/* HERO PROFILE */
-.profile-hero{padding:34px 0 18px}
-.profile-card{position:relative;overflow:hidden;background:linear-gradient(145deg,var(--card),var(--primary-soft));border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow);transition:all .3s}
-.profile-card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(56,178,172,.10);right:-65px;top:-75px}
-.profile-main{position:relative;display:flex;align-items:center;gap:22px}
-.avatar-wrap{position:relative;flex:0 0 auto}
-.avatar{width:132px;height:132px;border-radius:34px;object-fit:cover;display:block;background:linear-gradient(135deg,#dff3f1,#cce9e6);border:5px solid var(--card);box-shadow:0 15px 35px rgba(44,122,123,.18);transition:all .3s}
-.avatar:hover{transform:scale(1.02)}
-.avatar-fallback{display:grid;place-items:center;color:var(--primary);font-size:48px;font-weight:900}
-.online-dot{position:absolute;right:3px;bottom:5px;width:24px;height:24px;border-radius:50%;background:#28bf88;border:5px solid var(--card)}
-.profile-info{min-width:0}
-.eyebrow{display:inline-flex;padding:6px 9px;border-radius:999px;background:color-mix(in srgb,var(--primary) 12%,transparent);color:var(--primary);font-size:9px;font-weight:950;letter-spacing:.08em}
-.profile-info h1{margin:9px 0 3px;font-size:clamp(25px,5vw,36px);line-height:1.05;letter-spacing:-.035em}
-.username{color:var(--muted);font-size:13px;font-weight:700}
-.profile-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:color-mix(in srgb,var(--primary) 6%,transparent);border:1px solid var(--line);color:var(--primary);font-size:10px;font-weight:900}
-.badge.success{color:#087854;background:#e7f8f1;border-color:#c8ecdf}
-[data-theme=dark] .badge.success{color:#4ad9a0;background:#0a2a1e;border-color:#1a4a35}
-.profile-actions{position:relative;display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
-.btn{border:1px solid var(--line);background:var(--card);color:var(--text);padding:11px 15px;border-radius:12px;font-weight:900;font-size:12px;box-shadow:0 6px 18px rgba(25,80,82,.06);transition:all .2s}
-.btn:hover{transform:translateY(-2px)}
-.btn.primary{color:#fff;border-color:transparent;background:linear-gradient(135deg,var(--primary),var(--primary2))}
-.btn.danger{color:#fff;border-color:transparent;background:linear-gradient(135deg,#c53f3f,#e85b5b)}
-
-/* SECTION */
-.section{padding:15px 0}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:10px 0 14px}
-.section-head h2{margin:0;font-size:21px;letter-spacing:-.025em}
-.section-head p{margin:4px 0 0;color:var(--muted);font-size:11px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);transition:all .3s}
-
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.stat{padding:17px;transition:.25s}
-.stat:hover{transform:translateY(-6px) scale(.97);box-shadow:0 22px 42px rgba(44,122,123,.17)}
-.stat-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:var(--primary-soft);font-size:18px}
-.stat strong{display:block;margin-top:12px;font-size:24px}
-.stat span{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:800}
-
-/* INFO */
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.info-card{padding:20px}
-.info-card h3{margin-bottom:8px;font-size:16px}
-.info-list{display:grid;gap:0}
-.info-row{display:grid;grid-template-columns:145px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.info-row:last-child{border-bottom:0}
-.info-label{color:var(--muted);font-size:11px;font-weight:800}
-.info-value{font-size:12px;font-weight:850;word-break:break-word}
-.status-active{display:inline-flex;align-items:center;gap:6px;color:#087854}
-.status-active:before{content:"";width:7px;height:7px;background:#22b97f;border-radius:50%}
-
-/* ACTIVITY */
-.activity-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.activity-card{padding:20px}
-.activity-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.activity-item:last-child{border-bottom:0}
-.activity-icon{flex:0 0 auto;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--primary-soft)}
-.activity-item b{display:block;font-size:12px}
-.activity-item span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-.activity-value{margin-left:auto;font-weight:950;color:var(--primary)}
-
-/* QUICK MENU */
-.quick-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.quick{padding:18px 13px;text-align:center;transition:.25s}
-.quick:hover{transform:translateY(-5px) scale(.98)}
-.quick-icon{width:48px;height:48px;margin:auto;display:grid;place-items:center;background:var(--primary-soft);border-radius:15px;font-size:22px}
-.quick b{display:block;margin-top:9px;font-size:11px}
-.quick span{display:block;color:var(--muted);font-size:9px;margin-top:3px}
-
-/* SECURITY */
-.security{padding:20px}
-.security-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.security-item:last-child{border-bottom:0}
-.security-icon{width:39px;height:39px;border-radius:12px;background:var(--primary-soft);display:grid;place-items:center}
-.security-text{flex:1}
-.security-text b{display:block;font-size:12px}
-.security-text span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-
-/* FOOTER */
-.footer{margin-top:28px;padding:28px 0;background:#153b3d;color:#dff1f0}
-.footer-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
-.footer small{color:#a9c8c7;font-size:10px}
-.footer-links{display:flex;gap:14px;flex-wrap:wrap;font-size:10px;font-weight:800}
-.footer-links a{transition:all .2s}
-.footer-links a:hover{color:#fff}
-
-/* MODAL */
-.overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(11,42,43,.48);backdrop-filter:blur(8px)}
-.overlay.show{display:flex}
-.modal{width:min(650px,100%);max-height:min(88vh,760px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 30px 90px rgba(0,0,0,.25)}
-.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.modal-head h3{margin:0;font-size:19px}
-.close{border:0;background:var(--primary-soft);width:38px;height:38px;border-radius:11px;font-size:18px;transition:all .2s}
-.close:hover{transform:scale(0.9)}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:15px}
-.field.full{grid-column:1/-1}
-.field label{display:block;margin-bottom:6px;font-size:10px;font-weight:950}
-.field input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;outline:0;color:var(--text);background:var(--bg);transition:all .2s}
-.field input:focus{border-color:var(--primary)}
-.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}
-
-/* TOAST */
-.toast{position:fixed;right:16px;bottom:16px;z-index:150;max-width:340px;padding:12px 15px;border-radius:13px;color:#fff;background:#173b3d;box-shadow:0 15px 40px rgba(0,0,0,.2);opacity:0;transform:translateY(15px);pointer-events:none;transition:.25s;font-size:11px;font-weight:850}
-.toast.show{opacity:1;transform:none}
-
-/* LOADING */
-.loading{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(244,248,248,.86);backdrop-filter:blur(7px)}
-.loading.show{display:flex}
-.loader-box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;box-shadow:var(--shadow);text-align:center}
-.spinner{width:30px;height:30px;border:3px solid #d8eeee;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:auto}
-.loader-box span{display:block;margin-top:9px;color:var(--muted);font-size:10px;font-weight:800}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* EMPTY STATE */
-.empty-state{
-  text-align:center;
-  padding:40px 20px;
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
-.empty-state .icon{font-size:56px;margin-bottom:12px;display:block}
-.empty-state h3{font-size:20px;margin-bottom:6px;color:var(--text)}
-.empty-state p{color:var(--muted);font-size:13px;max-width:400px;margin:0 auto 18px}
-.empty-state .btn{display:inline-block;margin-top:8px}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .info-grid,.activity-grid{grid-template-columns:1fr}
+button,
+input {
+  font: inherit;
+  max-width: 100%;
 }
-@media(max-width:680px){
-  .profile-main{display:block;text-align:center}
-  .avatar-wrap{width:max-content;margin:0 auto 16px}
-  .profile-badges,.profile-actions{justify-content:center}
-  .profile-card{padding:22px 17px}
-  .quick-menu{grid-template-columns:repeat(2,1fr)}
-  .info-row{grid-template-columns:120px 1fr}
-  .footer-row{display:block;text-align:center}
-  .footer-links{margin-top:13px;justify-content:center}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  color: inherit;
 }
-@media(max-width:520px){
-  .container{width:min(100% - 20px,1120px)}
-  .header-inner{min-height:62px}
-  .avatar{width:112px;height:112px;border-radius:30px}
-  .stats{grid-template-columns:1fr 1fr;gap:8px}
-  .stat{padding:13px}
-  .stat strong{font-size:21px}
-  .form-grid{grid-template-columns:1fr}
-  .field.full{grid-column:auto}
-  .info-row{grid-template-columns:1fr;gap:4px}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+:root {
+  --primary: #2c7a7b;
+  --primary2: #38b2ac;
+  --primary-soft: #e8f5f4;
+  --bg: #f4f8f8;
+  --card: #ffffff;
+  --text: #183a3c;
+  --muted: #718486;
+  --line: #dcebea;
+  --success: #15966d;
+  --warning: #d68b18;
+  --danger: #d84b4b;
+  --admin: #f59e0b;
+  --shadow: 0 14px 38px rgba(25, 80, 82, .10);
+  --radius: 20px;
+  --pad-x: clamp(14px, 4vw, 28px);
+  --section-y: clamp(14px, 4vw, 22px);
+}
+
+[data-theme="dark"] {
+  --bg: #07110c;
+  --card: #0d1912;
+  --card2: #112319;
+  --text: #e7f4eb;
+  --muted: #9bb0a1;
+  --line: #20352a;
+  --primary-soft: #1a3a3b;
+  --shadow: 0 15px 40px rgba(0, 0, 0, .35);
+}
+
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+  transition: box-shadow .25s;
+}
+
+.header.scrolled {
+  box-shadow: var(--shadow);
+}
+
+.header-inner {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-block: 6px;
+}
+
+.back-btn,
+.header-action {
+  border: 0;
+  background: var(--primary-soft);
+  color: var(--primary);
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  transition: all .2s;
+}
+
+.back-btn:hover,
+.header-action:hover {
+  background: var(--line);
+}
+
+.page-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.page-title strong {
+  display: block;
+  font-size: clamp(13px, 3.6vw, 15px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.page-title small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Badge Admin di header */
+.admin-badge {
+  display: none;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: #422006;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .5px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, .3);
+  z-index: 1;
+}
+
+.admin-badge.show {
+  display: inline-block;
+}
+
+/* =========================================================
+   BANNER GUEST
+   ========================================================= */
+.guest-banner {
+  display: none;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  color: #422006;
+  padding: 10px 14px;
+  font-size: clamp(11px, 2.6vw, 13px);
+  font-weight: 700;
+}
+
+.guest-banner.show {
+  display: block;
+}
+
+.guest-banner .container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.guest-banner a {
+  background: #422006;
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  align-self: stretch;
+  text-align: center;
+}
+
+/* =========================================================
+   PROFILE HERO
+   ========================================================= */
+.profile-hero {
+  padding: clamp(20px, 5vw, 34px) 0 clamp(10px, 3vw, 18px);
+}
+
+.profile-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--card), var(--primary-soft));
+  border: 1px solid var(--line);
+  border-radius: clamp(20px, 5vw, 28px);
+  padding: clamp(18px, 5vw, 28px);
+  box-shadow: var(--shadow);
+}
+
+.profile-card::before {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(56, 178, 172, .10);
+  right: -60px;
+  top: -70px;
+  pointer-events: none;
+}
+
+.profile-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.avatar-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.avatar {
+  width: clamp(96px, 28vw, 132px);
+  height: clamp(96px, 28vw, 132px);
+  border-radius: clamp(24px, 6vw, 34px);
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, #dff3f1, #cce9e6);
+  border: 4px solid var(--card);
+  box-shadow: 0 15px 35px rgba(44, 122, 123, .18);
+}
+
+.avatar-fallback {
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+  font-size: clamp(36px, 10vw, 48px);
+  font-weight: 900;
+}
+
+.online-dot {
+  position: absolute;
+  right: 2px;
+  bottom: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #28bf88;
+  border: 4px solid var(--card);
+}
+
+.profile-info {
+  min-width: 0;
+  width: 100%;
+}
+
+.eyebrow {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: .08em;
+}
+
+.eyebrow.admin {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: #422006;
+}
+
+.profile-info h1 {
+  margin: 9px 0 3px;
+  font-size: clamp(20px, 6vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  word-break: break-word;
+}
+
+.username {
+  color: var(--muted);
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  border: 1px solid var(--line);
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.badge.success {
+  color: #087854;
+  background: #e7f8f1;
+  border-color: #c8ecdf;
+}
+
+.badge.admin {
+  color: #422006;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-color: #fcd34d;
+}
+
+[data-theme="dark"] .badge.success {
+  color: #4ad9a0;
+  background: #0a2a1e;
+  border-color: #1a4a35;
+}
+
+.profile-actions {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  justify-content: center;
+}
+
+.btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  padding: 11px 15px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: clamp(11px, 3vw, 12px);
+  box-shadow: 0 6px 18px rgba(25, 80, 82, .06);
+  transition: all .2s;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn.primary {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+}
+
+.btn.danger {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #c53f3f, #e85b5b);
+}
+
+.btn.admin-btn {
+  color: #422006;
+  border-color: transparent;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+.section {
+  padding-block: var(--section-y);
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 14px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(17px, 4.6vw, 21px);
+  letter-spacing: -.02em;
+}
+
+.section-head p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: clamp(10px, 2.8vw, 11px);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all .3s;
+}
+
+/* =========================================================
+   STATS
+   ========================================================= */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.stat {
+  padding: 14px;
+  transition: .25s;
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 42px rgba(44, 122, 123, .17);
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--primary-soft);
+  font-size: 17px;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(18px, 5vw, 24px);
+}
+
+.stat span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   INFO
+   ========================================================= */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.info-card {
+  padding: clamp(16px, 4vw, 20px);
+}
+
+.info-card h3 {
+  margin-bottom: 8px;
+  font-size: clamp(14px, 3.8vw, 16px);
+}
+
+.info-list {
+  display: grid;
+  gap: 0;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.info-row:last-child {
+  border-bottom: 0;
+}
+
+.info-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.info-value {
+  font-size: clamp(12px, 3.2vw, 13px);
+  font-weight: 850;
+  word-break: break-word;
+}
+
+.status-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #087854;
+}
+
+.status-active::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #22b97f;
+  border-radius: 50%;
+}
+
+/* =========================================================
+   ACTIVITY
+   ========================================================= */
+.activity-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.activity-card {
+  padding: clamp(16px, 4vw, 20px);
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.activity-item:last-child {
+  border-bottom: 0;
+}
+
+.activity-icon {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--primary-soft);
+  font-size: 17px;
+}
+
+.activity-item b {
+  display: block;
+  font-size: clamp(12px, 3.2vw, 13px);
+}
+
+.activity-item span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.activity-value {
+  margin-left: auto;
+  font-weight: 950;
+  color: var(--primary);
+  font-size: clamp(13px, 3.6vw, 15px);
+}
+
+/* =========================================================
+   QUICK MENU
+   ========================================================= */
+.quick-menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.quick {
+  padding: 16px 12px;
+  text-align: center;
+  transition: .25s;
+  display: block;
+  width: 100%;
+}
+
+.quick:hover {
+  transform: translateY(-5px) scale(.98);
+}
+
+.quick-icon {
+  width: 44px;
+  height: 44px;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  background: var(--primary-soft);
+  border-radius: 14px;
+  font-size: 20px;
+}
+
+.quick b {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+}
+
+.quick span {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 3px;
+}
+
+/* =========================================================
+   SECURITY
+   ========================================================= */
+.security {
+  padding: clamp(16px, 4vw, 20px);
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.security-item:last-child {
+  border-bottom: 0;
+}
+
+.security-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--primary-soft);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.security-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.security-text b {
+  display: block;
+  font-size: clamp(12px, 3.2vw, 13px);
+}
+
+.security-text span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  margin-top: 24px;
+  padding: clamp(22px, 5vw, 28px) 0;
+  background: #153b3d;
+  color: #dff1f0;
+}
+
+.footer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.footer b {
+  font-size: clamp(13px, 3.4vw, 14px);
+}
+
+.footer small {
+  color: #a9c8c7;
+  font-size: 10px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  font-weight: 800;
+  justify-content: center;
+}
+
+.footer-links a {
+  transition: all .2s;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(11, 42, 43, .5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow-y: auto;
+}
+
+.overlay.show {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(16px, 4vw, 22px);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .25);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.modal-head h3 {
+  margin: 0;
+  font-size: clamp(15px, 4vw, 18px);
+}
+
+.close {
+  border: 0;
+  background: var(--primary-soft);
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  font-size: 17px;
+  display: grid;
+  place-items: center;
+  transition: all .2s;
+}
+
+.close:hover {
+  transform: scale(.92);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.field {
+  min-width: 0;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.field input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  outline: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 14px;
+  transition: border-color .2s;
+}
+
+.field input:focus {
+  border-color: var(--primary);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) translateY(15px);
+  z-index: 150;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  padding: 12px 16px;
+  border-radius: 13px;
+  color: #fff;
+  background: #173b3d;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, .2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  font-size: clamp(11px, 3vw, 12px);
+  font-weight: 850;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(244, 248, 248, .85);
+  backdrop-filter: blur(7px);
+}
+
+.loading.show {
+  display: flex;
+}
+
+.loader-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 22px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #d8eeee;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin: auto;
+}
+
+.loader-box span {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   EMPTY / LOGIN CTA
+   ========================================================= */
+.empty-state {
+  text-align: center;
+  padding: clamp(28px, 8vw, 48px) 20px;
+}
+
+.empty-state .icon {
+  font-size: clamp(46px, 12vw, 64px);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.empty-state h3 {
+  font-size: clamp(16px, 5vw, 20px);
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  color: var(--muted);
+  font-size: clamp(12px, 3.4vw, 14px);
+  max-width: 420px;
+  margin: 0 auto 18px;
+  line-height: 1.6;
+}
+
+.empty-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET (≥ 640px)
+   ========================================================= */
+@media (min-width: 640px) {
+  .guest-banner .container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .guest-banner a {
+    align-self: auto;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .quick-menu {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .info-row {
+    grid-template-columns: 145px 1fr;
+    gap: 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-row {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .footer-links {
+    justify-content: flex-end;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — DESKTOP (≥ 900px)
+   ========================================================= */
+@media (min-width: 900px) {
+  .header-inner {
+    min-height: 68px;
+  }
+
+  .profile-main {
+    flex-direction: row;
+    text-align: left;
+    gap: 22px;
+  }
+
+  .profile-info {
+    flex: 1;
+  }
+
+  .profile-badges,
+  .profile-actions {
+    justify-content: flex-start;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .activity-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .toast {
+    left: auto;
+    right: 18px;
+    bottom: 18px;
+    transform: translateY(15px);
+  }
+
+  .toast.show {
+    transform: translateY(0);
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================================================
+     BANNER GUEST
+     ========================================================= -->
+<div class="guest-banner" id="guestBanner">
+  <div class="container">
+    <span><b>READ-ONLY</b> Anda belum login. Login untuk mengedit profil & akses penuh.</span>
+    <a href="login-register.html">🔑 Login / Daftar</a>
+  </div>
+</div>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
 <header class="header" id="header">
-  <div class="container header-inner">
+  <div class="container header-inner" style="position:relative">
+    <span class="admin-badge" id="adminBadge">🔐 ADMIN</span>
     <button class="back-btn" id="backBtn" aria-label="Kembali">←</button>
     <div class="page-title">
       <strong>Profil Saya</strong>
-      <small>Karang Taruna (Putra Asmara)</small>
+      <small id="headerSubtitle">Karang Taruna (Putra Asmara)</small>
     </div>
-    <div style="width:42px;height:42px;"></div>
+    <button class="header-action" id="headerAction" aria-label="Beranda">🏠</button>
   </div>
 </header>
 
 <main>
 
-<!-- EMPTY STATE (ditampilkan jika user tidak ditemukan) -->
+<!-- =========================================================
+     EMPTY STATE — GUEST
+     ========================================================= -->
 <section id="emptyStateSection" style="display:none">
-  <div class="container">
+  <div class="container" style="padding-top:20px">
     <div class="card empty-state">
       <span class="icon">👤</span>
-      <h3>Data User Tidak Ditemukan</h3>
-      <p id="emptyStateMessage">Data user dengan NIA ini tidak tersedia di server. Silakan hubungi admin atau periksa kembali NIA Anda.</p>
-      <button class="btn primary" onclick="loadUser()">🔄 Coba Lagi</button>
-      <button class="btn" onclick="clearCacheAndReload()" style="margin-left:8px">🗑️ Bersihkan Cache</button>
+      <h3 id="emptyTitle">Profil Tidak Tersedia</h3>
+      <p id="emptyStateMessage">Silakan login untuk melihat profil Anda.</p>
+      <div class="empty-actions">
+        <a href="login-register.html" class="btn primary" id="emptyLoginBtn">🔑 Login / Daftar</a>
+        <a href="index.html" class="btn">🏠 Beranda</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PROFILE CONTENT (ditampilkan jika user ditemukan) -->
+<!-- =========================================================
+     PROFILE CONTENT
+     ========================================================= -->
 <div id="profileContent" style="display:none">
 
 <section class="profile-hero">
@@ -252,17 +1126,19 @@ a{text-decoration:none;color:inherit}
           <span class="online-dot" title="Status aktif"></span>
         </div>
         <div class="profile-info">
-          <span class="eyebrow">PROFIL ANGGOTA</span>
+          <span class="eyebrow" id="eyebrowText">PROFIL ANGGOTA</span>
           <h1 id="fullName">Memuat Profil...</h1>
           <div class="username" id="username">@user</div>
           <div class="profile-badges">
             <span class="badge success" id="memberStatus">● Aktif</span>
             <span class="badge" id="memberPosition">👤 Anggota</span>
             <span class="badge" id="memberNia">🆔 NIA —</span>
+            <span class="badge admin" id="memberAdminBadge" style="display:none">🔐 ADMIN</span>
           </div>
-          <div class="profile-actions">
+          <div class="profile-actions" id="profileActions">
             <button class="btn primary" id="editBtn">✏️ Edit Profil</button>
-            <button class="btn" id="shareBtn">↗️ Bagikan Profil</button>
+            <button class="btn" id="shareBtn">↗️ Bagikan</button>
+            <a class="btn admin-btn" id="adminPanelBtn" href="dashboard-admin.html" style="display:none">🔐 Dashboard Admin</a>
           </div>
         </div>
       </div>
@@ -279,7 +1155,7 @@ a{text-decoration:none;color:inherit}
       </div>
     </div>
     <div class="stats">
-      <article class="card stat"><div class="stat-icon">📅</div><strong id="statActivities">0</strong><span>Kegiatan Diikuti</span></article>
+      <article class="card stat"><div class="stat-icon">📅</div><strong id="statActivities">0</strong><span>Kegiatan</span></article>
       <article class="card stat"><div class="stat-icon">✅</div><strong id="statAttendance">0</strong><span>Kehadiran</span></article>
       <article class="card stat"><div class="stat-icon">🤝</div><strong id="statContribution">0</strong><span>Kontribusi</span></article>
       <article class="card stat"><div class="stat-icon">🏆</div><strong id="statAchievement">0</strong><span>Prestasi</span></article>
@@ -355,22 +1231,35 @@ a{text-decoration:none;color:inherit}
     </div>
     <div class="quick-menu">
       <a class="card quick" href="index.html"><div class="quick-icon">🏠</div><b>Beranda</b><span>Website utama</span></a>
-      <a class="card quick" href="berita-list.html"><div class="quick-icon">📰</div><b>Semua Berita</b><span>Daftar berita</span></a>
+      <a class="card quick" href="berita-list.html"><div class="quick-icon">📰</div><b>Berita</b><span>Daftar berita</span></a>
       <a class="card quick" href="index.html#agenda"><div class="quick-icon">📅</div><b>Agenda</b><span>Kegiatan & acara</span></a>
       <button class="card quick" id="securityBtn"><div class="quick-icon">🔐</div><b>Keamanan</b><span>Akun & password</span></button>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- KEAMANAN — hanya untuk user login -->
+<section class="section" id="securitySection">
   <div class="container">
     <article class="card security">
       <div class="section-head" style="margin-top:0">
         <div><h2>Keamanan Akun</h2><p>Pengaturan keamanan akun pribadi.</p></div>
       </div>
-      <div class="security-item"><div class="security-icon">🔐</div><div class="security-text"><b>Password</b><span>Ubah password akun secara berkala.</span></div><button class="btn" id="passwordBtn">Ubah</button></div>
-      <div class="security-item"><div class="security-icon">🔔</div><div class="security-text"><b>Notifikasi</b><span>Kelola preferensi pemberitahuan akun.</span></div><button class="btn" id="notificationBtn">Atur</button></div>
-      <div class="security-item"><div class="security-icon">🚪</div><div class="security-text"><b>Keluar</b><span>Keluar dari sesi akun saat ini.</span></div><button class="btn danger" id="logoutBtn">Logout</button></div>
+      <div class="security-item">
+        <div class="security-icon">🔐</div>
+        <div class="security-text"><b>Password</b><span>Ubah password akun secara berkala.</span></div>
+        <button class="btn" id="passwordBtn">Ubah</button>
+      </div>
+      <div class="security-item">
+        <div class="security-icon">🔔</div>
+        <div class="security-text"><b>Notifikasi</b><span>Kelola preferensi pemberitahuan akun.</span></div>
+        <button class="btn" id="notificationBtn">Atur</button>
+      </div>
+      <div class="security-item">
+        <div class="security-icon">🚪</div>
+        <div class="security-text"><b>Keluar</b><span>Keluar dari sesi akun saat ini.</span></div>
+        <button class="btn danger" id="logoutBtn">Logout</button>
+      </div>
     </article>
   </div>
 </section>
@@ -379,27 +1268,35 @@ a{text-decoration:none;color:inherit}
 
 </main>
 
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
 <footer class="footer">
   <div class="container footer-row">
     <div>
       <b>Karang Taruna (Putra Asmara)</b><br>
-      <small>Dari Pemuda Untuk Desa · Kecamatan Pamijahan — Kabupaten Bogor</small>
+      <small>Dari Pemuda Untuk Desa · Kec. Pamijahan — Kab. Bogor</small>
     </div>
     <div class="footer-links">
       <a href="index.html">Beranda</a>
       <a href="berita-list.html">Berita</a>
-      <a href="dashboard-admin.html">Admin</a>
+      <a href="dashboard-admin.html" id="adminFooterLink" style="display:none">🔐 Admin</a>
     </div>
   </div>
-  <div class="container" style="margin-top:17px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);text-align:center">
+  <div class="container" style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);text-align:center">
     <small>© 2026 Karang Taruna (Putra Asmara)</small>
   </div>
 </footer>
 
-<!-- EDIT PROFILE MODAL -->
+<!-- =========================================================
+     EDIT PROFILE MODAL
+     ========================================================= -->
 <div class="overlay" id="editOverlay">
   <div class="modal">
-    <div class="modal-head"><h3>✏️ Edit Profil</h3><button class="close" data-close="editOverlay">✕</button></div>
+    <div class="modal-head">
+      <h3>✏️ Edit Profil</h3>
+      <button class="close" data-close="editOverlay">✕</button>
+    </div>
     <form id="editForm">
       <div class="form-grid">
         <div class="field full"><label>Foto Profil — URL</label><input name="foto" type="url" placeholder="https://..."></div>
@@ -412,23 +1309,30 @@ a{text-decoration:none;color:inherit}
       </div>
       <div class="modal-actions">
         <button class="btn" type="button" data-close="editOverlay">Batal</button>
-        <button class="btn primary" type="submit">💾 Simpan Perubahan</button>
+        <button class="btn primary" type="submit">💾 Simpan</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- PASSWORD MODAL -->
+<!-- =========================================================
+     PASSWORD MODAL
+     ========================================================= -->
 <div class="overlay" id="passwordOverlay">
   <div class="modal">
-    <div class="modal-head"><h3>🔐 Ubah Password</h3><button class="close" data-close="passwordOverlay">✕</button></div>
+    <div class="modal-head">
+      <h3>🔐 Ubah Password</h3>
+      <button class="close" data-close="passwordOverlay">✕</button>
+    </div>
     <form id="passwordForm">
-      <div class="field"><label>Password Lama</label><input name="oldPassword" type="password" required></div>
-      <div class="field"><label>Password Baru</label><input name="newPassword" type="password" minlength="6" required></div>
-      <div class="field"><label>Konfirmasi Password Baru</label><input name="confirmPassword" type="password" minlength="6" required></div>
+      <div class="form-grid">
+        <div class="field full"><label>Password Lama</label><input name="oldPassword" type="password" required></div>
+        <div class="field full"><label>Password Baru</label><input name="newPassword" type="password" minlength="6" required></div>
+        <div class="field full"><label>Konfirmasi Password Baru</label><input name="confirmPassword" type="password" minlength="6" required></div>
+      </div>
       <div class="modal-actions">
         <button class="btn" type="button" data-close="passwordOverlay">Batal</button>
-        <button class="btn primary" type="submit">🔐 Ubah Password</button>
+        <button class="btn primary" type="submit">🔐 Ubah</button>
       </div>
     </form>
   </div>
@@ -438,27 +1342,101 @@ a{text-decoration:none;color:inherit}
 <div class="loading" id="loading"><div class="loader-box"><div class="spinner"></div><span id="loadingText">Memuat data...</span></div></div>
 
 <script>
-// ============================================================
-// KONFIGURASI API
-// ============================================================
+/* =========================================================
+   KONFIGURASI
+   ========================================================= */
 const API_URL = 'https://script.google.com/macros/s/AKfycbxAck8UdHXSyeBtybGpFQyiamwgMC0O4mDfvrZ2EtAUzJ1YaaEXZcEuxlAPdFWUCW4V7A/exec';
+const SESSION_KEY = 'kt_user';
+const LOGIN_URL = 'login-register.html';
+const INDEX_URL = 'index.html';
+const ADMIN_URL = 'dashboard-admin.html';
 
-const CONFIG = {
-  apiUrl: API_URL,
-  sessionKey: 'KT_SESSION',
-  apiStorageKey: 'KT_API_URL',
-  demoNia: 'KT-001'
-};
+/* Session expiry: 30 hari */
+const SESSION_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 
 const $ = id => document.getElementById(id);
 
-// ============================================================
-// UTILITY
-// ============================================================
+/* =========================================================
+   SESSION MANAGEMENT (dengan expiry & fallback korup)
+   ========================================================= */
+function getSession() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+
+    let user;
+    try {
+      user = JSON.parse(raw);
+    } catch (parseError) {
+      // Session korup → hapus
+      console.warn('⚠️ Session korup, dihapus:', parseError.message);
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+
+    if (!user || typeof user !== 'object') {
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+
+    // Cek expiry
+    if (user._loginAt && (Date.now() - user._loginAt > SESSION_MAX_AGE_MS)) {
+      console.warn('⚠️ Session expired (30 hari), dihapus.');
+      localStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+
+    return user;
+  } catch (e) {
+    console.warn('⚠️ getSession error:', e.message);
+    return null;
+  }
+}
+
+function saveSession(user) {
+  try {
+    const payload = {
+      ...user,
+      _loginAt: user._loginAt || Date.now()
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+  } catch (e) {
+    console.warn('⚠️ saveSession error:', e.message);
+  }
+}
+
+function clearSession() {
+  try {
+    localStorage.removeItem(SESSION_KEY);
+  } catch (e) {}
+}
+
+function isLoggedIn() {
+  const u = getSession();
+  if (!u) return false;
+  return !!(u.NIA || u.nia || u.Username || u.username);
+}
+
+function isAdmin() {
+  const u = getSession();
+  if (!u) return false;
+  const pos = String(u.Posisi || u.position || '').trim().toLowerCase();
+  return pos === 'admin';
+}
+
+function getUserName() {
+  const u = getSession();
+  if (!u) return '';
+  return u.NamaLengkap || u.fullName || u.Username || u.username || '';
+}
+
+/* =========================================================
+   UTILITY
+   ========================================================= */
 function esc(value) {
-  return String(value ?? '').replace(/[&<>"']/g, char => ({
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[char]));
+  }[c]));
 }
 
 function formatDate(value) {
@@ -488,32 +1466,9 @@ function setLoading(show, text = 'Memuat data...') {
   $('loading').classList.toggle('show', show);
 }
 
-function getApiUrl() {
-  return localStorage.getItem(CONFIG.apiStorageKey) || CONFIG.apiUrl;
-}
-
-function getUserNia() {
-  const params = new URLSearchParams(location.search);
-  return params.get('nia') || params.get('user') || params.get('id') || CONFIG.demoNia;
-}
-
-// ============================================================
-// CLEAR CACHE (untuk user yang tidak ditemukan)
-// ============================================================
-function clearCacheAndReload() {
-  const nia = getUserNia();
-  try {
-    Object.keys(localStorage).forEach(key => {
-      if (key.startsWith('KT_')) localStorage.removeItem(key);
-    });
-  } catch (e) {}
-  showToast('✓ Cache dibersihkan. Memuat ulang...');
-  setTimeout(() => location.reload(), 800);
-}
-
-// ============================================================
-// NORMALIZE USER (dari struktur API)
-// ============================================================
+/* =========================================================
+   NORMALIZE USER
+   ========================================================= */
 function normalizeUser(raw) {
   if (!raw) return {};
   return {
@@ -528,6 +1483,7 @@ function normalizeUser(raw) {
     status: raw.Status || raw.status || 'Aktif',
     tanggal_bergabung: raw.JoinDate || raw.tanggal_bergabung || raw.joinDate || '',
     foto: raw.Foto || raw.foto || raw.profilePicture || '',
+    _loginAt: raw._loginAt || Date.now(),
     activity: {
       kegiatan: 0,
       kehadiran: 0,
@@ -537,33 +1493,62 @@ function normalizeUser(raw) {
   };
 }
 
-// ============================================================
-// SHOW/HIDE SECTION
-// ============================================================
+/* =========================================================
+   SHOW / HIDE
+   ========================================================= */
 function showProfile() {
   $('profileContent').style.display = 'block';
   $('emptyStateSection').style.display = 'none';
+  $('guestBanner').classList.toggle('show', !isLoggedIn());
 }
 
-function showEmptyState(message) {
+function showEmptyState(title, message) {
   $('profileContent').style.display = 'none';
   $('emptyStateSection').style.display = 'block';
-  if (message) $('emptyStateMessage').textContent = message;
+  $('guestBanner').classList.remove('show');
+  $('emptyTitle').textContent = title;
+  $('emptyStateMessage').textContent = message;
 }
 
-// ============================================================
-// RENDER USER
-// ============================================================
+/* =========================================================
+   RENDER USER
+   ========================================================= */
 function renderUser(user) {
   window.currentUser = user;
+  const logged = isLoggedIn();
+  const admin = isAdmin();
+
   showProfile();
 
-  $('fullName').textContent = user.nama_lengkap || 'Anggota';
-  $('username').textContent = '@' + (user.username || 'user');
+  // Banner guest
+  $('guestBanner').classList.toggle('show', !logged);
+
+  // Badge admin di header
+  $('adminBadge').classList.toggle('show', admin);
+
+  // Subtitle header
+  $('headerSubtitle').textContent = admin
+    ? 'Anda login sebagai ADMIN'
+    : (logged ? 'Karang Taruna (Putra Asmara)' : 'Mode Read-Only');
+
+  // Eyebrow
+  const eyebrow = $('eyebrowText');
+  eyebrow.textContent = admin
+    ? 'PROFIL ADMIN'
+    : (logged ? 'PROFIL ANGGOTA' : 'PROFIL (READ-ONLY)');
+  eyebrow.classList.toggle('admin', admin);
+
+  // Basic info
+  $('fullName').textContent = user.nama_lengkap || (logged ? 'Anggota' : 'Guest');
+  $('username').textContent = '@' + (user.username || (logged ? 'user' : 'guest'));
   $('memberNia').textContent = '🆔 NIA ' + (user.nia || '—');
   $('memberPosition').textContent = '👤 ' + (user.posisi || 'Anggota');
   $('memberStatus').textContent = (String(user.status).toLowerCase() === 'aktif' ? '● Aktif' : '● ' + (user.status || '—'));
 
+  // Badge admin di profil
+  $('memberAdminBadge').style.display = admin ? '' : 'none';
+
+  // Info grid
   $('infoName').textContent = user.nama_lengkap || '—';
   $('infoNia').textContent = user.nia || '—';
   $('infoGender').textContent = user.jenis_kelamin || '—';
@@ -574,6 +1559,7 @@ function renderUser(user) {
   $('infoStatus').textContent = user.status || '—';
   $('infoJoinDate').textContent = formatDate(user.tanggal_bergabung);
 
+  // Activity
   const activity = user.activity || {};
   const kegiatan = Number(activity.kegiatan || 0);
   const kehadiran = Number(activity.kehadiran || 0);
@@ -591,6 +1577,7 @@ function renderUser(user) {
   $('activitySince').textContent = shortDate(user.tanggal_bergabung);
   $('activityStatus').textContent = user.status || '—';
 
+  // Avatar
   const avatar = $('avatar');
   const fallback = $('avatarFallback');
   if (user.foto) {
@@ -607,6 +1594,19 @@ function renderUser(user) {
     fallback.style.display = 'grid';
   }
 
+  // Actions — hanya untuk user login
+  $('profileActions').style.display = logged ? '' : 'none';
+
+  // Tombol admin panel — hanya untuk admin
+  $('adminPanelBtn').style.display = admin ? '' : 'none';
+
+  // Security section — hanya untuk user login
+  $('securitySection').style.display = logged ? '' : 'none';
+
+  // Admin link di footer
+  $('adminFooterLink').style.display = admin ? '' : 'none';
+
+  // Fill edit form
   fillEditForm(user);
 }
 
@@ -622,14 +1622,12 @@ function fillEditForm(user) {
   form.elements.alamat_lengkap.value = user.alamat_lengkap || '';
 }
 
-// ============================================================
-// API REQUEST
-// ============================================================
+/* =========================================================
+   API REQUEST
+   ========================================================= */
 async function requestAPI(action, options = {}) {
-  const api = getApiUrl();
+  const api = API_URL;
   if (!api) throw new Error('API belum dikonfigurasi');
-
-  console.log('📡 API Request:', action, options);
 
   try {
     if (options.method === 'POST') {
@@ -640,111 +1638,112 @@ async function requestAPI(action, options = {}) {
         body: JSON.stringify({ action, ...options.body })
       });
       if (!response.ok) throw new Error('HTTP ' + response.status);
-      const result = await response.json();
-      console.log('📥 Response:', result);
-      return result;
+      return await response.json();
     }
 
     const query = new URLSearchParams({ action, ...(options.params || {}) });
     const response = await fetch(api + '?' + query.toString(), { method: 'GET', cache: 'no-store' });
     if (!response.ok) throw new Error('HTTP ' + response.status);
-    const result = await response.json();
-    console.log('📥 Response:', result);
-    return result;
+    return await response.json();
   } catch (error) {
     console.error('❌ API error:', error);
     throw error;
   }
 }
 
-// ============================================================
-// LOAD USER - FINAL (Deteksi Data Kosong + Auto Clear Cache)
-// ============================================================
+/* =========================================================
+   LOAD USER — dengan auto-refresh & fallback
+   ========================================================= */
 async function loadUser() {
-  const nia = getUserNia();
-  showEmptyState('Memuat data user...');
-  setLoading(true, 'Mengambil profil dari server...');
+  const sessionUser = getSession();
 
-  try {
-    const result = await requestAPI('getUser', { params: { nia } });
-    
-    // Cek response valid
-    if (result && result.success) {
-      const userData = result.user || result.data;
-      
-      // ✅ User ditemukan
-      if (userData && (userData.NIA || userData.nia)) {
-        const normalized = normalizeUser(userData);
-        
-        // Simpan ke cache
-        try {
-          localStorage.setItem('KT_USER_' + nia, JSON.stringify(normalized));
-        } catch (e) {}
-        
-        renderUser(normalized);
-        showToast('✓ Profil berhasil dimuat dari server.');
+  // GUEST — tidak login
+  if (!sessionUser) {
+    showEmptyState(
+      'Anda Belum Login',
+      'Login atau daftar untuk melihat profil pribadi Anda dan mengakses fitur penuh Karang Taruna.'
+    );
+    return;
+  }
+
+  // User login — tampilkan dari session dulu (instant)
+  const normalized = normalizeUser(sessionUser);
+  renderUser(normalized);
+
+  // Auto-refresh dari server (background, tidak blocking)
+  if (normalized.nia) {
+    try {
+      const result = await requestAPI('getUser', { params: { nia: normalized.nia } });
+
+      // Kalau server bilang user tidak ada → auto-logout (fallback)
+      if (result && result.success && !result.user && !result.data) {
+        console.warn('⚠️ User tidak ditemukan di server, auto-logout.');
+        clearSession();
+        showEmptyState(
+          'Akun Tidak Ditemukan',
+          'Akun Anda tidak lagi terdaftar di server. Silakan login ulang atau hubungi admin.'
+        );
+        showToast('⚠️ Sesi berakhir. Silakan login ulang.', 4000);
         return;
       }
-      
-      // ❌ User kosong (server sukses tapi data tidak ada)
-      // HAPUS CACHE LAMA agar tidak muncul lagi
-      try {
-        localStorage.removeItem('KT_USER_' + nia);
-      } catch (e) {}
-      
-      showEmptyState('Data user dengan NIA "' + nia + '" tidak ditemukan di server. Silakan hubungi admin untuk mendaftarkan akun Anda.');
-      showToast('⚠️ Data user dengan NIA ' + nia + ' tidak ditemukan.', 4000);
-      return;
-    }
-    
-    // Response tidak valid
-    throw new Error(result?.message || 'Response API tidak valid');
 
-  } catch (error) {
-    console.warn('❌ loadUser error:', error);
-    
-    // Cek cache sebagai fallback terakhir
-    let cached = null;
-    try {
-      const raw = localStorage.getItem('KT_USER_' + nia);
-      if (raw) cached = JSON.parse(raw);
-    } catch (e) {}
-    
-    if (cached && (cached.nia || cached.NIA)) {
-      renderUser(normalizeUser(cached));
-      showToast('⚠️ Gagal terhubung server. Menampilkan data cache.', 4000);
-    } else {
-      showEmptyState('Gagal terhubung ke server. Silakan periksa koneksi internet Anda dan coba lagi.');
-      showToast('❌ Gagal terhubung ke server.', 4000);
+      // User ditemukan — update session & render ulang
+      if (result && result.success) {
+        const userData = result.user || result.data;
+        if (userData && (userData.NIA || userData.nia)) {
+          const fresh = normalizeUser(userData);
+          saveSession(fresh);  // update session (termasuk _loginAt tetap)
+          renderUser(fresh);
+
+          // Cek perubahan role
+          const wasAdmin = String(normalized.posisi || '').toLowerCase() === 'admin';
+          const isNowAdmin = String(fresh.posisi || '').toLowerCase() === 'admin';
+          if (!wasAdmin && isNowAdmin) {
+            showToast('🎉 Selamat! Anda sekarang Admin.', 4500);
+          }
+        }
+      }
+    } catch (error) {
+      // Gagal refresh — pakai data session (tidak ganggu UX)
+      console.warn('⚠️ Gagal refresh dari server, pakai session:', error.message);
     }
-  } finally {
-    setLoading(false);
   }
 }
 
-// ============================================================
-// UPDATE USER
-// ============================================================
+/* =========================================================
+   UPDATE USER
+   ========================================================= */
 async function updateUser(data) {
+  if (!isLoggedIn()) {
+    showToast('🔒 Silakan login dulu.');
+    return;
+  }
+
   const current = window.currentUser || {};
-  const nia = current.nia || getUserNia();
+  const nia = current.nia;
 
   if (!nia) {
     showToast('❌ NIA tidak ditemukan.');
     return;
   }
 
-  // Update lokal dulu (optimistic UI)
+  // Optimistic UI
   const updated = { ...current, ...data, nia };
-  try {
-    localStorage.setItem('KT_USER_' + nia, JSON.stringify(updated));
-  } catch (e) {}
+  const session = getSession() || {};
+  saveSession({
+    ...session,
+    NamaLengkap: updated.nama_lengkap,
+    Email: updated.email,
+    WhatsApp: updated.whatsapp,
+    Gender: updated.jenis_kelamin,
+    Alamat: updated.alamat_lengkap,
+    Foto: updated.foto
+  });
   renderUser(updated);
 
   try {
     setLoading(true, 'Menyimpan ke server...');
 
-    // Kirim dengan field yang sesuai sheet members
     const payload = {
       nia: nia,
       data: {
@@ -753,42 +1752,35 @@ async function updateUser(data) {
         WhatsApp: data.whatsapp || updated.whatsapp,
         Gender: data.jenis_kelamin || updated.jenis_kelamin,
         Alamat: data.alamat_lengkap || updated.alamat_lengkap,
-        Foto: data.foto || updated.foto,
-        Posisi: data.posisi || updated.posisi,
-        Status: data.status || updated.status || 'Aktif'
+        Foto: data.foto || updated.foto
       }
     };
 
-    console.log('📤 Payload:', payload);
-
-    const result = await requestAPI('updateUser', {
-      method: 'POST',
-      body: payload
-    });
+    const result = await requestAPI('updateUser', { method: 'POST', body: payload });
 
     if (result && result.success === false) {
       throw new Error(result.message || 'Gagal menyimpan');
     }
 
-    showToast('✓ Profil berhasil disimpan ke server.');
-    
-    // Refresh dari server untuk konfirmasi (opsional)
-    setTimeout(() => loadUser(), 800);
+    showToast('✓ Profil berhasil disimpan.');
 
   } catch (error) {
-    console.warn('updateUser error:', error);
-    showToast('⚠️ Gagal menyimpan ke server. Data tersimpan lokal.', 4000);
+    showToast('⚠️ ' + (error.message || 'Gagal simpan ke server. Tersimpan lokal.'), 4000);
   } finally {
     setLoading(false);
   }
 }
 
-// ============================================================
-// CHANGE PASSWORD
-// ============================================================
+/* =========================================================
+   CHANGE PASSWORD
+   ========================================================= */
 async function changePassword(oldPassword, newPassword) {
+  if (!isLoggedIn()) {
+    showToast('🔒 Silakan login dulu.');
+    return;
+  }
+
   const user = window.currentUser || {};
-  const nia = user.nia || getUserNia();
 
   try {
     setLoading(true, 'Mengubah password...');
@@ -812,21 +1804,30 @@ async function changePassword(oldPassword, newPassword) {
     $('passwordForm').reset();
     showToast('✓ Password berhasil diubah.');
   } catch (error) {
-    showToast('⚠️ ' + (error.message || 'Gagal mengubah password.'), 4000);
+    showToast('⚠️ ' + (error.message || 'Gagal ubah password.'), 4000);
   } finally {
     setLoading(false);
   }
 }
 
-// ============================================================
-// EVENT HANDLERS
-// ============================================================
+/* =========================================================
+   EVENT HANDLERS
+   ========================================================= */
 $('backBtn').onclick = () => {
   if (history.length > 1) history.back();
-  else location.href = 'index.html';
+  else location.href = INDEX_URL;
+};
+
+$('headerAction').onclick = () => {
+  location.href = INDEX_URL;
 };
 
 $('editBtn').onclick = () => {
+  if (!isLoggedIn()) {
+    showToast('🔒 Silakan login dulu.');
+    setTimeout(() => location.href = LOGIN_URL, 1000);
+    return;
+  }
   fillEditForm(window.currentUser || {});
   $('editOverlay').classList.add('show');
 };
@@ -840,8 +1841,23 @@ $('editForm').addEventListener('submit', async event => {
   $('editOverlay').classList.remove('show');
 });
 
-$('passwordBtn').onclick = () => $('passwordOverlay').classList.add('show');
-$('securityBtn').onclick = () => $('passwordOverlay').classList.add('show');
+$('passwordBtn').onclick = () => {
+  if (!isLoggedIn()) {
+    showToast('🔒 Silakan login dulu.');
+    setTimeout(() => location.href = LOGIN_URL, 1000);
+    return;
+  }
+  $('passwordOverlay').classList.add('show');
+};
+
+$('securityBtn').onclick = () => {
+  if (!isLoggedIn()) {
+    showToast('🔒 Silakan login dulu.');
+    setTimeout(() => location.href = LOGIN_URL, 1000);
+    return;
+  }
+  $('passwordOverlay').classList.add('show');
+};
 
 $('passwordForm').addEventListener('submit', async event => {
   event.preventDefault();
@@ -861,7 +1877,7 @@ $('passwordForm').addEventListener('submit', async event => {
 $('shareBtn').onclick = async () => {
   const user = window.currentUser || {};
   const url = new URL(location.href);
-  url.searchParams.set('nia', user.nia || getUserNia());
+  if (user.nia) url.searchParams.set('nia', user.nia);
   const shareData = {
     title: 'Profil ' + (user.nama_lengkap || 'Anggota'),
     text: 'Profil anggota Karang Taruna',
@@ -880,10 +1896,9 @@ $('notificationBtn').onclick = () => showToast('ℹ️ Modul notifikasi akan dat
 
 $('logoutBtn').onclick = () => {
   if (!confirm('Keluar dari akun ini?')) return;
-  sessionStorage.removeItem(CONFIG.sessionKey);
-  localStorage.removeItem(CONFIG.sessionKey);
-  showToast('Sesi dihapus.');
-  setTimeout(() => location.href = 'index.html', 700);
+  clearSession();
+  showToast('✓ Berhasil logout.');
+  setTimeout(() => location.href = INDEX_URL, 700);
 };
 
 document.querySelectorAll('[data-close]').forEach(button => {
@@ -906,32 +1921,20 @@ window.addEventListener('keydown', event => {
 });
 
 window.addEventListener('scroll', () => {
-  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
-});
+  $('header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
 
-// ============================================================
-// THEME
-// ============================================================
+/* =========================================================
+   THEME
+   ========================================================= */
 if (localStorage.getItem('theme') === 'dark') {
   document.documentElement.dataset.theme = 'dark';
 }
 
-// ============================================================
-// INIT
-// ============================================================
-(function boot() {
-  const params = new URLSearchParams(location.search);
-  if (params.get('api')) {
-    localStorage.setItem(CONFIG.apiStorageKey, params.get('api'));
-    params.delete('api');
-    const newUrl = location.pathname + (params.toString() ? '?' + params.toString() : '');
-    if (history.replaceState) history.replaceState({}, '', newUrl);
-  }
-  if (!localStorage.getItem(CONFIG.apiStorageKey)) {
-    localStorage.setItem(CONFIG.apiStorageKey, API_URL);
-  }
-  loadUser();
-})();
+/* =========================================================
+   INIT
+   ========================================================= */
+loadUser();
 </script>
 </body>
 </html>
