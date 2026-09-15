@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2c7a7b">
+  <meta name="description" content="Daftar semua berita Karang Taruna (Putra Asmara)">
+  <title>Semua Berita — Karang Taruna (Putra Asmara)</title>
+
+  <style>
+    :root {
+      --primary: #2c7a7b;
+      --primary2: #245f60;
+      --green: #38b2ac;
+      --teal: #319795;
+      --bg: #f5f7f6;
+      --surface: #fff;
+      --surface2: #eef6f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --shadow: 0 12px 35px rgba(15,23,42,.08);
+      --radius: 16px;
+      --card-shadow: 0 10px 30px rgba(44,122,123,.12);
+      --transition: 0.35s cubic-bezier(.2,.8,.2,1);
+      --pad-x: clamp(12px, 4vw, 32px);
+    }
+    [data-theme=dark] {
+      --bg: #07110c;
+      --surface: #0d1912;
+      --surface2: #112319;
+      --text: #e7f4eb;
+      --muted: #9bb0a1;
+      --line: #20352a;
+      --shadow: 0 15px 40px rgba(0,0,0,.28);
+      --card-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background var(--transition), color var(--transition);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: 0; background: transparent; font: inherit; color: inherit; }
+    input { font: inherit; }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+      transition: .25s;
+    }
+    .header.scrolled { box-shadow: var(--shadow); }
+    .header-inner {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-block: 6px;
+    }
+    .back-btn, .theme-toggle {
+      border: 0;
+      background: var(--surface2);
+      color: var(--primary);
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      transition: all .2s;
+    }
+    .back-btn:hover, .theme-toggle:hover { background: var(--line); }
+    .header-title {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+      font-size: clamp(13px, 3.6vw, 15px);
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .header-title small {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      opacity: .7;
+      margin-top: 2px;
+    }
+
+    /* ===== SEARCH & FILTER ===== */
+    .control-section {
+      padding: 16px 0 8px;
+    }
+    .search-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+    .search-box {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 12px;
+      outline: 0;
+      font-size: 14px;
+      transition: all .2s;
+    }
+    .search-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(44,122,123,.1);
+    }
+    .search-clear {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 16px;
+      display: none;
+      place-items: center;
+    }
+    .search-clear.show { display: grid; }
+    .search-clear:hover { background: var(--line); }
+
+    /* FILTER — horizontal scroll di HP */
+    .filter-section {
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+    }
+    .filter-section::-webkit-scrollbar { height: 4px; }
+    .filter-section::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+    .filter-wrap {
+      display: inline-flex;
+      gap: 6px;
+    }
+    .filter-btn {
+      padding: 7px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--surface);
+      border: 2px solid var(--line);
+      color: var(--muted);
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(44,122,123,.25);
+    }
+
+    /* ===== NEWS COUNT ===== */
+    .news-count {
+      padding: 12px 0 14px;
+      font-size: 13px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+    .news-count strong { color: var(--text); }
+
+    /* ===== NEWS LIST ===== */
+    .news-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    /* ===== NEWS CARD ===== */
+    .news-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all .3s;
+      cursor: pointer;
+    }
+    .news-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 45px rgba(44,122,123,.15);
+      border-color: var(--primary);
+    }
+    .news-card-image {
+      flex: 0 0 auto;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      background: var(--surface2);
+    }
+    .news-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+    .news-card:hover .news-card-image img {
+      transform: scale(1.03);
+    }
+    .news-card-body {
+      flex: 1;
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .news-card-category {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--surface2);
+      color: var(--primary);
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+    .news-card-title {
+      font-size: clamp(15px, 4vw, 20px);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
+    }
+    .news-card-excerpt {
+      font-size: clamp(12px, 3.2vw, 14px);
+      color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .news-card-meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .news-card-meta span { display: flex; align-items: center; gap: 4px; }
+    .news-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      transition: gap .2s;
+      align-self: flex-start;
+      margin-top: auto;
+    }
+    .news-card-link:hover { gap: 12px; }
+
+    /* Highlight search match */
+    mark {
+      background: #fef3c7;
+      color: inherit;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+    [data-theme=dark] mark {
+      background: #78350f;
+      color: #fef3c7;
+    }
+
+    /* ===== LOADING & EMPTY ===== */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      gap: 16px;
+    }
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid var(--line);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-state p { color: var(--muted); font-size: 14px; }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      grid-column: 1 / -1;
+    }
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; display: block; }
+    .empty-state h3 { font-size: 18px; margin-bottom: 6px; }
+    .empty-state p { color: var(--muted); font-size: 13px; }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(15px);
+      z-index: 100;
+      width: max-content;
+      max-width: calc(100vw - 24px);
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 640px) {
+      .header-inner { min-height: 64px; }
+      .back-btn, .theme-toggle { width: 40px; height: 40px; }
+      .news-list { gap: 18px; }
+      .news-card {
+        flex-direction: row;
+        gap: 0;
+      }
+      .news-card-image {
+        flex: 0 0 260px;
+        height: auto;
+        min-height: 200px;
+      }
+      .news-card-body {
+        padding: 20px 22px;
+      }
+      .news-card-title { font-size: 20px; }
+    }
+
+    @media (min-width: 900px) {
+      .news-card-image { flex: 0 0 300px; }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner { min-height: 56px; }
+      .back-btn, .theme-toggle { width: 36px; height: 36px; font-size: 16px; }
+      .header-title { font-size: 13px; }
+      .filter-btn { padding: 6px 12px; font-size: 11px; }
+      .news-card-image { height: 170px; }
+      .toast { left: 12px; right: 12px; transform: translateY(15px); width: auto; max-width: none; }
+      .toast.show { transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <button class="back-btn" onclick="goBack()" aria-label="Kembali">←</button>
+    <div class="header-title">
+      Semua Berita
+      <small>Karang Taruna (Putra Asmara)</small>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Tema" id="themeBtn">☾</button>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <!-- SEARCH -->
+    <section class="control-section">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-box"
+          id="searchBox"
+          placeholder="Cari berita berdasarkan judul, kategori, atau isi..."
+          autocomplete="off"
+        >
+        <button class="search-clear" id="searchClear" aria-label="Bersihkan">✕</button>
+      </div>
+
+      <!-- FILTER KATEGORI (dinamis) -->
+      <div class="filter-section">
+        <div class="filter-wrap" id="filterWrap">
+          <button class="filter-btn active" data-filter="all">📰 Semua</button>
+          <!-- Kategori akan di-generate JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS COUNT -->
+    <div class="news-count" id="newsCount">Memuat berita...</div>
+
+    <!-- NEWS LIST -->
+    <div class="news-list" id="newsList">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Memuat berita...</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   KONFIGURASI
+   ========================================================= */
+const API_URL = 'https://script.google.com/macros/s/AKfycbxAck8UdHXSyeBtybGpFQyiamwgMC0O4mDfvrZ2EtAUzJ1YaaEXZcEuxlAPdFWUCW4V7A/exec';
+const CACHE_KEY = 'KT_NEWS_CACHE';
+const INDEX_URL = 'index.html';
+
+const $ = id => document.getElementById(id);
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let allNews = [];           // semua berita (dari server/cache)
+let currentFilter = 'all';  // filter kategori aktif
+let currentSearch = '';     // kata kunci search
+let searchTimer = null;     // debounce
+
+/* =========================================================
+   UTILITY
+   ========================================================= */
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function escRegex(str) {
+  return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlight(text, keyword) {
+  const safe = esc(text);
+  if (!keyword) return safe;
+  try {
+    const re = new RegExp('(' + escRegex(keyword) + ')', 'gi');
+    return safe.replace(re, '<mark>$1</mark>');
+  } catch (e) {
+    return safe;
+  }
+}
+
+function formatDateFull(value) {
+  if (!value) return '—';
+  try {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return String(value);
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  } catch (e) { return '—'; }
+}
+
+function formatTime(value) {
+  if (!value) return '';
+  try {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return ''; }
+}
+
+function toast(msg, ms = 2800) {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+function toggleTheme() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = dark ? '' : 'dark';
+  localStorage.setItem('theme', dark ? 'light' : 'dark');
+  $('themeBtn').textContent = dark ? '☾' : '☀';
+}
+
+function goBack() {
+  if (history.length > 1) history.back();
+  else location.href = INDEX_URL + '#berita';
+}
+
+/* =========================================================
+   CACHE
+   ========================================================= */
+function getCachedNews() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : null;
+  } catch (e) { return null; }
+}
+
+function setCachedNews(news) {
+  try {
+    if (Array.isArray(news)) {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(news));
+    }
+  } catch (e) { /* ignore quota */ }
+}
+
+/* =========================================================
+   FETCH dari server (getAll → ambil .news)
+   ========================================================= */
+async function fetchNewsFromServer() {
+  try {
+    const response = await fetch(API_URL + '?action=getAll', {
+      method: 'GET',
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const result = await response.json();
+    if (result && result.success && result.data && Array.isArray(result.data.news)) {
+      return result.data.news;
+    }
+    return null;
+  } catch (error) {
+    console.warn('Fetch news error:', error.message);
+    return null;
+  }
+}
+
+/* =========================================================
+   BUILD FILTER KATEGORI (dinamis dari data)
+   ========================================================= */
+function buildCategoryFilter() {
+  const wrap = $('filterWrap');
+  const categories = new Set();
+
+  allNews.forEach(item => {
+    const cat = String(item.category || '').trim();
+    if (cat) categories.add(cat);
+  });
+
+  const sorted = Array.from(categories).sort();
+
+  // Icon mapping (opsional, berdasarkan nama kategori)
+  const iconMap = {
+    'Kepemudaan': '🧑‍🤝‍🧑',
+    'Sosial': '❤️',
+    'UMKM': '🛍️',
+    'Pengumuman': '📢',
+    'Kegiatan': '📅',
+    'Olahraga': '🏆',
+    'Seni & Budaya': '🎨',
+    'Umum': '📰',
+    'Pendidikan': '📚',
+    'Lingkungan': '🌱'
+  };
+
+  let html = `<button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" data-filter="all">📰 Semua</button>`;
+
+  sorted.forEach(cat => {
+    const icon = iconMap[cat] || '📌';
+    const active = currentFilter === cat ? 'active' : '';
+    html += `<button class="filter-btn ${active}" data-filter="${esc(cat)}">${icon} ${esc(cat)}</button>`;
+  });
+
+  wrap.innerHTML = html;
+}
+
+/* =========================================================
+   FILTER & SEARCH LOGIC
+   ========================================================= */
+function getFilteredNews() {
+  let list = allNews.slice();
+
+  // Filter kategori
+  if (currentFilter !== 'all') {
+    list = list.filter(item =>
+      String(item.category || '').trim() === currentFilter
+    );
+  }
+
+  // Filter search (judul, kategori, excerpt/body)
+  if (currentSearch.trim()) {
+    const q = currentSearch.toLowerCase().trim();
+    list = list.filter(item => {
+      const title = String(item.title || '').toLowerCase();
+      const category = String(item.category || '').toLowerCase();
+      const excerpt = String(item.excerpt || '').toLowerCase();
+      const body = String(item.body || '').replace(/<[^>]*>/g, '').toLowerCase();
+      return title.includes(q) || category.includes(q) || excerpt.includes(q) || body.includes(q);
+    });
+  }
+
+  // Sort terbaru
+  list.sort((a, b) => {
+    const da = new Date(a.date || 0).getTime() || 0;
+    const db = new Date(b.date || 0).getTime() || 0;
+    return db - da;
+  });
+
+  return list;
+}
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function renderNewsList() {
+  const list = $('newsList');
+  const count = $('newsCount');
+
+  const filtered = getFilteredNews();
+
+  // Update count
+  const total = allNews.length;
+  const shown = filtered.length;
+  if (currentSearch.trim() || currentFilter !== 'all') {
+    count.innerHTML = `Menampilkan <strong>${shown}</strong> dari <strong>${total}</strong> berita`;
+  } else {
+    count.innerHTML = `Menampilkan <strong>${total}</strong> berita`;
+  }
+
+  // Empty state
+  if (shown === 0) {
+    if (total === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <span class="icon">📰</span>
+          <h3>Belum Ada Berita</h3>
+          <p>Belum ada berita yang dipublikasikan. Silakan cek kembali nanti.</p>
+        </div>
+      `;
+    } else {
+      list.innerHTML = `
+        <div class="empty-state">
+          <span class="icon">🔍</span>
+          <h3>Tidak Ditemukan</h3>
+          <p>Tidak ada berita yang cocok dengan pencarian/filter Anda.</p>
+        </div>
+      `;
+    }
+    return;
+  }
+
+  // Render kartu
+  list.innerHTML = filtered.map(item => {
+    const newsId = encodeURIComponent(item.id || '');
+    const imageUrl = item.image ||
+      (Array.isArray(item.images) && item.images.length ? item.images[0] : '') ||
+      'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80';
+
+    const cleanBody = item.body ? String(item.body).replace(/<[^>]*>/g, '').trim() : '';
+    const excerpt = item.excerpt ||
+      (cleanBody ? cleanBody.slice(0, 150) + (cleanBody.length > 150 ? '...' : '') : 'Klik untuk membaca selengkapnya...');
+
+    const title = item.title || 'Berita Tanpa Judul';
+    const category = item.category || 'Umum';
+    const dateFull = formatDateFull(item.date);
+    const time = formatTime(item.date);
+
+    // Highlight search di judul & excerpt
+    const titleHtml = highlight(title, currentSearch);
+    const excerptHtml = highlight(excerpt, currentSearch);
+
+    return `
+      <article class="news-card" data-news-id="${esc(item.id || '')}" tabindex="0">
+        <div class="news-card-image">
+          <img src="${esc(imageUrl)}" alt="${esc(title)}" loading="lazy"
+            onerror="this.src='https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80'">
+        </div>
+        <div class="news-card-body">
+          <span class="news-card-category">${esc(category)}</span>
+          <h2 class="news-card-title">${titleHtml}</h2>
+          <p class="news-card-excerpt">${excerptHtml}</p>
+          <div class="news-card-meta">
+            <span>📅 ${esc(dateFull)}</span>
+            ${time ? `<span>🕐 ${esc(time)}</span>` : ''}
+          </div>
+          <a class="news-card-link" href="berita-detail.html?id=${newsId}" onclick="event.stopPropagation()">
+            Baca Selengkapnya →
+          </a>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+/* =========================================================
+   LOAD DATA
+   ========================================================= */
+async function loadNews() {
+  // 1) Cek cache dulu — render instant
+  const cached = getCachedNews();
+  if (cached && cached.length) {
+    allNews = cached;
+    buildCategoryFilter();
+    renderNewsList();
+  }
+
+  // 2) Fetch dari server
+  const fresh = await fetchNewsFromServer();
+
+  if (fresh) {
+    // Filter hanya Published/Draft yang tidak deleted
+    const published = fresh.filter(item => {
+      const s = String(item.status || '').trim().toLowerCase();
+      return s === 'publish' || s === 'published' || s === '';
+    });
+
+    allNews = published;
+    setCachedNews(published);
+    buildCategoryFilter();
+    renderNewsList();
+
+    if (cached && cached.length) {
+      // Silent update — user tidak perlu tahu
+      console.log('✓ Berita di-refresh dari server');
+    }
+  } else if (!cached || !cached.length) {
+    // Tidak ada cache & server gagal
+    $('newsList').innerHTML = `
+      <div class="empty-state">
+        <span class="icon">📡</span>
+        <h3>Gagal Memuat</h3>
+        <p>Tidak dapat terhubung ke server. Silakan coba lagi nanti.</p>
+      </div>
+    `;
+    $('newsCount').textContent = 'Gagal memuat berita';
+  }
+}
+
+/* =========================================================
+   EVENT LISTENERS
+   ========================================================= */
+// Klik kartu berita (event delegation)
+document.addEventListener('click', e => {
+  const card = e.target.closest('.news-card');
+  if (card && card.dataset.newsId) {
+    // Kalau yang diklik adalah link, jangan redirect (sudah handle di <a>)
+    if (e.target.closest('.news-card-link')) return;
+    location.href = 'berita-detail.html?id=' + encodeURIComponent(card.dataset.newsId);
+  }
+});
+
+// Keyboard Enter pada kartu
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const card = e.target.closest('.news-card');
+    if (card && card.dataset.newsId) {
+      location.href = 'berita-detail.html?id=' + encodeURIComponent(card.dataset.newsId);
+    }
+  }
+});
+
+// Filter kategori
+$('filterWrap').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  currentFilter = btn.dataset.filter || 'all';
+
+  // Update UI
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === currentFilter);
+  });
+
+  renderNewsList();
+});
+
+// Search — debounce
+$('searchBox').addEventListener('input', e => {
+  const val = e.target.value;
+  $('searchClear').classList.toggle('show', !!val.trim());
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    currentSearch = val;
+    renderNewsList();
+  }, 250);
+});
+
+// Clear search
+$('searchClear').addEventListener('click', () => {
+  $('searchBox').value = '';
+  currentSearch = '';
+  $('searchClear').classList.remove('show');
+  renderNewsList();
+  $('searchBox').focus();
+});
+
+// Header scroll
+window.addEventListener('scroll', () => {
+  $('header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// Keyboard shortcut
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if ($('searchBox') === document.activeElement) {
+      $('searchClear').click();
+    } else {
+      goBack();
+    }
+  }
+});
+
+/* =========================================================
+   THEME
+   ========================================================= */
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+  $('themeBtn').textContent = '☀';
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+loadNews();
+</script>
+</body>
+</html>
