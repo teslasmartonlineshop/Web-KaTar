@@ -1066,7 +1066,48 @@ input, select, textarea {
   border-radius: 11px;
   font-size: clamp(11px, 2.8vw, 13px);
 }
-
+/* Patch: Foto pengurus */
+.org-leader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+.org-photo {
+  width: clamp(84px, 22vw, 120px);
+  height: clamp(84px, 22vw, 120px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c7a7b, #38b2ac);
+  display: grid;
+  place-items: center;
+  font-size: clamp(32px, 9vw, 48px);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(44,122,123,.3);
+  border: 4px solid #fff;
+  color: #fff;
+  position: relative;
+}
+.org-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.org-photo span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+.org-leader .org-main {
+  padding: 10px 22px;
+  font-size: clamp(12px, 3.2vw, 14px);
+  min-width: 160px;
+  text-align: center;
+  max-width: 90%;
+  word-break: break-word;
+}
 /* =========================================================
    SERVICES
    ========================================================= */
@@ -2095,12 +2136,11 @@ input, select, textarea {
         </div>
       </div>
       <div class="dropdown">
-        <button class="dropbtn">Kepengurusan ▾</button>
-        <div class="dropdown-menu">
-          <a href="#pemerintah">Perangkat Desa</a>
-          <a href="#struktur">Struktur Organisasi</a>
-        </div>
-      </div>
+  <button class="dropbtn">Kepengurusan ▾</button>
+  <div class="dropdown-menu">
+    <a href="#struktur">Struktur Kepengurusan</a>
+  </div>
+</div>
       <div class="dropdown">
         <button class="dropbtn">Informasi ▾</button>
         <div class="dropdown-menu">
@@ -2269,20 +2309,7 @@ input, select, textarea {
   </div>
 </section>
 
-<!-- PERANGKAT DESA -->
-<section class="section alt" id="pemerintah">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow">Kepengurusan</div>
-        <h2>Perangkat Desa</h2>
-      </div>
-    </div>
-    <div class="official-grid" id="officials"></div>
-  </div>
-</section>
-
-<!-- STRUKTUR -->
+<!-- STRUKTUR KEPENGURUSAN -->
 <section class="section" id="struktur">
   <div class="container">
     <div class="section-head">
@@ -2292,12 +2319,35 @@ input, select, textarea {
       </div>
     </div>
     <div class="org">
-      <div class="org-main">Ketua Karang Taruna</div>
+      <!-- Ketua -->
+      <div class="org-leader">
+        <div class="org-photo" id="orgKetuaPhoto">
+          <span>👑</span>
+        </div>
+        <div class="org-main" id="orgKetuaName">Ketua Karang Taruna</div>
+      </div>
       <div class="org-line"></div>
-      <div class="org-main">Sekretaris</div>
+
+      <!-- Sekretaris -->
+      <div class="org-leader">
+        <div class="org-photo" id="orgSekretarisPhoto">
+          <span>📋</span>
+        </div>
+        <div class="org-main" id="orgSekretarisName">Sekretaris</div>
+      </div>
       <div class="org-line"></div>
+
+      <!-- Bendahara -->
+      <div class="org-leader">
+        <div class="org-photo" id="orgBendaharaPhoto">
+          <span>💰</span>
+        </div>
+        <div class="org-main" id="orgBendaharaName">Bendahara</div>
+      </div>
+      <div class="org-line"></div>
+
+      <!-- Divisi (hardcoded) -->
       <div class="org-row">
-        <div>Bendahara</div>
         <div>Divisi Organisasi</div>
         <div>Kasi Kepengurusan</div>
         <div>Koordinator Sosial</div>
@@ -2523,7 +2573,7 @@ input, select, textarea {
     </div>
     <a href="#home" onclick="closeDrawer()">🏠 Beranda</a>
     <a href="#profil" onclick="closeDrawer()">🏛️ Tentang Kami</a>
-    <a href="#pemerintah" onclick="closeDrawer()">👥 Kepengurusan</a>
+    <a href="#struktur" onclick="closeDrawer()">👥 Kepengurusan</a>
     <a href="#berita" onclick="closeDrawer()">📰 Berita</a>
     <a href="#layanan" onclick="closeDrawer()">📄 Layanan Pemuda</a>
     <a href="#transparansi" onclick="closeDrawer()">📊 Program & Laporan</a>
@@ -2994,23 +3044,56 @@ function renderWithData(data) {
       }).join("")
     : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada agenda.</p>';
 
-  /* OFFICIALS */
-  const latestMgt = Array.isArray(management) && management.length ? management[0] : (management || null);
-  let officialCards = [];
-  if (latestMgt) {
-    if (latestMgt.ketuaName)      officialCards.push({ jabatan: 'Ketua',      nama: latestMgt.ketuaName,      foto: latestMgt.ketuaPhoto });
-    if (latestMgt.sekretarisName) officialCards.push({ jabatan: 'Sekretaris', nama: latestMgt.sekretarisName, foto: latestMgt.sekretarisPhoto });
-    if (latestMgt.bendaharaName)  officialCards.push({ jabatan: 'Bendahara',  nama: latestMgt.bendaharaName,  foto: latestMgt.bendaharaPhoto });
-  }
-  document.getElementById("officials").innerHTML = officialCards.length
-    ? officialCards.map(x =>
-        `<article class="official reveal">
-          <img src="${esc(x.foto || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80')}" alt="${esc(x.nama)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80'">
-          <div class="card-body"><h3>${esc(x.nama)}</h3><small>${esc(x.jabatan)}</small></div>
-        </article>`
-      ).join("")
-    : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada data pengurus.</p>';
+  /* STRUKTUR KEPENGURUSAN — dinamis dari management */
+const latestMgt = Array.isArray(management) && management.length ? management[0] : (management || null);
 
+function setOrgPerson(photoId, nameId, name, photo, fallbackEmoji, fallbackText) {
+  const photoEl = document.getElementById(photoId);
+  const nameEl = document.getElementById(nameId);
+  if (!photoEl || !nameEl) return;
+
+  // Nama
+  nameEl.textContent = name || fallbackText;
+
+  // Foto
+  if (photo) {
+    photoEl.innerHTML = '<img src="' + esc(photo) + '" alt="' + esc(name) + '" onerror="this.parentElement.innerHTML=\'<span>' + fallbackEmoji + '</span>\'">';
+  } else {
+    photoEl.innerHTML = '<span>' + fallbackEmoji + '</span>';
+  }
+}
+
+if (latestMgt) {
+  setOrgPerson(
+    'orgKetuaPhoto',
+    'orgKetuaName',
+    latestMgt.ketuaName,
+    latestMgt.ketuaPhoto,
+    '👑',
+    'Ketua Karang Taruna'
+  );
+  setOrgPerson(
+    'orgSekretarisPhoto',
+    'orgSekretarisName',
+    latestMgt.sekretarisName,
+    latestMgt.sekretarisPhoto,
+    '📋',
+    'Sekretaris'
+  );
+  setOrgPerson(
+    'orgBendaharaPhoto',
+    'orgBendaharaName',
+    latestMgt.bendaharaName,
+    latestMgt.bendaharaPhoto,
+    '💰',
+    'Bendahara'
+  );
+} else {
+  setOrgPerson('orgKetuaPhoto', 'orgKetuaName', '', '', '👑', 'Ketua Karang Taruna');
+  setOrgPerson('orgSekretarisPhoto', 'orgSekretarisName', '', '', '📋', 'Sekretaris');
+  setOrgPerson('orgBendaharaPhoto', 'orgBendaharaName', '', '', '💰', 'Bendahara');
+}
+  
   /* SERVICES */
   const servicesHTML = services.map(x => {
     if (x[3] === "Cek Status") {
