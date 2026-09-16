@@ -2071,26 +2071,6 @@ input, select, textarea {
     grid-column: 1 / -1;
   }
 }
-
-/* =========================================================
-   RESPONSIVE — DESKTOP BESAR (≥ 1200px)
-   ========================================================= */
-@media (min-width: 1200px) {
-  .hero h1 {
-    font-size: 62px;
-  }
-
-  .section h2 {
-    font-size: 38px;
-  }
-}
-
-@supports (padding: max(0px)) {
-  .header .container {
-    padding-left: max(var(--pad-x), env(safe-area-inset-left));
-    padding-right: max(var(--pad-x), env(safe-area-inset-right));
-  }
-}
 /* =========================================================
    ORG CHART — STRUKTUR KEPENGURUSAN
    ========================================================= */
@@ -2304,6 +2284,26 @@ input, select, textarea {
   }
 }
   
+/* =========================================================
+   RESPONSIVE — DESKTOP BESAR (≥ 1200px)
+   ========================================================= */
+@media (min-width: 1200px) {
+  .hero h1 {
+    font-size: 62px;
+  }
+
+  .section h2 {
+    font-size: 38px;
+  }
+}
+
+@supports (padding: max(0px)) {
+  .header .container {
+    padding-left: max(var(--pad-x), env(safe-area-inset-left));
+    padding-right: max(var(--pad-x), env(safe-area-inset-right));
+  }
+}
+
 </style>
 </head>
 <body>
