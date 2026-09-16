@@ -2091,6 +2091,219 @@ input, select, textarea {
     padding-right: max(var(--pad-x), env(safe-area-inset-right));
   }
 }
+/* =========================================================
+   ORG CHART — STRUKTUR KEPENGURUSAN
+   ========================================================= */
+.org-chart {
+  background: linear-gradient(135deg, #f0f9f4, #e8f5f4);
+  border-radius: 24px;
+  padding: clamp(20px, 5vw, 40px) clamp(12px, 3vw, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme=dark] .org-chart {
+  background: linear-gradient(135deg, #0d1912, #112319);
+}
+
+/* Level container */
+.org-level {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.org-level.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 5vw, 60px);
+  max-width: 560px;
+  margin: 0 auto;
+}
+.org-level.divisions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 3vw, 24px);
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Node (kotak orang) */
+.org-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Foto bulat */
+.org-photo {
+  width: clamp(70px, 18vw, 100px);
+  height: clamp(70px, 18vw, 100px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c7a7b, #38b2ac);
+  display: grid;
+  place-items: center;
+  font-size: clamp(28px, 8vw, 42px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(44, 122, 123, .3);
+  border: 4px solid #fff;
+  color: #fff;
+  transition: transform .3s;
+}
+[data-theme=dark] .org-photo {
+  border-color: #0d1912;
+}
+.org-photo:hover {
+  transform: scale(1.05);
+}
+.org-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.org-photo span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Node spesial (Pembina & Ketua) — foto lebih besar */
+.org-node.pembina .org-photo {
+  width: clamp(80px, 20vw, 110px);
+  height: clamp(80px, 20vw, 110px);
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  box-shadow: 0 8px 24px rgba(217, 119, 6, .3);
+}
+.org-node.ketua .org-photo {
+  width: clamp(85px, 22vw, 120px);
+  height: clamp(85px, 22vw, 120px);
+  background: linear-gradient(135deg, #2c7a7b, #38b2ac);
+  box-shadow: 0 10px 28px rgba(44, 122, 123, .35);
+}
+
+/* Role label */
+.org-role {
+  font-size: clamp(10px, 2.6vw, 11px);
+  font-weight: 800;
+  color: #176b6d;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-top: 4px;
+}
+[data-theme=dark] .org-role {
+  color: #5eead4;
+}
+
+/* Nama */
+.org-name {
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #2c7a7b, #319795);
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: clamp(12px, 3.2vw, 14px);
+  text-align: center;
+  min-width: clamp(120px, 30vw, 160px);
+  max-width: 90%;
+  word-break: break-word;
+  box-shadow: 0 4px 14px rgba(44, 122, 123, .25);
+}
+.org-node.pembina .org-name {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, .3);
+}
+
+/* Connector (garis vertikal) */
+.org-connector {
+  width: 3px;
+  height: clamp(20px, 5vw, 32px);
+  background: linear-gradient(180deg, #2c7a7b, #94a3b8);
+  border-radius: 2px;
+  position: relative;
+  z-index: 0;
+}
+.org-connector::before,
+.org-connector::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2c7a7b;
+}
+.org-connector::before { top: -4px; }
+.org-connector::after { bottom: -4px; background: #94a3b8; }
+
+/* Divisions (kotak kecil) */
+.div-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.div-col-title {
+  font-size: clamp(10px, 2.6vw, 11px);
+  font-weight: 900;
+  color: #176b6d;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+[data-theme=dark] .div-col-title {
+  color: #5eead4;
+}
+.div-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: clamp(9px, 2.4vw, 12px) clamp(10px, 2.6vw, 16px);
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, .05);
+  transition: all .2s;
+}
+[data-theme=dark] .div-item {
+  background: #112319;
+}
+.div-item:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(44, 122, 123, .15);
+}
+
+/* Responsive tweak */
+@media (max-width: 520px) {
+  .org-level.two-col {
+    gap: 12px;
+  }
+  .org-level.divisions {
+    gap: 8px;
+  }
+  .div-item {
+    padding: 8px 6px;
+    font-size: 10px;
+  }
+  .org-name {
+    min-width: 100px;
+    padding: 6px 12px;
+  }
+}
+  
 </style>
 </head>
 <body>
@@ -2318,42 +2531,75 @@ input, select, textarea {
         <h2>Struktur Kepengurusan</h2>
       </div>
     </div>
-    <div class="org">
-      <!-- Ketua -->
-      <div class="org-leader">
-        <div class="org-photo" id="orgKetuaPhoto">
-          <span>👑</span>
-        </div>
-        <div class="org-main" id="orgKetuaName">Ketua Karang Taruna</div>
-      </div>
-      <div class="org-line"></div>
 
-      <!-- Sekretaris -->
-      <div class="org-leader">
-        <div class="org-photo" id="orgSekretarisPhoto">
-          <span>📋</span>
-        </div>
-        <div class="org-main" id="orgSekretarisName">Sekretaris</div>
-      </div>
-      <div class="org-line"></div>
+    <div class="org-chart">
 
-      <!-- Bendahara -->
-      <div class="org-leader">
-        <div class="org-photo" id="orgBendaharaPhoto">
-          <span>💰</span>
+      <!-- LEVEL 1: PEMBINA -->
+      <div class="org-level">
+        <div class="org-node pembina">
+          <div class="org-photo" id="orgPembinaPhoto">
+            <span>🏛️</span>
+          </div>
+          <div class="org-role">Pembina</div>
+          <div class="org-name" id="orgPembinaName">Kepala Desa</div>
         </div>
-        <div class="org-main" id="orgBendaharaName">Bendahara</div>
       </div>
-      <div class="org-line"></div>
 
-      <!-- Divisi (hardcoded) -->
-      <div class="org-row">
-        <div>Divisi Organisasi</div>
-        <div>Kasi Kepengurusan</div>
-        <div>Koordinator Sosial</div>
-        <div>Divisi Kesejahteraan</div>
-        <div>Koordinator Wilayah</div>
+      <div class="org-connector"></div>
+
+      <!-- LEVEL 2: KETUA -->
+      <div class="org-level">
+        <div class="org-node ketua">
+          <div class="org-photo" id="orgKetuaPhoto">
+            <span>👑</span>
+          </div>
+          <div class="org-role">Ketua</div>
+          <div class="org-name" id="orgKetuaName">Nama Ketua</div>
+        </div>
       </div>
+
+      <div class="org-connector"></div>
+
+      <!-- LEVEL 3: SEKRETARIS + BENDAHARA (SEJAJAR) -->
+      <div class="org-level two-col">
+        <div class="org-node sekretaris">
+          <div class="org-photo" id="orgSekretarisPhoto">
+            <span>📋</span>
+          </div>
+          <div class="org-role">Sekretaris</div>
+          <div class="org-name" id="orgSekretarisName">Nama</div>
+        </div>
+
+        <div class="org-node bendahara">
+          <div class="org-photo" id="orgBendaharaPhoto">
+            <span>💰</span>
+          </div>
+          <div class="org-role">Bendahara</div>
+          <div class="org-name" id="orgBendaharaName">Nama</div>
+        </div>
+      </div>
+
+      <div class="org-connector"></div>
+
+      <!-- LEVEL 4: DIVISI (2 KOLOM) -->
+      <div class="org-level divisions">
+        <!-- Kolom Kiri -->
+        <div class="div-col">
+          <div class="div-col-title">Bidang & Divisi</div>
+          <div class="div-item">🏆 Divisi Olahraga</div>
+          <div class="div-item">🗂️ Divisi Organisasi</div>
+          <div class="div-item">⚖️ Divisi HAM</div>
+        </div>
+
+        <!-- Kolom Kanan -->
+        <div class="div-col">
+          <div class="div-col-title">Bidang & Divisi</div>
+          <div class="div-item">🚀 Divisi Pengembangan</div>
+          <div class="div-item">🌴 Divisi Wisata</div>
+          <div class="div-item">📣 Divisi Humas</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3044,7 +3290,7 @@ function renderWithData(data) {
       }).join("")
     : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada agenda.</p>';
 
-  /* STRUKTUR KEPENGURUSAN — dinamis dari management */
+/* STRUKTUR KEPENGURUSAN — dinamis dari management */
 const latestMgt = Array.isArray(management) && management.length ? management[0] : (management || null);
 
 function setOrgPerson(photoId, nameId, name, photo, fallbackEmoji, fallbackText) {
@@ -3052,10 +3298,8 @@ function setOrgPerson(photoId, nameId, name, photo, fallbackEmoji, fallbackText)
   const nameEl = document.getElementById(nameId);
   if (!photoEl || !nameEl) return;
 
-  // Nama
   nameEl.textContent = name || fallbackText;
 
-  // Foto
   if (photo) {
     photoEl.innerHTML = '<img src="' + esc(photo) + '" alt="' + esc(name) + '" onerror="this.parentElement.innerHTML=\'<span>' + fallbackEmoji + '</span>\'">';
   } else {
@@ -3064,30 +3308,50 @@ function setOrgPerson(photoId, nameId, name, photo, fallbackEmoji, fallbackText)
 }
 
 if (latestMgt) {
+  // Pembina (Kepala Desa) — belum ada di sheet, pakai default
+  // Kalau nanti mau dinamis, tambah kolom `pembinaName` + `pembinaPhoto` di sheet management
+  setOrgPerson(
+    'orgPembinaPhoto',
+    'orgPembinaName',
+    latestMgt.pembinaName || '',
+    latestMgt.pembinaPhoto || '',
+    '🏛️',
+    'Kepala Desa'
+  );
+
   setOrgPerson(
     'orgKetuaPhoto',
     'orgKetuaName',
     latestMgt.ketuaName,
     latestMgt.ketuaPhoto,
     '👑',
-    'Ketua Karang Taruna'
+    'Nama Ketua'
   );
+
   setOrgPerson(
     'orgSekretarisPhoto',
     'orgSekretarisName',
     latestMgt.sekretarisName,
     latestMgt.sekretarisPhoto,
     '📋',
-    'Sekretaris'
+    'Nama'
   );
+
   setOrgPerson(
     'orgBendaharaPhoto',
     'orgBendaharaName',
     latestMgt.bendaharaName,
     latestMgt.bendaharaPhoto,
     '💰',
-    'Bendahara'
+    'Nama'
   );
+} else {
+  // Belum ada data management → tampil placeholder
+  setOrgPerson('orgPembinaPhoto', 'orgPembinaName', '', '', '🏛️', 'Kepala Desa');
+  setOrgPerson('orgKetuaPhoto', 'orgKetuaName', '', '', '👑', 'Nama Ketua');
+  setOrgPerson('orgSekretarisPhoto', 'orgSekretarisName', '', '', '📋', 'Nama');
+  setOrgPerson('orgBendaharaPhoto', 'orgBendaharaName', '', '', '💰', 'Nama');
+  
 } else {
   setOrgPerson('orgKetuaPhoto', 'orgKetuaName', '', '', '👑', 'Ketua Karang Taruna');
   setOrgPerson('orgSekretarisPhoto', 'orgSekretarisName', '', '', '📋', 'Sekretaris');
