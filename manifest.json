@@ -1,32 +1,48 @@
 {
   "name": "Karang Taruna (Putra Asmara)",
   "short_name": "Karang Taruna",
-  "description": "Website resmi Karang Taruna (Putra Asmara) — Dari Pemuda Untuk Desa.",
+  "description": "Portal resmi Karang Taruna (Putra Asmara) — informasi, pelayanan publik, transparansi dan partisipasi masyarakat.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "background_color": "#f5f7f6",
   "theme_color": "#2c7a7b",
-  "lang": "id-ID",
+  "lang": "id",
   "dir": "ltr",
-  "categories": [
-    "social",
-    "community",
-    "lifestyle"
-  ],
+  "categories": ["news", "social", "government"],
   "icons": [
     {
-      "src": "./assets/icon-192.png",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/jpeg",
+      "purpose": "any"
     },
     {
-      "src": "./assets/icon-512.png",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Berita",
+      "short_name": "Berita",
+      "url": "./berita-list.html",
+      "icons": [{ "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Profil Saya",
+      "short_name": "Profil",
+      "url": "./profil.html",
+      "icons": [{ "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg", "sizes": "192x192" }]
     }
   ]
 }
