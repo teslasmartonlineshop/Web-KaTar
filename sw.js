@@ -1,245 +1,155 @@
 /* =========================================================
-   KARANG TARUNA (PUTRA ASMARA)
-   Progressive Web App — Service Worker
+   SERVICE WORKER — Karang Taruna PWA
+   Versi: 1.0.0
    ========================================================= */
 
-const CACHE_NAME = "karang-taruna-putra-asmara-v2";
+const CACHE_NAME = 'karang-taruna-v1';
+const RUNTIME_CACHE = 'karang-taruna-runtime-v1';
 
-/*
- * File utama yang wajib tersedia ketika offline.
- */
-const CORE_ASSETS = [
-  "./",
-  "./index.html",
-  "./profil.html",
-  "./login-register.html",
-  "./manifest.json",
-
-  /* Icon PWA */
-  "./assets/icon-192.png",
-  "./assets/icon-512.png",
-
-  /* Karakter Ghibli */
-  "./assets/karakter-ghibli.png"
+/* File yang di-cache saat install (static assets) */
+const PRECACHE_URLS = [
+  './',
+  './index.html',
+  './berita-list.html',
+  './berita-detail.html',
+  './login-register.html',
+  './profil.html',
+  './manifest.json'
 ];
 
-
 /* =========================================================
-   INSTALL
+   INSTALL — Pre-cache static assets
    ========================================================= */
-
-self.addEventListener("install", event => {
-
-  console.log("[PWA] Service Worker: INSTALL");
-
+self.addEventListener('install', event => {
+  console.log('[SW] Installing...');
   event.waitUntil(
-
     caches.open(CACHE_NAME)
-
       .then(cache => {
-
-        console.log("[PWA] Menyimpan core assets...");
-
-        return cache.addAll(CORE_ASSETS);
-
+        console.log('[SW] Pre-caching static assets');
+        return cache.addAll(PRECACHE_URLS.map(url => new Request(url, { cache: 'reload' })));
       })
-
-      .then(() => {
-
-        console.log("[PWA] Core assets berhasil dicache.");
-
-        /*
-         * Langsung mengaktifkan Service Worker baru.
-         */
-        return self.skipWaiting();
-
-      })
-
+      .then(() => self.skipWaiting())
+      .catch(err => console.warn('[SW] Pre-cache gagal:', err))
   );
-
 });
 
-
 /* =========================================================
-   ACTIVATE
+   ACTIVATE — Hapus cache lama
    ========================================================= */
-
-self.addEventListener("activate", event => {
-
-  console.log("[PWA] Service Worker: ACTIVATE");
-
+self.addEventListener('activate', event => {
+  console.log('[SW] Activating...');
   event.waitUntil(
-
-    caches.keys()
-
-      .then(cacheNames => {
-
-        return Promise.all(
-
-          cacheNames
-
-            .filter(name => name !== CACHE_NAME)
-
-            .map(name => {
-
-              console.log("[PWA] Menghapus cache lama:", name);
-
-              return caches.delete(name);
-
-            })
-
-        );
-
-      })
-
-      .then(() => {
-
-        /*
-         * Mengambil alih seluruh halaman
-         * tanpa menunggu reload berikutnya.
-         */
-        return self.clients.claim();
-
-      })
-
-  );
-
-});
-
-
-/* =========================================================
-   FETCH
-   ========================================================= */
-
-self.addEventListener("fetch", event => {
-
-  /*
-   * Hanya GET request.
-   */
-  if (event.request.method !== "GET") {
-    return;
-  }
-
-  /*
-   * Jangan mengganggu request eksternal tertentu.
-   */
-  const requestURL = new URL(event.request.url);
-
-  /*
-   * Strategi:
-   *
-   * 1. Cache terlebih dahulu.
-   * 2. Jika tidak ada → Internet.
-   * 3. Jika berhasil → simpan ke cache.
-   * 4. Jika offline → fallback.
-   */
-
-  event.respondWith(
-
-    caches.match(event.request)
-
-      .then(cachedResponse => {
-
-        if (cachedResponse) {
-
-          return cachedResponse;
-
-        }
-
-        return fetch(event.request)
-
-          .then(networkResponse => {
-
-            /*
-             * Response harus valid.
-             */
-            if (
-              networkResponse &&
-              networkResponse.status === 200 &&
-              networkResponse.type === "basic"
-            ) {
-
-              const responseClone =
-                networkResponse.clone();
-
-              caches.open(CACHE_NAME)
-
-                .then(cache => {
-
-                  cache.put(
-                    event.request,
-                    responseClone
-                  );
-
-                });
-
-            }
-
-            return networkResponse;
-
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames
+          .filter(name => name !== CACHE_NAME && name !== RUNTIME_CACHE)
+          .map(name => {
+            console.log('[SW] Hapus cache lama:', name);
+            return caches.delete(name);
           })
-
-          .catch(() => {
-
-            /*
-             * Jika request berupa halaman HTML
-             * dan internet tidak tersedia,
-             * tampilkan index.html.
-             */
-
-            if (
-              event.request.destination === "document"
-            ) {
-
-              return caches.match(
-                "./index.html"
-              );
-
-            }
-
-            /*
-             * Resource lain yang tidak tersedia
-             * saat offline akan menghasilkan error.
-             */
-
-            return new Response(
-              "Offline — resource tidak tersedia.",
-              {
-                status: 503,
-                statusText: "Service Unavailable",
-                headers: {
-                  "Content-Type": "text/plain; charset=utf-8"
-                }
-              }
-            );
-
-          });
-
-      })
-
+      );
+    }).then(() => self.clients.claim())
   );
-
 });
 
-
 /* =========================================================
-   MESSAGE
+   FETCH — Strategi caching
+   - API Google Apps Script: Network-only (jangan cache)
+   - Google Fonts / CDN: Cache-first
+   - File lokal: Stale-while-revalidate
    ========================================================= */
+self.addEventListener('fetch', event => {
+  const { request } = event;
+  const url = new URL(request.url);
 
-self.addEventListener("message", event => {
+  // Skip non-GET
+  if (request.method !== 'GET') return;
 
-  if (!event.data) {
+  // Skip chrome-extension, dll
+  if (!url.protocol.startsWith('http')) return;
+
+  // API Google Apps Script — Network only (selalu fresh)
+  if (url.hostname.includes('script.google.com') || url.hostname.includes('script.googleusercontent.com')) {
+    event.respondWith(
+      fetch(request).catch(() => {
+        return new Response(JSON.stringify({ success: false, message: 'Offline' }), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+      })
+    );
     return;
   }
 
-  /*
-   * Memungkinkan halaman meminta
-   * Service Worker langsung mengambil alih.
-   */
-  if (event.data.type === "SKIP_WAITING") {
-
-    self.skipWaiting();
-
+  // Google Fonts, Blogger images, Unsplash — Cache first
+  if (
+    url.hostname.includes('fonts.googleapis.com') ||
+    url.hostname.includes('fonts.gstatic.com') ||
+    url.hostname.includes('blogger.googleusercontent.com') ||
+    url.hostname.includes('images.unsplash.com') ||
+    url.hostname.includes('dicebear.com')
+  ) {
+    event.respondWith(
+      caches.match(request).then(cached => {
+        if (cached) return cached;
+        return fetch(request).then(response => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(RUNTIME_CACHE).then(cache => cache.put(request, clone));
+          }
+          return response;
+        }).catch(() => cached);
+      })
+    );
+    return;
   }
 
+  // File lokal (HTML, CSS, JS) — Stale-while-revalidate
+  event.respondWith(
+    caches.match(request).then(cached => {
+      const fetchPromise = fetch(request).then(response => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+        }
+        return response;
+      }).catch(() => cached);
+
+      return cached || fetchPromise;
+    })
+  );
+});
+
+/* =========================================================
+   MESSAGE — Handle pesan dari halaman
+   ========================================================= */
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    caches.keys().then(names => {
+      names.forEach(name => caches.delete(name));
+    });
+  }
+});
+
+/* =========================================================
+   PUSH NOTIFICATION (opsional — untuk future)
+   ========================================================= */
+self.addEventListener('push', event => {
+  if (!event.data) return;
+  const data = event.data.json();
+  const options = {
+    body: data.body || 'Ada berita baru dari Karang Taruna',
+    icon: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg',
+    badge: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg',
+    data: { url: data.url || './' }
+  };
+  event.waitUntil(self.registration.showNotification(data.title || 'Karang Taruna', options));
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const url = event.notification.data.url || './';
+  event.waitUntil(clients.openWindow(url));
 });
