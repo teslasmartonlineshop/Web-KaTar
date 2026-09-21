@@ -17,9 +17,6 @@
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrgyRNOvRz64nJHacMOfS1zS3Nu-uffga7jZfnnXjAmaelH9p6oQVFMlE5UKiUeV9NxzjOnjqRyXqReI-DpEgWkqBT5pfeiM-U-ry9lf-opHX7-M2V_KEAi4NH8sOOWc1zZfea49CLVXRwRUKN4IBYKJAxuY7sybH_Xe-e6g0ZcGiGRRHGP0BGGFAzoMg/s320/1000007259.png">
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
 <style>
 /* =========================================================
    RESET & BASE (MOBILE-FIRST)
@@ -89,32 +86,31 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
-   PWA INSTALL BANNER (POSISI SUDAH DIPERBAIKI)
+   PWA INSTALL BANNER
    ========================================================= */
 .pwa-install {
   display: none;
   position: fixed;
   left: 50%;
-  /* Mobile: di atas bottom-nav (bottom-nav ~70px + safe area) */
-  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%) translateY(120%);
   z-index: 1400;
   width: calc(100% - 20px);
-  max-width: 420px;
+  max-width: 440px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
   background: linear-gradient(135deg, var(--primary), var(--green));
   color: #fff;
   border-radius: 14px;
-  padding: 11px 13px;
+  padding: 12px 14px;
   box-shadow: 0 12px 40px rgba(44,122,123,.4);
-  transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s;
-  opacity: 0;
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
 }
 .pwa-install.show {
   display: flex;
   align-items: center;
   gap: 10px;
   transform: translateX(-50%) translateY(0);
-  opacity: 1;
 }
 .pwa-install-icon {
   width: 38px;
@@ -128,13 +124,13 @@ input, select, textarea { font: inherit; max-width: 100%; }
 .pwa-install-text { flex: 1; min-width: 0; }
 .pwa-install-text b {
   display: block;
-  font-size: 12px;
+  font-size: clamp(11px, 3vw, 13px);
   font-weight: 900;
   line-height: 1.2;
 }
 .pwa-install-text span {
   display: block;
-  font-size: 10px;
+  font-size: clamp(9px, 2.6vw, 11px);
   opacity: .9;
   margin-top: 2px;
   line-height: 1.3;
@@ -144,11 +140,11 @@ input, select, textarea { font: inherit; max-width: 100%; }
   border: 0;
   border-radius: 8px;
   padding: 7px 11px;
-  font-size: 11px;
+  font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 800;
   transition: all .2s;
   white-space: nowrap;
-  min-height: 32px;
+  min-height: 34px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -158,23 +154,12 @@ input, select, textarea { font: inherit; max-width: 100%; }
   background: rgba(255,255,255,.2);
   color: #fff;
   padding: 7px 9px;
-  min-width: 32px;
+  min-width: 34px;
 }
 .pwa-install button:hover { transform: scale(.96); }
 
-/* Desktop: bottom 20px (tidak ada bottom-nav) */
 @media (min-width: 900px) {
-  .pwa-install { bottom: 20px; right: 20px; left: auto; transform: translateY(120%); }
-  .pwa-install.show { transform: translateY(0); }
-}
-
-/* HP sangat kecil */
-@media (max-width: 360px) {
-  .pwa-install { padding: 9px 11px; gap: 8px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
-  .pwa-install-icon { width: 34px; height: 34px; }
-  .pwa-install-text b { font-size: 11px; }
-  .pwa-install-text span { font-size: 9px; }
-  .pwa-install button { padding: 6px 9px; font-size: 10px; min-height: 30px; }
+  .pwa-install { bottom: 20px; }
 }
 
 /* =========================================================
@@ -855,40 +840,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
-   PETA INTERAKTIF (LEAFLET)
-   ========================================================= */
-#map {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  z-index: 1;
-  background: #e8f5f4;
-}
-#map .leaflet-container {
-  font-family: inherit;
-  border-radius: 20px;
-}
-#map .leaflet-popup-content-wrapper {
-  border-radius: 12px;
-}
-#map .leaflet-popup-content {
-  margin: 12px 14px;
-  font-size: 13px;
-  line-height: 1.5;
-}
-#map .leaflet-popup-content b {
-  color: var(--primary);
-  font-size: 14px;
-}
-
-@media (max-width: 520px) {
-  #map { aspect-ratio: 1 / 1; }
-}
-
-/* =========================================================
-   ORG CHART
+   ORG CHART — STRUKTUR KEPENGURUSAN
    ========================================================= */
 .org-chart {
   background: linear-gradient(135deg, #f0f9f4, #e8f5f4);
@@ -1159,6 +1111,28 @@ input, select, textarea { font: inherit; max-width: 100%; }
 .product .card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; }
 .product h3 { font-size: clamp(14px, 3.6vw, 16px); margin: 8px 0 4px; }
 .product p { font-size: clamp(12px, 3vw, 13px); color: var(--muted); margin: 4px 0 10px; flex: 1; }
+
+/* =========================================================
+   GOOGLE MAPS EMBED (PETA INTERAKTIF)
+   ========================================================= */
+.map-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--surface2);
+  position: relative;
+}
+.map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+@media (max-width: 520px) {
+  .map-wrapper { aspect-ratio: 1 / 1; }
+}
 
 /* =========================================================
    GALLERY
@@ -1587,7 +1561,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   .desktop-menu { display: flex; margin-left: auto; }
   .hero-inner { grid-template-columns: 1.15fr .85fr; align-items: center; gap: 40px; }
   .hero-card { display: block; }
-  .program-grid { grid-template-columns: repeat(2, 1fr); }
+  .program-grid { grid-template-columns: repeat(3, 1fr); }
   .news-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .agenda-grid { grid-template-columns: repeat(3, 1fr); }
   .services { grid-template-columns: repeat(4, 1fr); }
@@ -1863,6 +1837,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
     <div class="org-chart">
 
+      <!-- LEVEL 1: PEMBINA -->
       <div class="org-level">
         <div class="org-node pembina">
           <div class="org-photo" id="orgPembinaPhoto">
@@ -1875,6 +1850,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
       <div class="org-connector"></div>
 
+      <!-- LEVEL 2: KETUA -->
       <div class="org-level">
         <div class="org-node ketua">
           <div class="org-photo" id="orgKetuaPhoto">
@@ -1887,6 +1863,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
       <div class="org-connector"></div>
 
+      <!-- LEVEL 3: SEKRETARIS + BENDAHARA -->
       <div class="org-level two-col">
         <div class="org-node sekretaris">
           <div class="org-photo" id="orgSekretarisPhoto">
@@ -1907,6 +1884,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
       <div class="org-connector"></div>
 
+      <!-- LEVEL 4: DIVISI -->
       <div class="org-level divisions">
         <div class="div-col">
           <div class="div-col-title">Bidang & Divisi</div>
@@ -2005,12 +1983,20 @@ input, select, textarea { font: inherit; max-width: 100%; }
         <div class="stat-card"><div class="stat-icon">🏘️</div><strong>3</strong><span>Dusun</span></div>
         <div class="stat-card"><div class="stat-icon">📋</div><strong>32</strong><span>RT</span></div>
         <div class="stat-card"><div class="stat-icon">🏛️</div><strong>11</strong><span>RW</span></div>
-        <div class="stat-card"><div class="stat-icon">🌾</div><strong>626 H</strong><span>Luas Wilayah</span></div>
+        <div class="stat-card"><div class="stat-icon">🌾</div><strong>626 ha</strong><span>Luas Wilayah</span></div>
         <div class="stat-card"><div class="stat-icon">👪</div><strong>2.449</strong><span>Kepala Keluarga</span></div>
         <div class="stat-card"><div class="stat-icon">👥</div><strong>8.985</strong><span>Jumlah Penduduk</span></div>
       </div>
     </div>
-    <div id="map"></div>
+    <div class="map-wrapper">
+      <iframe
+        src="https://www.google.com/maps?q=-6.684732,106.648403&hl=id&z=15&output=embed"
+        title="Peta Desa Ciasmara"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
   </div>
 </section>
 
@@ -2242,9 +2228,6 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 /* =========================================================
@@ -2550,18 +2533,13 @@ function renderWithData(data) {
     `<div class="stat-card reveal"><div class="stat-icon">${x[0]}</div><strong>${x[1]}</strong><span>${x[2]}</span></div>`
   ).join("");
 
-  /* PROGRAM UNGGULAN — LIMIT 4 */
+  /* PROGRAM UNGGULAN — FIX: tampil SEMUA program (maks 4) tanpa filter aktif */
   const programList = document.getElementById('programList');
   if (programList) {
-    const activePrograms = (programs || []).filter(p => {
-      const s = String(p.status || '').toLowerCase();
-      return !s.includes('selesai') && !s.includes('done');
-    });
+    const allPrograms = Array.isArray(programs) ? programs : [];
 
-    const displayPrograms = activePrograms.length ? activePrograms : (programs || []);
-
-    programList.innerHTML = displayPrograms.length
-      ? displayPrograms.slice(0, 4).map(p => {
+    programList.innerHTML = allPrograms.length
+      ? allPrograms.slice(0, 4).map(p => {
           const statusClass = getProgramStatusClass(p.status);
           const icon = getProgramIcon(p.category);
           return `<article class="program-card reveal">
@@ -2581,13 +2559,13 @@ function renderWithData(data) {
       : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada program. Silakan tambahkan melalui dashboard admin.</p>';
   }
 
-  /* NEWS — LIMIT 2 */
+  /* NEWS — limit 2 */
   const publishedNews = news.filter(x => {
     const s = String(x.status || '').trim().toLowerCase();
     return s === 'publish' || s === 'published' || s === '';
   });
   document.getElementById("news").innerHTML = publishedNews.length
-    ? publishedNews.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 2).map((x) => {
+    ? publishedNews.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 2).map((x, i) => {
         const image = x.image || (Array.isArray(x.images) && x.images.length ? x.images[0] : '') ||
           'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80';
         return `<article class="news-card reveal">
@@ -2648,7 +2626,7 @@ function renderWithData(data) {
     setOrgPerson('orgBendaharaPhoto', 'orgBendaharaName', '', '', '💰', 'Nama');
   }
 
-  /* SERVICES */
+  /* SERVICES (Layanan Pemuda) */
   const servicesHTML = services.map(x => {
     if (x[3] === "Cek Status") {
       return `<article class="service-card reveal">
@@ -2742,62 +2720,6 @@ async function loadData() {
     showToast("✓ Data berhasil disinkronkan.");
   } else {
     showToast("⚠️ Mode offline — data lokal.");
-  }
-}
-
-/* =========================================================
-   PETA INTERAKTIF — LEAFLET
-   ========================================================= */
-function initMap() {
-  const mapEl = document.getElementById('map');
-  if (!mapEl) return;
-
-  if (typeof L === 'undefined') {
-    console.warn('[Map] Leaflet belum di-load');
-    return;
-  }
-
-  const lat = -6.684732;
-  const lng = 106.648403;
-
-  try {
-    const map = L.map('map', {
-      center: [lat, lng],
-      zoom: 15,
-      scrollWheelZoom: false,
-      zoomControl: true
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
-      maxZoom: 19,
-      minZoom: 10
-    }).addTo(map);
-
-    const markerIcon = L.divIcon({
-      className: 'custom-marker',
-      html: '<div style="background:linear-gradient(135deg,#2c7a7b,#38b2ac);width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:grid;place-items:center;box-shadow:0 4px 12px rgba(44,122,123,.4);border:3px solid #fff;"><span style="transform:rotate(45deg);font-size:16px;">🏛️</span></div>',
-      iconSize: [36, 36],
-      iconAnchor: [18, 36],
-      popupAnchor: [0, -36]
-    });
-
-    L.marker([lat, lng], { icon: markerIcon })
-      .addTo(map)
-      .bindPopup(
-        '<b>Karang Taruna (Putra Asmara)</b><br>' +
-        'Desa Ciasmara, Kec. Pamijahan<br>' +
-        'Kab. Bogor, Jawa Barat'
-      )
-      .openPopup();
-
-    map.on('click', () => map.scrollWheelZoom.enable());
-
-    console.log('[Map] Peta berhasil di-load');
-
-  } catch (err) {
-    console.error('[Map] Gagal inisialisasi peta:', err);
-    mapEl.innerHTML = '<div style="display:grid;place-items:center;height:100%;color:var(--muted);font-size:13px;text-align:center;padding:20px">🗺️<br>Peta tidak dapat dimuat.<br><small>Periksa koneksi internet Anda.</small></div>';
   }
 }
 
@@ -2988,13 +2910,6 @@ window.addEventListener("appinstalled", () => {
 applyAuthUI();
 loadData();
 refreshSessionFromServer();
-
-// Init peta setelah DOM ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initMap);
-} else {
-  initMap();
-}
 </script>
 </body>
 </html>
