@@ -3070,8 +3070,27 @@ function performSearch(q) {
    ========================================================= */
 let deferredInstallPrompt = null;
 
+/* Deteksi standalone mode (dibuka dari app yang sudah diinstall) */
+function isStandaloneMode() {
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.matchMedia('(display-mode: fullscreen)').matches ||
+    window.matchMedia('(display-mode: minimal-ui)').matches ||
+    window.navigator.standalone === true ||
+    document.referrer.includes('android-app://')
+  );
+}
+
+/* Helper: hapus elemen install prompt dari DOM */
+function removeInstallPrompt() {
+  const el = document.getElementById('pwaInstallPrompt');
+  if (el) el.remove();
+}
+
 function initPWA() {
-  // Register Service Worker
+  /* -----------------------------------------
+     1. Register Service Worker
+     ----------------------------------------- */
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("./sw.js", { scope: "./" })
@@ -3080,27 +3099,48 @@ function initPWA() {
     });
   }
 
-  // Install prompt
+  /* -----------------------------------------
+     2. Cek kondisi: sudah install / standalone / dismissed
+     ----------------------------------------- */
+
+  // Kalau sudah pernah install (flag dari event appinstalled) → hapus prompt
+  if (localStorage.getItem('pwa_installed') === 'true') {
+    removeInstallPrompt();
+    return;
+  }
+
+  // Kalau standalone mode (dibuka dari app) → tandai install & hapus prompt
+  if (isStandaloneMode()) {
+    console.log('[PWA] Running in standalone mode');
+    localStorage.setItem('pwa_installed', 'true');
+    removeInstallPrompt();
+    return;
+  }
+
+  // Kalau baru dismiss < 7 hari → skip prompt
+  const dismissed = localStorage.getItem('pwa_dismissed_at');
+  if (dismissed && (Date.now() - parseInt(dismissed, 10) < 7 * 24 * 60 * 60 * 1000)) {
+    removeInstallPrompt();
+    return;
+  }
+
+  /* -----------------------------------------
+     3. Setup install prompt
+     ----------------------------------------- */
   const promptEl = document.getElementById('pwaInstallPrompt');
   const installBtn = document.getElementById('pwaInstallBtn');
   const laterBtn = document.getElementById('pwaLaterBtn');
 
-  // Cek kalau sudah pernah dismiss
-  const dismissed = localStorage.getItem('pwa_dismissed_at');
-  if (dismissed && (Date.now() - parseInt(dismissed, 10) < 7 * 24 * 60 * 60 * 1000)) {
-    // Skip kalau baru dismiss < 7 hari
-    return;
-  }
-
-  // Cek kalau sudah install (standalone mode)
-  if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) {
-    return;
-  }
+  if (!promptEl || !installBtn || !laterBtn) return;
 
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredInstallPrompt = e;
     setTimeout(() => {
+      // Cek lagi — kalau sudah standalone/install, jangan tampilkan
+      if (isStandaloneMode() || localStorage.getItem('pwa_installed') === 'true') {
+        return;
+      }
       promptEl.classList.add('show');
     }, 3000);
   });
@@ -3108,21 +3148,38 @@ function initPWA() {
   installBtn.addEventListener('click', async () => {
     promptEl.classList.remove('show');
     if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      const { outcome } = await deferredInstallPrompt.userChoice;
-      console.log('[PWA] Install outcome:', outcome);
-      deferredInstallPrompt = null;
+      try {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        console.log('[PWA] Install outcome:', outcome);
+
+        if (outcome === 'accepted') {
+          localStorage.setItem('pwa_installed', 'true');
+          setTimeout(removeInstallPrompt, 500);
+        }
+      } catch (err) {
+        console.warn('[PWA] Install error:', err);
+      } finally {
+        deferredInstallPrompt = null;
+      }
     }
   });
 
   laterBtn.addEventListener('click', () => {
     promptEl.classList.remove('show');
     localStorage.setItem('pwa_dismissed_at', String(Date.now()));
+    setTimeout(removeInstallPrompt, 500);
   });
 
+  /* Event setelah app berhasil diinstall (dari browser) */
   window.addEventListener('appinstalled', () => {
-    console.log('[PWA] App installed');
-    promptEl.classList.remove('show');
+    console.log('[PWA] App installed (event)');
+    localStorage.setItem('pwa_installed', 'true');
+    const el = document.getElementById('pwaInstallPrompt');
+    if (el) {
+      el.classList.remove('show');
+      setTimeout(removeInstallPrompt, 500);
+    }
     deferredInstallPrompt = null;
   });
 }
