@@ -86,6 +86,60 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
+   PWA INSTALL BANNER
+   ========================================================= */
+.pwa-install {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%) translateY(120%);
+  z-index: 1400;
+  width: calc(100% - 24px);
+  max-width: 440px;
+  background: linear-gradient(135deg, var(--primary), var(--green));
+  color: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 12px 40px rgba(44,122,123,.4);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.pwa-install.show {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateX(-50%) translateY(0);
+}
+.pwa-install-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #fff;
+  padding: 4px;
+  flex: none;
+  object-fit: contain;
+}
+.pwa-install-text { flex: 1; min-width: 0; }
+.pwa-install-text b { display: block; font-size: 13px; font-weight: 900; }
+.pwa-install-text span { display: block; font-size: 11px; opacity: .9; margin-top: 2px; }
+.pwa-install-actions { display: flex; gap: 6px; flex: none; }
+.pwa-install button {
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  transition: all .2s;
+}
+.pwa-install .pwa-install-yes { background: #fff; color: var(--primary); }
+.pwa-install .pwa-install-no { background: rgba(255,255,255,.2); color: #fff; padding: 8px 10px; }
+.pwa-install button:hover { transform: scale(.96); }
+
+@media (min-width: 900px) {
+  .pwa-install { bottom: 24px; }
+}
+
+/* =========================================================
    BANNER READ-ONLY
    ========================================================= */
 .readonly-banner {
@@ -179,13 +233,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   gap: 10px;
   padding-block: 8px;
 }
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-  min-width: 0;
-}
+.brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
 .logo {
   width: 40px;
   height: 40px;
@@ -200,13 +248,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   overflow: hidden;
   box-shadow: 0 6px 16px rgba(44, 122, 123, .25);
 }
-.brand-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 3px;
-  background: #fff;
-}
+.brand-logo-img { width: 100%; height: 100%; object-fit: contain; padding: 3px; background: #fff; }
 .brand-text { min-width: 0; flex: 1; }
 .brand strong {
   display: block;
@@ -224,11 +266,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.desktop-menu {
-  display: none;
-  align-items: center;
-  gap: 2px;
-}
+.desktop-menu { display: none; align-items: center; gap: 2px; }
 .desktop-menu > a,
 .dropbtn {
   padding: 8px 10px;
@@ -239,10 +277,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: all .2s;
 }
 .desktop-menu > a:hover,
-.dropbtn:hover {
-  background: var(--surface2);
-  color: var(--primary);
-}
+.dropbtn:hover { background: var(--surface2); color: var(--primary); }
 .dropdown { position: relative; }
 .dropdown-menu {
   position: absolute;
@@ -264,16 +299,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   font-size: 13px;
   color: var(--muted);
 }
-.dropdown-menu a:hover {
-  background: var(--surface2);
-  color: var(--primary);
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex: none;
-}
+.dropdown-menu a:hover { background: var(--surface2); color: var(--primary); }
+.nav-actions { display: flex; align-items: center; gap: 6px; flex: none; }
 .icon-btn {
   width: 38px;
   height: 38px;
@@ -287,11 +314,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   font-size: 17px;
   transition: all .2s;
 }
-.icon-btn:hover {
-  background: var(--surface2);
-  border-color: var(--primary);
-  color: var(--primary);
-}
+.icon-btn:hover { background: var(--surface2); border-color: var(--primary); color: var(--primary); }
 .hamb { display: grid; }
 .login-btn {
   display: inline-flex;
@@ -308,11 +331,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: all .2s;
 }
 .login-btn:hover { background: var(--primary2); }
-.user-menu {
-  position: relative;
-  display: none;
-  align-items: center;
-}
+.user-menu { position: relative; display: none; align-items: center; }
 .user-menu.active { display: flex; }
 .user-chip {
   display: flex;
@@ -346,7 +365,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   position: absolute;
   bottom: -2px;
   right: -2px;
-  font-size: 8px;
+  font-size: 11px;
   background: #f59e0b;
   width: 16px;
   height: 16px;
@@ -354,6 +373,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: grid;
   place-items: center;
   border: 2px solid var(--surface);
+  font-size: 8px;
 }
 .user-name {
   font-size: 12px;
@@ -400,10 +420,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: all .2s;
 }
 .user-dropdown a:hover,
-.user-dropdown button:hover {
-  background: var(--surface2);
-  color: var(--primary);
-}
+.user-dropdown button:hover { background: var(--surface2); color: var(--primary); }
 .user-dropdown .admin-link { color: var(--accent); font-weight: 800; }
 .user-dropdown .logout-link { color: var(--danger); }
 
@@ -416,8 +433,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   background: linear-gradient(135deg, #173f40, #2c7a7b 52%, #319795);
   color: #fff;
 }
-.hero::before,
-.hero::after {
+.hero::before, .hero::after {
   content: "";
   position: absolute;
   border-radius: 50%;
@@ -480,11 +496,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: transform .2s;
 }
 .btn.primary { background: #fff; color: var(--primary); }
-.btn.secondary {
-  background: rgba(255, 255, 255, .1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, .25);
-}
+.btn.secondary { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .25); }
 .btn:hover { transform: translateY(-2px); }
 .hero-card {
   display: none;
@@ -507,11 +519,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   padding-top: 14px;
 }
 .hero-stat strong { font-size: clamp(18px, 4.5vw, 24px); }
-.hero-stat small {
-  display: block;
-  color: #cfe9d8;
-  font-size: clamp(10px, 2.5vw, 12px);
-}
+.hero-stat small { display: block; color: #cfe9d8; font-size: clamp(10px, 2.5vw, 12px); }
 
 /* =========================================================
    QUICK CARDS
@@ -537,10 +545,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: transform .25s ease, border-color .25s;
   display: block;
 }
-.quick-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-}
+.quick-card:hover { transform: translateY(-4px); border-color: var(--primary); }
 .quick-card .ico { font-size: 22px; line-height: 1; }
 .quick-card strong {
   display: block;
@@ -608,33 +613,17 @@ input, select, textarea { font: inherit; max-width: 100%; }
   pointer-events: none;
   background: linear-gradient(135deg, rgba(56, 178, 172, .08), transparent);
 }
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .stat-card:nth-child(1) { border-left-color: #38b2ac; }
 .stat-card:nth-child(2) { border-left-color: #2c7a7b; }
 .stat-card:nth-child(3) { border-left-color: #f59e0b; }
 .stat-card:nth-child(4) { border-left-color: #22c55e; }
-.stat-icon {
-  font-size: 24px;
-  line-height: 1;
-  display: inline-block;
-  margin-bottom: 4px;
-}
-.stat-card strong {
-  display: block;
-  font-size: clamp(22px, 5.5vw, 30px);
-  font-weight: 800;
-  line-height: 1.1;
-}
-.stat-card span {
-  color: var(--muted);
-  font-size: clamp(11px, 2.8vw, 13px);
-}
+.stat-icon { font-size: 24px; line-height: 1; display: inline-block; margin-bottom: 4px; }
+.stat-card strong { display: block; font-size: clamp(22px, 5.5vw, 30px); font-weight: 800; line-height: 1.1; }
+.stat-card span { color: var(--muted); font-size: clamp(11px, 2.8vw, 13px); }
 
 /* =========================================================
-   PROGRAM UNGGULAN (dinamis dari sheet programs)
+   PROGRAM UNGGULAN (BARU — dari sheet programs)
    ========================================================= */
 .program-grid {
   display: grid;
@@ -645,104 +634,93 @@ input, select, textarea { font: inherit; max-width: 100%; }
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 18px;
+  padding: 20px;
   box-shadow: var(--shadow);
-  transition: transform .3s, box-shadow .3s;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   position: relative;
   overflow: hidden;
 }
 .program-card::before {
   content: "";
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(135deg, rgba(56, 178, 172, .05), transparent);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--green));
 }
 .program-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
 }
 .program-header {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
   gap: 10px;
+  margin-bottom: 12px;
 }
 .program-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: linear-gradient(135deg, var(--primary), var(--green));
-  color: #fff;
   display: grid;
   place-items: center;
   font-size: 22px;
   flex: none;
+  color: #fff;
+}
+.program-cat {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--surface2);
+  color: var(--primary);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
 }
 .program-card h3 {
-  font-size: clamp(15px, 3.8vw, 17px);
-  margin: 0 0 4px;
+  font-size: clamp(15px, 3.8vw, 18px);
+  margin: 0 0 8px;
   line-height: 1.3;
+  word-break: break-word;
 }
 .program-card p {
   font-size: clamp(12px, 3vw, 14px);
   color: var(--muted);
-  margin: 0;
-  line-height: 1.6;
+  margin: 0 0 14px;
   flex: 1;
+  line-height: 1.6;
 }
-.program-meta {
+.program-footer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   align-items: center;
-  margin-top: 4px;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  margin-top: auto;
 }
-.program-badge {
-  display: inline-block;
-  padding: 4px 10px;
+.program-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
   border-radius: 999px;
   font-size: 10px;
   font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  background: var(--surface2);
-  color: var(--primary);
 }
-.program-badge.status-berjalan {
-  background: #d1fae5;
-  color: #065f46;
-}
-.program-badge.status-direncanakan {
-  background: #fef3c7;
-  color: #92400e;
-}
-.program-badge.status-selesai {
-  background: #e0e7ff;
-  color: #3730a3;
-}
-[data-theme=dark] .program-badge.status-berjalan {
-  background: #064e3b;
-  color: #6ee7b7;
-}
-[data-theme=dark] .program-badge.status-direncanakan {
-  background: #78350f;
-  color: #fcd34d;
-}
-[data-theme=dark] .program-badge.status-selesai {
-  background: #312e81;
-  color: #a5b4fc;
-}
-.program-empty {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--muted);
-  font-size: 13px;
-  grid-column: 1 / -1;
-}
+.program-status.berjalan { background: #dcfce7; color: #166534; }
+.program-status.direncanakan { background: #fef3c7; color: #92400e; }
+.program-status.selesai { background: #dbeafe; color: #1e40af; }
+[data-theme=dark] .program-status.berjalan { background: #052e16; color: #86efac; }
+[data-theme=dark] .program-status.direncanakan { background: #451a03; color: #fcd34d; }
+[data-theme=dark] .program-status.selesai { background: #172554; color: #93c5fd; }
 
 /* =========================================================
    NEWS
@@ -761,21 +739,9 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: flex;
   flex-direction: column;
 }
-.news-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-.news-card img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-.news-card .card-body {
-  padding: 16px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+.news-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.news-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.news-card .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
 .tag {
   display: inline-block;
   padding: 4px 9px;
@@ -786,20 +752,9 @@ input, select, textarea { font: inherit; max-width: 100%; }
   font-weight: 800;
   align-self: flex-start;
 }
-.news-card h3 {
-  margin: 8px 0 6px;
-  line-height: 1.3;
-  font-size: clamp(15px, 4vw, 18px);
-}
-.meta {
-  color: var(--muted);
-  font-size: clamp(11px, 2.8vw, 12px);
-}
-.news-card p {
-  font-size: clamp(12px, 3vw, 14px);
-  margin: 8px 0;
-  color: var(--muted);
-}
+.news-card h3 { margin: 8px 0 6px; line-height: 1.3; font-size: clamp(15px, 4vw, 18px); }
+.meta { color: var(--muted); font-size: clamp(11px, 2.8vw, 12px); }
+.news-card p { font-size: clamp(12px, 3vw, 14px); margin: 8px 0; color: var(--muted); }
 .news-card .link { margin-top: auto; }
 
 /* =========================================================
@@ -817,15 +772,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   border-radius: var(--radius);
   transition: transform .3s, border-color .3s;
 }
-.agenda:hover {
-  transform: translateY(-3px);
-  border-color: var(--primary);
-}
-.agenda-row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
+.agenda:hover { transform: translateY(-3px); border-color: var(--primary); }
+.agenda-row { display: flex; gap: 12px; align-items: center; }
 .date {
   width: 54px;
   height: 54px;
@@ -841,13 +789,10 @@ input, select, textarea { font: inherit; max-width: 100%; }
   font-size: 16px;
 }
 .date small { font-size: 10px; display: block; }
-.agenda h3 {
-  font-size: clamp(14px, 3.6vw, 16px);
-  margin: 0;
-}
+.agenda h3 { font-size: clamp(14px, 3.6vw, 16px); margin: 0; }
 
 /* =========================================================
-   PROFILE
+   PROFILE (About)
    ========================================================= */
 .profile {
   display: grid;
@@ -862,15 +807,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
 }
-.check-list {
-  padding: 0;
-  margin: 16px 0;
-  list-style: none;
-}
-.check-list li {
-  margin: 8px 0;
-  font-size: clamp(13px, 3vw, 15px);
-}
+.check-list { padding: 0; margin: 16px 0; list-style: none; }
+.check-list li { margin: 8px 0; font-size: clamp(13px, 3vw, 15px); }
 .check-list li::before {
   content: "✓";
   color: var(--green);
@@ -879,7 +817,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
-   ORG CHART
+   ORG CHART — STRUKTUR KEPENGURUSAN
    ========================================================= */
 .org-chart {
   background: linear-gradient(135deg, #f0f9f4, #e8f5f4);
@@ -942,18 +880,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 [data-theme=dark] .org-photo { border-color: #0d1912; }
 .org-photo:hover { transform: scale(1.05); }
-.org-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.org-photo span {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-}
+.org-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.org-photo span { display: grid; place-items: center; width: 100%; height: 100%; }
 .org-node.pembina .org-photo {
   width: clamp(80px, 20vw, 110px);
   height: clamp(80px, 20vw, 110px);
@@ -1013,11 +941,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 .org-connector::before { top: -4px; }
 .org-connector::after { bottom: -4px; background: #94a3b8; }
-.div-col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.div-col { display: flex; flex-direction: column; gap: 8px; }
 .div-col-title {
   font-size: clamp(10px, 2.6vw, 11px);
   font-weight: 900;
@@ -1070,21 +994,10 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: flex;
   flex-direction: column;
 }
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
+.service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .service-icon { font-size: 26px; line-height: 1; }
-.service-card h3 {
-  font-size: clamp(14px, 3.6vw, 16px);
-  margin: 8px 0 5px;
-}
-.service-card p {
-  font-size: clamp(12px, 3vw, 13px);
-  color: var(--muted);
-  margin: 0 0 14px;
-  flex: 1;
-}
+.service-card h3 { font-size: clamp(14px, 3.6vw, 16px); margin: 8px 0 5px; }
+.service-card p { font-size: clamp(12px, 3vw, 13px); color: var(--muted); margin: 0 0 14px; flex: 1; }
 .mini-btn {
   display: inline-flex;
   padding: 8px 12px;
@@ -1096,10 +1009,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: all .2s;
   align-self: flex-start;
 }
-.mini-btn:hover {
-  background: var(--primary);
-  color: #fff;
-}
+.mini-btn:hover { background: var(--primary); color: #fff; }
 
 /* =========================================================
    TRANSPARENCY
@@ -1116,10 +1026,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   padding: 20px;
   border-radius: var(--radius);
 }
-.budget-card h3 {
-  font-size: clamp(15px, 3.8vw, 17px);
-  margin-bottom: 10px;
-}
+.budget-card h3 { font-size: clamp(15px, 3.8vw, 17px); margin-bottom: 10px; }
 .budget-row { margin: 14px 0; }
 .budget-row > div {
   display: flex;
@@ -1128,12 +1035,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   margin-bottom: 6px;
   gap: 8px;
 }
-.bar {
-  height: 8px;
-  background: var(--surface2);
-  border-radius: 99px;
-  overflow: hidden;
-}
+.bar { height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
 .bar i {
   display: block;
   height: 100%;
@@ -1159,20 +1061,13 @@ input, select, textarea { font: inherit; max-width: 100%; }
   gap: 12px;
   transition: transform .3s, border-color .3s;
 }
-.doc:hover {
-  transform: translateY(-3px);
-  border-color: var(--primary);
-}
+.doc:hover { transform: translateY(-3px); border-color: var(--primary); }
 .doc-icon { font-size: 24px; flex: none; }
 .doc b { display: block; font-size: clamp(13px, 3.2vw, 15px); }
-.doc small {
-  display: block;
-  color: var(--muted);
-  font-size: clamp(11px, 2.8vw, 12px);
-}
+.doc small { display: block; color: var(--muted); font-size: clamp(11px, 2.8vw, 12px); }
 
 /* =========================================================
-   PRODUCTS
+   PRODUCTS / UMKM
    ========================================================= */
 .products {
   display: grid;
@@ -1188,31 +1083,11 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: flex;
   flex-direction: column;
 }
-.product:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-.product img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-.product .card-body {
-  padding: 14px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.product h3 {
-  font-size: clamp(14px, 3.6vw, 16px);
-  margin: 8px 0 4px;
-}
-.product p {
-  font-size: clamp(12px, 3vw, 13px);
-  color: var(--muted);
-  margin: 4px 0 10px;
-  flex: 1;
-}
+.product:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.product img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.product .card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; }
+.product h3 { font-size: clamp(14px, 3.6vw, 16px); margin: 8px 0 4px; }
+.product p { font-size: clamp(12px, 3vw, 13px); color: var(--muted); margin: 4px 0 10px; flex: 1; }
 
 /* =========================================================
    GALLERY
@@ -1249,20 +1124,9 @@ input, select, textarea { font: inherit; max-width: 100%; }
   transition: transform .3s, border-color .3s;
   font-size: 20px;
 }
-.emergency a:hover {
-  transform: translateY(-3px);
-  border-color: var(--accent);
-}
-.emergency b {
-  display: block;
-  margin-top: 6px;
-  font-size: clamp(11px, 2.8vw, 13px);
-}
-.emergency small {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-}
+.emergency a:hover { transform: translateY(-3px); border-color: var(--accent); }
+.emergency b { display: block; margin-top: 6px; font-size: clamp(11px, 2.8vw, 13px); }
+.emergency small { display: block; color: var(--muted); font-size: 11px; }
 
 /* =========================================================
    FAQ
@@ -1306,15 +1170,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: grid;
   gap: 18px;
 }
-.newsletter h2 {
-  font-size: clamp(20px, 5vw, 30px);
-  color: #fff;
-  margin: 4px 0 8px;
-}
-.newsletter p {
-  color: #d8f2e1;
-  font-size: clamp(13px, 3vw, 15px);
-}
+.newsletter h2 { font-size: clamp(20px, 5vw, 30px); color: #fff; margin: 4px 0 8px; }
+.newsletter p { color: #d8f2e1; font-size: clamp(13px, 3vw, 15px); }
 .newsletter-form {
   display: flex;
   flex-direction: column;
@@ -1354,11 +1211,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   grid-template-columns: 1fr;
   gap: 24px;
 }
-.footer h3 {
-  font-size: 14px;
-  color: #fff;
-  margin-bottom: 8px;
-}
+.footer h3 { font-size: 14px; color: #fff; margin-bottom: 8px; }
 .footer a {
   display: block;
   color: #9fb7a6;
@@ -1366,15 +1219,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   margin: 6px 0;
   transition: all .2s;
 }
-.footer a:hover {
-  color: #fff;
-  transform: translateX(3px);
-}
-.footer-brand p {
-  color: #9fb7a6;
-  font-size: 13px;
-  margin-top: 10px;
-}
+.footer a:hover { color: #fff; transform: translateX(3px); }
+.footer-brand p { color: #9fb7a6; font-size: 13px; margin-top: 10px; }
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, .08);
   margin-top: 24px;
@@ -1464,15 +1310,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   font-size: 14px;
   transition: all .2s;
 }
-.drawer a:hover {
-  color: var(--primary);
-  padding-left: 12px;
-}
-.drawer-footer {
-  margin-top: auto;
-  border-top: 1px solid var(--line);
-  padding-top: 12px;
-}
+.drawer a:hover { color: var(--primary); padding-left: 12px; }
+.drawer-footer { margin-top: auto; border-top: 1px solid var(--line); padding-top: 12px; }
 
 /* =========================================================
    SEARCH OVERLAY
@@ -1505,15 +1344,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   outline: 0;
   font-size: 14px;
 }
-.search-results {
-  max-height: 55vh;
-  overflow-y: auto;
-  margin-top: 10px;
-}
-.result {
-  padding: 12px;
-  border-bottom: 1px solid var(--line);
-}
+.search-results { max-height: 55vh; overflow-y: auto; margin-top: 10px; }
+.result { padding: 12px; border-bottom: 1px solid var(--line); }
 
 /* =========================================================
    MODAL
@@ -1564,20 +1396,10 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: grid;
   place-items: center;
 }
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
+.form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .field { display: flex; flex-direction: column; }
-.field label {
-  font-size: 12px;
-  font-weight: 800;
-  margin-bottom: 5px;
-}
-.field input,
-.field select,
-.field textarea {
+.field label { font-size: 12px; font-weight: 800; margin-bottom: 5px; }
+.field input, .field select, .field textarea {
   width: 100%;
   border: 1px solid var(--line);
   background: var(--bg);
@@ -1587,9 +1409,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   outline: 0;
   font-size: 14px;
 }
-.field input:focus,
-.field select:focus,
-.field textarea:focus { border-color: var(--primary); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); }
 .field textarea { min-height: 90px; resize: vertical; }
 
 /* =========================================================
@@ -1614,10 +1434,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   pointer-events: none;
   transition: opacity .25s, transform .25s;
 }
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* =========================================================
    LIGHTBOX
@@ -1633,12 +1450,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   padding: 20px;
 }
 .lightbox.active { display: flex; }
-.lightbox img {
-  max-height: 88vh;
-  max-width: 95vw;
-  border-radius: 12px;
-  object-fit: contain;
-}
+.lightbox img { max-height: 88vh; max-width: 95vw; border-radius: 12px; object-fit: contain; }
 .lightbox button {
   position: absolute;
   top: 16px;
@@ -1654,84 +1466,9 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
-   PWA INSTALL PROMPT
-   ========================================================= */
-.pwa-install-prompt {
-  position: fixed;
-  left: 50%;
-  bottom: 86px;
-  transform: translateX(-50%) translateY(120%);
-  z-index: 3500;
-  background: linear-gradient(135deg, var(--primary), var(--green));
-  color: #fff;
-  padding: 14px 16px;
-  border-radius: 16px;
-  box-shadow: 0 14px 40px rgba(44, 122, 123, .4);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  max-width: calc(100vw - 24px);
-  width: max-content;
-  transition: transform .4s cubic-bezier(.2,.8,.2,1);
-  pointer-events: none;
-}
-.pwa-install-prompt.show {
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
-}
-.pwa-install-prompt .pwa-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: #fff;
-  padding: 4px;
-  flex: none;
-  object-fit: contain;
-}
-.pwa-install-prompt .pwa-text {
-  flex: 1;
-  min-width: 0;
-}
-.pwa-install-prompt .pwa-text strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 800;
-}
-.pwa-install-prompt .pwa-text small {
-  display: block;
-  font-size: 11px;
-  opacity: .9;
-  margin-top: 2px;
-}
-.pwa-install-prompt .pwa-actions {
-  display: flex;
-  gap: 6px;
-  flex: none;
-}
-.pwa-install-prompt button {
-  padding: 8px 12px;
-  border-radius: 9px;
-  font-weight: 800;
-  font-size: 12px;
-  white-space: nowrap;
-}
-.pwa-install-prompt .pwa-btn-install {
-  background: #fff;
-  color: var(--primary);
-}
-.pwa-install-prompt .pwa-btn-later {
-  background: rgba(255, 255, 255, .18);
-  color: #fff;
-}
-
-/* =========================================================
    REVEAL
    ========================================================= */
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .55s ease, transform .55s ease;
-}
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1741,7 +1478,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE — TABLET (≥ 640px)
    ========================================================= */
 @media (min-width: 640px) {
   .readonly-banner .container {
@@ -1771,18 +1508,17 @@ input, select, textarea { font: inherit; max-width: 100%; }
   .user-name { display: inline; }
 }
 
+/* =========================================================
+   RESPONSIVE — TABLET LANDSCAPE / LAPTOP (≥ 900px)
+   ========================================================= */
 @media (min-width: 900px) {
   .nav { min-height: 68px; }
   .logo { width: 44px; height: 44px; }
   .hamb { display: none; }
   .desktop-menu { display: flex; margin-left: auto; }
-  .hero-inner {
-    grid-template-columns: 1.15fr .85fr;
-    align-items: center;
-    gap: 40px;
-  }
+  .hero-inner { grid-template-columns: 1.15fr .85fr; align-items: center; gap: 40px; }
   .hero-card { display: block; }
-  .program-grid { grid-template-columns: repeat(4, 1fr); }
+  .program-grid { grid-template-columns: repeat(3, 1fr); }
   .news-grid { grid-template-columns: 1.5fr 1fr 1fr; }
   .news-card.featured { grid-column: auto; }
   .news-card.featured img { aspect-ratio: 16 / 10; }
@@ -1792,41 +1528,16 @@ input, select, textarea { font: inherit; max-width: 100%; }
   .products { grid-template-columns: repeat(4, 1fr); }
   .gallery { grid-template-columns: repeat(4, 1fr); }
   .emergency { grid-template-columns: repeat(5, 1fr); }
-  .section-head {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  .section-head p {
-    max-width: 480px;
-    text-align: right;
-  }
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+  .section-head p { max-width: 480px; text-align: right; }
   .link { margin-top: 0; }
   .profile { grid-template-columns: 1fr 1fr; gap: 40px; }
   .transparency { grid-template-columns: 1fr 1fr; gap: 40px; }
-  .newsletter {
-    grid-template-columns: 1.3fr 1fr;
-    align-items: center;
-  }
+  .newsletter { grid-template-columns: 1.3fr 1fr; align-items: center; }
   .footer-grid { grid-template-columns: 1.4fr repeat(3, 1fr); gap: 30px; }
   .bottom-nav { display: none; }
-  .toast {
-    left: auto;
-    right: 18px;
-    bottom: 18px;
-    transform: translateY(20px);
-  }
+  .toast { left: auto; right: 18px; bottom: 18px; transform: translateY(20px); }
   .toast.show { transform: translateY(0); }
-  .pwa-install-prompt {
-    left: auto;
-    right: 18px;
-    bottom: 18px;
-    transform: translateY(140%);
-  }
-  .pwa-install-prompt.show {
-    transform: translateY(0);
-  }
   .form-grid { grid-template-columns: 1fr 1fr; }
   .field.full { grid-column: 1 / -1; }
 }
@@ -1845,6 +1556,19 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </style>
 </head>
 <body>
+
+<!-- PWA INSTALL BANNER -->
+<div class="pwa-install" id="pwaInstall">
+  <img class="pwa-install-icon" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg" alt="Logo">
+  <div class="pwa-install-text">
+    <b>Pasang Aplikasi</b>
+    <span>Akses cepat Karang Taruna dari layar utama</span>
+  </div>
+  <div class="pwa-install-actions">
+    <button class="pwa-install-yes" id="pwaInstallYes">Pasang</button>
+    <button class="pwa-install-no" id="pwaInstallNo" aria-label="Tutup">✕</button>
+  </div>
+</div>
 
 <!-- BANNER READ-ONLY -->
 <div class="readonly-banner" id="readonlyBanner">
@@ -1900,7 +1624,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
           <a href="#galeri">Galeri</a>
         </div>
       </div>
-      <a href="#program">Program</a>
+      <a href="#program-unggulan">Program</a>
       <a href="#layanan">Layanan</a>
       <a href="#transparansi">Laporan</a>
     </nav>
@@ -1973,24 +1697,22 @@ input, select, textarea { font: inherit; max-width: 100%; }
   </div>
 </section>
 
-<!-- PROGRAM UNGGULAN (dinamis dari sheet programs) -->
-<section class="section" id="program">
+<!-- PROGRAM UNGGULAN (BARU — dari sheet programs) -->
+<section class="section" id="program-unggulan">
   <div class="container">
     <div class="section-head">
       <div>
         <div class="eyebrow">Gerakan Pemuda</div>
         <h2>Program Unggulan Karang Taruna</h2>
       </div>
-      <p>Program kerja yang sedang berjalan dan direncanakan untuk kemajuan pemuda dan masyarakat desa.</p>
+      <p>Program-program yang sedang berjalan dan direncanakan untuk kemajuan pemuda dan desa.</p>
     </div>
-    <div class="program-grid" id="programGrid">
-      <div class="program-empty">Memuat program...</div>
-    </div>
+    <div class="program-grid" id="programList"></div>
   </div>
 </section>
 
 <!-- STATS -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2004,7 +1726,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- BERITA -->
-<section class="section alt" id="berita">
+<section class="section" id="berita">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2018,7 +1740,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- PENGUMUMAN -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2031,7 +1753,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- AGENDA -->
-<section class="section alt" id="agenda">
+<section class="section" id="agenda">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2043,8 +1765,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   </div>
 </section>
 
-<!-- PROFIL -->
-<section class="section" id="profil">
+<!-- PROFIL / TENTANG -->
+<section class="section alt" id="profil">
   <div class="container profile">
     <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=900&q=85" alt="Lanskap wilayah desa" loading="lazy">
     <div>
@@ -2063,7 +1785,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- STRUKTUR KEPENGURUSAN -->
-<section class="section alt" id="struktur">
+<section class="section" id="struktur">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2073,38 +1795,55 @@ input, select, textarea { font: inherit; max-width: 100%; }
     </div>
 
     <div class="org-chart">
+
+      <!-- LEVEL 1: PEMBINA -->
       <div class="org-level">
         <div class="org-node pembina">
-          <div class="org-photo" id="orgPembinaPhoto"><span>🏛️</span></div>
+          <div class="org-photo" id="orgPembinaPhoto">
+            <span>🏛️</span>
+          </div>
           <div class="org-role">Pembina</div>
           <div class="org-name" id="orgPembinaName">Kepala Desa</div>
         </div>
       </div>
+
       <div class="org-connector"></div>
 
+      <!-- LEVEL 2: KETUA -->
       <div class="org-level">
         <div class="org-node ketua">
-          <div class="org-photo" id="orgKetuaPhoto"><span>👑</span></div>
+          <div class="org-photo" id="orgKetuaPhoto">
+            <span>👑</span>
+          </div>
           <div class="org-role">Ketua</div>
           <div class="org-name" id="orgKetuaName">Nama Ketua</div>
         </div>
       </div>
+
       <div class="org-connector"></div>
 
+      <!-- LEVEL 3: SEKRETARIS + BENDAHARA -->
       <div class="org-level two-col">
         <div class="org-node sekretaris">
-          <div class="org-photo" id="orgSekretarisPhoto"><span>📋</span></div>
+          <div class="org-photo" id="orgSekretarisPhoto">
+            <span>📋</span>
+          </div>
           <div class="org-role">Sekretaris</div>
           <div class="org-name" id="orgSekretarisName">Nama</div>
         </div>
+
         <div class="org-node bendahara">
-          <div class="org-photo" id="orgBendaharaPhoto"><span>💰</span></div>
+          <div class="org-photo" id="orgBendaharaPhoto">
+            <span>💰</span>
+          </div>
           <div class="org-role">Bendahara</div>
           <div class="org-name" id="orgBendaharaName">Nama</div>
         </div>
       </div>
+
       <div class="org-connector"></div>
 
+      <!-- LEVEL 4: DIVISI -->
       <div class="org-level divisions">
         <div class="div-col">
           <div class="div-col-title">Bidang & Divisi</div>
@@ -2112,6 +1851,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
           <div class="div-item">🗂️ Divisi Organisasi</div>
           <div class="div-item">⚖️ Divisi HAM</div>
         </div>
+
         <div class="div-col">
           <div class="div-col-title">Bidang & Divisi</div>
           <div class="div-item">🚀 Divisi Pengembangan</div>
@@ -2119,12 +1859,13 @@ input, select, textarea { font: inherit; max-width: 100%; }
           <div class="div-item">📣 Divisi Humas</div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
 <!-- LAYANAN -->
-<section class="section" id="layanan">
+<section class="section alt" id="layanan">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2138,7 +1879,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- TRANSPARANSI -->
-<section class="section alt" id="transparansi">
+<section class="section" id="transparansi">
   <div class="container transparency">
     <div>
       <div class="eyebrow">Akuntabilitas</div>
@@ -2165,7 +1906,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- DOKUMEN -->
-<section class="section" id="dokumen">
+<section class="section alt" id="dokumen">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2177,8 +1918,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
   </div>
 </section>
 
-<!-- PRODUK -->
-<section class="section alt" id="potensi">
+<!-- PRODUK / UMKM -->
+<section class="section" id="potensi">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2191,7 +1932,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- WILAYAH -->
-<section class="section" id="wilayah">
+<section class="section alt" id="wilayah">
   <div class="container profile">
     <div>
       <div class="eyebrow">Wilayah Desa</div>
@@ -2199,10 +1940,8 @@ input, select, textarea { font: inherit; max-width: 100%; }
       <p>Informasi wilayah dapat dikembangkan dengan peta interaktif berbasis OpenStreetMap/Leaflet.</p>
       <div class="stats" style="grid-template-columns:repeat(2,1fr);margin-top:16px">
         <div class="stat-card"><div class="stat-icon">🏘️</div><strong>3</strong><span>Dusun</span></div>
-        <div class="stat-card"><div class="stat-icon">🧑🏻‍🦱</div><strong>32</strong><span>RT</span></div>
-        <div class="stat-card"><div class="stat-icon">🧔🏻</div><strong>11</strong><span>RW</span></div>
+        <div class="stat-card"><div class="stat-icon">📋</div><strong>32</strong><span>RT</span></div>
         <div class="stat-card"><div class="stat-icon">🌾</div><strong>626 ha</strong><span>Luas wilayah</span></div>
-        <div class="stat-card"><div class="stat-icon">👥</div><strong>8.985</strong><span>Penduduk</span></div>
         <div class="stat-card"><div class="stat-icon">👪</div><strong>2.449</strong><span>Kepala keluarga</span></div>
       </div>
     </div>
@@ -2214,7 +1953,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- GALERI -->
-<section class="section alt" id="galeri">
+<section class="section" id="galeri">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2227,7 +1966,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- KONTAK DARURAT -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2246,7 +1985,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- FAQ -->
-<section class="section alt">
+<section class="section">
   <div class="container">
     <div class="section-head">
       <div>
@@ -2259,7 +1998,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 </section>
 
 <!-- NEWSLETTER -->
-<section class="section">
+<section class="section alt">
   <div class="container">
     <div class="newsletter">
       <div>
@@ -2341,7 +2080,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
     <a href="#home" onclick="closeDrawer()">🏠 Beranda</a>
     <a href="#profil" onclick="closeDrawer()">🏛️ Tentang Kami</a>
     <a href="#struktur" onclick="closeDrawer()">👥 Kepengurusan</a>
-    <a href="#program" onclick="closeDrawer()">🤝 Program</a>
+    <a href="#program-unggulan" onclick="closeDrawer()">🎯 Program</a>
     <a href="#berita" onclick="closeDrawer()">📰 Berita</a>
     <a href="#layanan" onclick="closeDrawer()">📄 Layanan Pemuda</a>
     <a href="#transparansi" onclick="closeDrawer()">📊 Program & Laporan</a>
@@ -2441,19 +2180,6 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
-<!-- PWA INSTALL PROMPT -->
-<div class="pwa-install-prompt" id="pwaInstallPrompt">
-  <img class="pwa-icon" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBWQvV0rCjuIh3Oe0RJ5i5tZDfL8QlJ-kXTtQk3Ur4JjnYWbOIpH7Z25CB3ejfZhQwT_KSFM2oMuUd5ErPXNVeddFJ-arCFoNhxRuu7L80M-BqT_E1QkAo38cmK5Gh3tzAGwcVmCZKK2UpTYU8EyFnJcMrKX6cS23Va12-NBNAygccopCtEV2lQEZA6Yk/s320/1000938390.jpg" alt="Icon">
-  <div class="pwa-text">
-    <strong>Install Aplikasi</strong>
-    <small>Karang Taruna di perangkat Anda</small>
-  </div>
-  <div class="pwa-actions">
-    <button class="pwa-btn-install" id="pwaInstallBtn">Install</button>
-    <button class="pwa-btn-later" id="pwaLaterBtn">Nanti</button>
-  </div>
-</div>
 
 <script>
 /* =========================================================
@@ -2716,53 +2442,27 @@ function fmtDate(d) {
 }
 
 /* =========================================================
-   RENDER PROGRAM (dinamis dari sheet programs)
+   PROGRAM ICON MAPPING
    ========================================================= */
-function renderPrograms(programs) {
-  const grid = document.getElementById('programGrid');
-  if (!grid) return;
+function getProgramIcon(category) {
+  const cat = String(category || '').toLowerCase();
+  if (cat.includes('sosial')) return '❤️';
+  if (cat.includes('olahraga')) return '🏆';
+  if (cat.includes('lingkungan')) return '🌱';
+  if (cat.includes('kreativitas') || cat.includes('seni')) return '🎨';
+  if (cat.includes('umkm') || cat.includes('ekonomi')) return '💼';
+  if (cat.includes('pendidikan')) return '📚';
+  if (cat.includes('teknologi')) return '💻';
+  if (cat.includes('kepemudaan')) return '🧑‍🤝‍🧑';
+  if (cat.includes('wisata')) return '🌴';
+  return '🎯';
+}
 
-  if (!Array.isArray(programs) || programs.length === 0) {
-    grid.innerHTML = '<div class="program-empty">Belum ada program. Silakan tambahkan melalui dashboard admin.</div>';
-    return;
-  }
-
-  // Icon & warna berdasarkan kategori
-  const iconMap = {
-    'Sosial': '❤️',
-    'Lingkungan': '🌱',
-    'Olahraga': '🏆',
-    'Kreativitas': '🎨',
-    'UMKM': '💼',
-    'Pendidikan': '📚',
-    'Kepemudaan': '🧑‍🤝‍🧑',
-    'Teknologi': '💻'
-  };
-
-  grid.innerHTML = programs.map(p => {
-    const name = p.name || p.Name || 'Program';
-    const category = p.category || p.Category || 'Umum';
-    const status = p.status || p.Status || 'Aktif';
-    const description = p.description || p.Description || '';
-    const icon = iconMap[category] || '📌';
-    const statusClass = 'status-' + String(status).toLowerCase().replace(/\s+/g, '-');
-
-    return `
-      <article class="program-card reveal">
-        <div class="program-header">
-          <div class="program-icon">${icon}</div>
-        </div>
-        <div>
-          <span class="program-badge">${esc(category)}</span>
-          <h3>${esc(name)}</h3>
-          <p>${esc(description)}</p>
-        </div>
-        <div class="program-meta">
-          <span class="program-badge ${statusClass}">${esc(status)}</span>
-        </div>
-      </article>
-    `;
-  }).join('');
+function getProgramStatusClass(status) {
+  const s = String(status || '').toLowerCase();
+  if (s.includes('selesai') || s.includes('done')) return 'selesai';
+  if (s.includes('rencana') || s.includes('planned')) return 'direncanakan';
+  return 'berjalan';
 }
 
 /* =========================================================
@@ -2785,10 +2485,39 @@ function renderWithData(data) {
     `<div class="stat-card reveal"><div class="stat-icon">${x[0]}</div><strong>${x[1]}</strong><span>${x[2]}</span></div>`
   ).join("");
 
-  /* PROGRAM UNGGULAN */
-  renderPrograms(programs);
+  /* PROGRAM UNGGULAN (dari sheet programs) */
+  const programList = document.getElementById('programList');
+  if (programList) {
+    const activePrograms = (programs || []).filter(p => {
+      const s = String(p.status || '').toLowerCase();
+      return !s.includes('selesai') && !s.includes('done');
+    });
 
-  /* NEWS — limit 4 */
+    // Kalau tidak ada program aktif, tampilkan semua
+    const displayPrograms = activePrograms.length ? activePrograms : (programs || []);
+
+    programList.innerHTML = displayPrograms.length
+      ? displayPrograms.slice(0, 6).map(p => {
+          const statusClass = getProgramStatusClass(p.status);
+          const icon = getProgramIcon(p.category);
+          return `<article class="program-card reveal">
+            <div class="program-header">
+              <div class="program-icon">${icon}</div>
+              <span class="program-cat">${esc(p.category || 'Program')}</span>
+            </div>
+            <h3>${esc(p.name || 'Program')}</h3>
+            <p>${esc((p.description || '').slice(0, 150))}${(p.description || '').length > 150 ? '…' : ''}</p>
+            <div class="program-footer">
+              <span class="program-status ${statusClass}">
+                ${statusClass === 'berjalan' ? '● Berjalan' : statusClass === 'direncanakan' ? '● Direncanakan' : '✓ Selesai'}
+              </span>
+            </div>
+          </article>`;
+        }).join("")
+      : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada program. Silakan tambahkan melalui dashboard admin.</p>';
+  }
+
+  /* NEWS */
   const publishedNews = news.filter(x => {
     const s = String(x.status || '').trim().toLowerCase();
     return s === 'publish' || s === 'published' || s === '';
@@ -2835,9 +2564,7 @@ function renderWithData(data) {
     const photoEl = document.getElementById(photoId);
     const nameEl = document.getElementById(nameId);
     if (!photoEl || !nameEl) return;
-
     nameEl.textContent = name || fallbackText;
-
     if (photo) {
       photoEl.innerHTML = '<img src="' + esc(photo) + '" alt="' + esc(name) + '" onerror="this.parentElement.innerHTML=\'<span>' + fallbackEmoji + '</span>\'">';
     } else {
@@ -2857,7 +2584,7 @@ function renderWithData(data) {
     setOrgPerson('orgBendaharaPhoto', 'orgBendaharaName', '', '', '💰', 'Nama');
   }
 
-  /* SERVICES */
+  /* SERVICES (Layanan Pemuda) */
   const servicesHTML = services.map(x => {
     if (x[3] === "Cek Status") {
       return `<article class="service-card reveal">
@@ -2874,7 +2601,6 @@ function renderWithData(data) {
       <a class="mini-btn" href="#" onclick="guestGuard(event,()=>window.open('${x[4] || '#'}','_blank'))">Kirim Pengajuan →</a>
     </article>`;
   }).join("");
-  document.getElementById("services").innerHTML = servicesHTML;
   const layananList = document.getElementById("layananList");
   if (layananList) layananList.innerHTML = servicesHTML;
 
@@ -3055,7 +2781,6 @@ function performSearch(q) {
   }
   const all = [
     ...(appData.news || []).map(x => [x.title || '', x.excerpt || x.body || '', "Berita"]),
-    ...(appData.programs || []).map(x => [x.name || '', x.description || '', "Program"]),
     ...(appData.services || []).map(x => [x[1], x[2], "Layanan"]),
     ...(appData.products || []).map(x => [x.name || x[0] || '', x.category || x[1] || '', "Potensi"])
   ];
@@ -3063,125 +2788,6 @@ function performSearch(q) {
   box.innerHTML = r.length
     ? r.map(x => `<div class="result"><span class="tag">${esc(x[2])}</span><b>${esc(x[0])}</b><div class="meta">${esc(x[1])}</div></div>`).join("")
     : '<p class="meta">Tidak ditemukan.</p>';
-}
-
-/* =========================================================
-   PWA — Service Worker & Install Prompt
-   ========================================================= */
-let deferredInstallPrompt = null;
-
-/* Deteksi standalone mode (dibuka dari app yang sudah diinstall) */
-function isStandaloneMode() {
-  return (
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.matchMedia('(display-mode: fullscreen)').matches ||
-    window.matchMedia('(display-mode: minimal-ui)').matches ||
-    window.navigator.standalone === true ||
-    document.referrer.includes('android-app://')
-  );
-}
-
-/* Helper: hapus elemen install prompt dari DOM */
-function removeInstallPrompt() {
-  const el = document.getElementById('pwaInstallPrompt');
-  if (el) el.remove();
-}
-
-function initPWA() {
-  /* -----------------------------------------
-     1. Register Service Worker
-     ----------------------------------------- */
-  if ("serviceWorker" in navigator && location.protocol !== "file:") {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("./sw.js", { scope: "./" })
-        .then(function (r) { console.log("[PWA] SW registered:", r.scope); })
-        .catch(function (e) { console.warn("[PWA] SW gagal:", e.message); });
-    });
-  }
-
-  /* -----------------------------------------
-     2. Cek kondisi: sudah install / standalone / dismissed
-     ----------------------------------------- */
-
-  // Kalau sudah pernah install (flag dari event appinstalled) → hapus prompt
-  if (localStorage.getItem('pwa_installed') === 'true') {
-    removeInstallPrompt();
-    return;
-  }
-
-  // Kalau standalone mode (dibuka dari app) → tandai install & hapus prompt
-  if (isStandaloneMode()) {
-    console.log('[PWA] Running in standalone mode');
-    localStorage.setItem('pwa_installed', 'true');
-    removeInstallPrompt();
-    return;
-  }
-
-  // Kalau baru dismiss < 7 hari → skip prompt
-  const dismissed = localStorage.getItem('pwa_dismissed_at');
-  if (dismissed && (Date.now() - parseInt(dismissed, 10) < 7 * 24 * 60 * 60 * 1000)) {
-    removeInstallPrompt();
-    return;
-  }
-
-  /* -----------------------------------------
-     3. Setup install prompt
-     ----------------------------------------- */
-  const promptEl = document.getElementById('pwaInstallPrompt');
-  const installBtn = document.getElementById('pwaInstallBtn');
-  const laterBtn = document.getElementById('pwaLaterBtn');
-
-  if (!promptEl || !installBtn || !laterBtn) return;
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredInstallPrompt = e;
-    setTimeout(() => {
-      // Cek lagi — kalau sudah standalone/install, jangan tampilkan
-      if (isStandaloneMode() || localStorage.getItem('pwa_installed') === 'true') {
-        return;
-      }
-      promptEl.classList.add('show');
-    }, 3000);
-  });
-
-  installBtn.addEventListener('click', async () => {
-    promptEl.classList.remove('show');
-    if (deferredInstallPrompt) {
-      try {
-        deferredInstallPrompt.prompt();
-        const { outcome } = await deferredInstallPrompt.userChoice;
-        console.log('[PWA] Install outcome:', outcome);
-
-        if (outcome === 'accepted') {
-          localStorage.setItem('pwa_installed', 'true');
-          setTimeout(removeInstallPrompt, 500);
-        }
-      } catch (err) {
-        console.warn('[PWA] Install error:', err);
-      } finally {
-        deferredInstallPrompt = null;
-      }
-    }
-  });
-
-  laterBtn.addEventListener('click', () => {
-    promptEl.classList.remove('show');
-    localStorage.setItem('pwa_dismissed_at', String(Date.now()));
-    setTimeout(removeInstallPrompt, 500);
-  });
-
-  /* Event setelah app berhasil diinstall (dari browser) */
-  window.addEventListener('appinstalled', () => {
-    console.log('[PWA] App installed (event)');
-    localStorage.setItem('pwa_installed', 'true');
-    const el = document.getElementById('pwaInstallPrompt');
-    if (el) {
-      el.classList.remove('show');
-      setTimeout(removeInstallPrompt, 500);
-    }
-    deferredInstallPrompt = null;
-  });
 }
 
 /* =========================================================
@@ -3206,12 +2812,63 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
 }
 
 /* =========================================================
+   PWA — SERVICE WORKER & INSTALL PROMPT
+   ========================================================= */
+let deferredPrompt = null;
+
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js", { scope: "./" })
+      .then(function (r) { console.log("[PWA] SW registered:", r.scope); })
+      .catch(function (e) { console.warn("[PWA] SW gagal:", e.message); });
+  });
+}
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log("[PWA] Install prompt ready");
+
+  // Tampilkan banner setelah 3 detik
+  setTimeout(() => {
+    const banner = document.getElementById("pwaInstall");
+    if (banner && !localStorage.getItem("pwa_dismissed")) {
+      banner.classList.add("show");
+    }
+  }, 3000);
+});
+
+document.getElementById("pwaInstallYes")?.addEventListener("click", async () => {
+  const banner = document.getElementById("pwaInstall");
+  banner.classList.remove("show");
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log("[PWA] User choice:", outcome);
+    deferredPrompt = null;
+  }
+});
+
+document.getElementById("pwaInstallNo")?.addEventListener("click", () => {
+  const banner = document.getElementById("pwaInstall");
+  banner.classList.remove("show");
+  localStorage.setItem("pwa_dismissed", "1");
+});
+
+window.addEventListener("appinstalled", () => {
+  console.log("[PWA] App installed");
+  deferredPrompt = null;
+  const banner = document.getElementById("pwaInstall");
+  if (banner) banner.classList.remove("show");
+  showToast("✓ Aplikasi berhasil dipasang!");
+});
+
+/* =========================================================
    INIT
    ========================================================= */
 applyAuthUI();
 loadData();
 refreshSessionFromServer();
-initPWA();
 </script>
 </body>
 </html>
