@@ -2561,9 +2561,12 @@ function renderWithData(data) {
 
   /* NEWS — limit 2 */
   const publishedNews = news.filter(x => {
-    const s = String(x.status || '').trim().toLowerCase();
-    return s === 'publish' || s === 'published' || s === '';
-  });
+  const s = String(x.status || '').trim().toLowerCase();
+  const cat = String(x.category || '').toLowerCase();
+  const isPublish = s === 'publish' || s === 'published' || s === '';
+  const isPengumuman = cat.includes('pengumuman');
+  return isPublish && !isPengumuman;  // ← exclude pengumuman
+});
   document.getElementById("news").innerHTML = publishedNews.length
     ? publishedNews.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 2).map((x, i) => {
         const image = x.image || (Array.isArray(x.images) && x.images.length ? x.images[0] : '') ||
@@ -2694,12 +2697,26 @@ function renderWithData(data) {
       ).join("")
     : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada dokumen publik.</p>';
 
-  /* NOTICE */
-  const noticeEl = document.getElementById("notice");
-  if (noticeEl) {
-    noticeEl.innerHTML = '<p class="meta" style="grid-column:1/-1;text-align:center;padding:10px 0;">Belum ada pengumuman.</p>';
-  }
+  /* NOTICE — dari berita kategori "Pengumuman" */
+const noticeEl = document.getElementById("notice");
+if (noticeEl) {
+  const announcements = (news || []).filter(x => {
+    const cat = String(x.category || '').toLowerCase();
+    const status = String(x.status || '').toLowerCase();
+    const isPublish = status === 'publish' || status === 'published' || status === '';
+    return cat.includes('pengumuman') && isPublish;
+  });
 
+  noticeEl.innerHTML = announcements.length
+    ? announcements.slice(0, 4).map(x =>
+        `<a href="berita-detail.html?id=${encodeURIComponent(x.id)}" class="notice-item reveal">
+          <span class="tag" style="background:#fef3c7;color:#92400e;">📢 Pengumuman</span>
+          <h3>${esc(x.title || 'Pengumuman')}</h3>
+          <p class="meta">${fmtDate(x.date)}</p>
+        </a>`
+      ).join("")
+    : '<p class="meta" style="grid-column:1/-1;text-align:center;padding:10px 0;">Belum ada pengumuman.</p>';
+}
   /* SERVICE SELECT */
   const select = document.getElementById("serviceSelect");
   if (select) {
