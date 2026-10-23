@@ -363,7 +363,7 @@ img{max-width:100%;display:block}
       <button data-page="management">🏛️ Kepengurusan</button>
       <button data-page="programs">🤝 Program & Kegiatan</button>
       <button data-page="news">📰 Berita</button>
-      <button data-page="agenda">📅 Agenda</button>
+      <button data-page="news">📆 Agenda</button>
       <!-- Tambahkan di bawah menu Agenda -->
       <div class="nav-title">Agenda Organisasi</div>
       <button data-page="org-agenda">📆 Jadwal Kegiatan</button>
@@ -1145,11 +1145,17 @@ async function callAPI(action, method = 'GET', body = null, params = null) {
       const qs = new URLSearchParams({ action, ...(params || {}) });
       url = apiUrl + '?' + qs.toString();
     }
+    
+    console.log(`[API] Mengirim request ke: ${action}`, body);
     const response = await fetch(url, options);
     if (!response.ok) throw new Error('HTTP ' + response.status);
-    return await response.json();
+    
+    const json = await response.json();
+    console.log(`[API] Respon dari ${action}:`, json);
+    return json;
   } catch (e) {
-    console.warn('API call failed:', e);
+    console.error('API call failed:', e);
+    toast('❌ Koneksi API gagal: ' + e.message);
     return null;
   }
 }
@@ -1327,56 +1333,90 @@ async function catatPresensi(attId, status) {
   else toast(res.message || 'Gagal');
 }
 
-// Event Listener Form Agenda
-const formAgenda = $('orgAgendaForm');
-if (formAgenda) {
-  formAgenda.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const admin = getSession();
-    if (!admin) return toast('Sesi habis');
+
+// ==========================================
+// FIX: FORM SUBMIT AGENDA & UNDANGAN
+// ==========================================
+
+// Pastikan NIA Admin terbaca dengan benar dari localStorage
+function getAdminNia() {
+  try {
+    const raw = localStorage.getItem('kt_user');
+    if (!raw) return null;
+    const user = JSON.parse(raw);
+    return user.NIA || user.nia || null;
+  } catch (e) { return null; }
+}
+
+// 1. Submit Agenda
+document.getElementById('orgAgendaForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const adminNia = getAdminNia();
+  if (!adminNia) {
+    toast('❌ Sesi login tidak valid. Silakan login ulang.');
+    return;
+  }
+  
+  const data = Object.fromEntries(new FormData(e.target));
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  
+  btn.innerHTML = '⏳ Menyimpan...'; 
+  btn.disabled = true;
+
+  try {
+    const res = await callAPI('save_agenda', 'POST', { adminNia: adminNia, agenda: data });
     
-    const data = Object.fromEntries(new FormData(e.target));
-    const btn = e.target.querySelector('button[type="submit"]');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = 'Menyimpan...'; btn.disabled = true;
-
-    const res = await callAPI('save_agenda', 'POST', { adminNia: admin.NIA, agenda: data });
-    btn.innerHTML = originalText; btn.disabled = false;
-
     if (res && res.success) {
-      toast('Agenda disimpan');
-      $('orgAgendaModal').classList.remove('show');
+      toast('✓ Agenda berhasil disimpan');
+      document.getElementById('orgAgendaModal').classList.remove('show');
       e.target.reset();
       loadOrgData();
-    } else toast(res.message || 'Gagal');
-  });
-}
+    } else {
+      toast('❌ Gagal: ' + (res && res.message ? res.message : 'Server tidak merespon.'));
+    }
+  } catch (err) {
+    toast('❌ Error: ' + err.message);
+  } finally {
+    btn.innerHTML = originalText; 
+    btn.disabled = false;
+  }
+});
 
-// Event Listener Form Undangan
-const formInvitation = $('orgInvitationForm');
-if (formInvitation) {
-  formInvitation.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const admin = getSession();
-    if (!admin) return toast('Sesi habis');
+// 2. Submit Undangan
+document.getElementById('orgInvitationForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const adminNia = getAdminNia();
+  if (!adminNia) {
+    toast('❌ Sesi login tidak valid. Silakan login ulang.');
+    return;
+  }
 
-    const data = Object.fromEntries(new FormData(e.target));
-    const btn = e.target.querySelector('button[type="submit"]');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = 'Menyimpan...'; btn.disabled = true;
+  const data = Object.fromEntries(new FormData(e.target));
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  
+  btn.innerHTML = '⏳ Menyimpan...'; 
+  btn.disabled = true;
 
-    const res = await callAPI('save_invitation', 'POST', { adminNia: admin.NIA, invitation: data });
-    btn.innerHTML = originalText; btn.disabled = false;
-
+  try {
+    const res = await callAPI('save_invitation', 'POST', { adminNia: adminNia, invitation: data });
+    
     if (res && res.success) {
-      toast('Undangan disimpan');
-      $('orgInvitationModal').classList.remove('show');
+      toast('✓ Undangan berhasil disimpan');
+      document.getElementById('orgInvitationModal').classList.remove('show');
       e.target.reset();
       loadOrgData();
-    } else toast(res.message || 'Gagal');
-  });
-}
-
+    } else {
+      toast('❌ Gagal: ' + (res && res.message ? res.message : 'Server tidak merespon.'));
+    }
+  } catch (err) {
+    toast('❌ Error: ' + err.message);
+  } finally {
+    btn.innerHTML = originalText; 
+    btn.disabled = false;
+  }
+});
 // Global Functions
 window.editOrgAgenda = function(id) {
   const item = orgAgendaData.find(x => x.id === id);
