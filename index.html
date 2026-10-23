@@ -609,6 +609,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
   display: inline-block;
   margin-top: 8px;
 }
+
 /* =========================================================
    NOTICE — PENGUMUMAN
    ========================================================= */
@@ -667,6 +668,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
     gap: 14px;
   }
 }
+
 /* =========================================================
    STATS
    ========================================================= */
@@ -838,38 +840,81 @@ input, select, textarea { font: inherit; max-width: 100%; }
 .news-card .link { margin-top: auto; }
 
 /* =========================================================
-   AGENDA
+   AGENDA (TIMELINE & PREVIEW)
    ========================================================= */
 .agenda-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
 }
-.agenda {
+.agenda-item {
   padding: 16px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  transition: transform .3s, border-color .3s;
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.agenda:hover { transform: translateY(-3px); border-color: var(--primary); }
-.agenda-row { display: flex; gap: 12px; align-items: center; }
-.date {
-  width: 54px;
-  height: 54px;
-  min-width: 54px;
-  border-radius: 13px;
+.agenda-item:hover { 
+  transform: translateY(-3px); 
+  border-color: var(--primary); 
+  box-shadow: var(--shadow-lg);
+}
+.agenda-row { display: flex; gap: 16px; align-items: flex-start; }
+.agenda-date {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--green));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.agenda-date .day { font-size: 22px; }
+.agenda-date .month { font-size: 11px; text-transform: uppercase; opacity: 0.9; }
+.agenda-info { flex: 1; min-width: 0; }
+.agenda-info h3 { 
+  font-size: clamp(15px, 4vw, 18px); 
+  margin: 0 0 6px; 
+  color: var(--text); 
+  line-height: 1.3;
+}
+.agenda-info .meta { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 12px; 
+  margin-bottom: 6px; 
+}
+.agenda-btn-view {
+  align-self: flex-start;
+  padding: 6px 14px;
   background: var(--surface2);
   color: var(--primary);
-  display: grid;
-  place-items: center;
-  text-align: center;
-  font-weight: 900;
-  line-height: 1.05;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  transition: all .2s;
 }
-.date small { font-size: 10px; display: block; }
-.agenda h3 { font-size: clamp(14px, 3.6vw, 16px); margin: 0; }
+.agenda-btn-view:hover { background: var(--primary); color: #fff; }
+
+@media (min-width: 640px) {
+  .agenda-grid { grid-template-columns: repeat(2, 1fr); }
+  .agenda-item { flex-direction: row; align-items: center; justify-content: space-between; }
+  .agenda-btn-view { align-self: center; }
+}
+@media (min-width: 900px) {
+  .agenda-grid { grid-template-columns: repeat(3, 1fr); }
+  .agenda-item { flex-direction: column; align-items: flex-start; }
+  .agenda-row { width: 100%; }
+  .agenda-btn-view { align-self: flex-start; margin-top: auto; }
+}
 
 /* =========================================================
    PROFILE (About)
@@ -897,7 +942,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
 }
 
 /* =========================================================
-   ORG CHART — STRUKTUR KEPENGURUSAN
+   ORG CHART
    ========================================================= */
 .org-chart {
   background: linear-gradient(135deg, #f0f9f4, #e8f5f4);
@@ -1060,86 +1105,39 @@ input, select, textarea { font: inherit; max-width: 100%; }
 /* =========================================================
    SERVICES
    ========================================================= */
-.services {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
+.services { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .service-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 18px;
-  transition: transform .3s, box-shadow .3s;
-  display: flex;
-  flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px; transition: transform .3s, box-shadow .3s; display: flex; flex-direction: column;
 }
 .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .service-icon { font-size: 26px; line-height: 1; }
 .service-card h3 { font-size: clamp(14px, 3.6vw, 16px); margin: 8px 0 5px; }
 .service-card p { font-size: clamp(12px, 3vw, 13px); color: var(--muted); margin: 0 0 14px; flex: 1; }
 .mini-btn {
-  display: inline-flex;
-  padding: 8px 12px;
-  background: var(--surface2);
-  color: var(--primary);
-  border-radius: 9px;
-  font-size: 12px;
-  font-weight: 800;
-  transition: all .2s;
-  align-self: flex-start;
+  display: inline-flex; padding: 8px 12px; background: var(--surface2); color: var(--primary);
+  border-radius: 9px; font-size: 12px; font-weight: 800; transition: all .2s; align-self: flex-start;
 }
 .mini-btn:hover { background: var(--primary); color: #fff; }
 
 /* =========================================================
    TRANSPARENCY
    ========================================================= */
-.transparency {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 22px;
-  align-items: center;
-}
-.budget-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: 20px;
-  border-radius: var(--radius);
-}
+.transparency { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; }
+.budget-card { background: var(--surface); border: 1px solid var(--line); padding: 20px; border-radius: var(--radius); }
 .budget-card h3 { font-size: clamp(15px, 3.8vw, 17px); margin-bottom: 10px; }
 .budget-row { margin: 14px 0; }
-.budget-row > div {
-  display: flex;
-  justify-content: space-between;
-  font-size: clamp(12px, 3vw, 13px);
-  margin-bottom: 6px;
-  gap: 8px;
-}
+.budget-row > div { display: flex; justify-content: space-between; font-size: clamp(12px, 3vw, 13px); margin-bottom: 6px; gap: 8px; }
 .bar { height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
-.bar i {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--green));
-  border-radius: 99px;
-}
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--green)); border-radius: 99px; }
 
 /* =========================================================
    DOCS
    ========================================================= */
-.docs {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
+.docs { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .doc {
-  padding: 16px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: transform .3s, border-color .3s;
+  padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  display: flex; align-items: center; gap: 12px; transition: transform .3s, border-color .3s;
 }
 .doc:hover { transform: translateY(-3px); border-color: var(--primary); }
 .doc-icon { font-size: 24px; flex: none; }
@@ -1149,19 +1147,10 @@ input, select, textarea { font: inherit; max-width: 100%; }
 /* =========================================================
    PRODUCTS / UMKM
    ========================================================= */
-.products {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-}
+.products { display: grid; grid-template-columns: 1fr; gap: 14px; }
 .product {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: transform .3s, box-shadow .3s;
-  display: flex;
-  flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; transition: transform .3s, box-shadow .3s; display: flex; flex-direction: column;
 }
 .product:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .product img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
@@ -1170,61 +1159,32 @@ input, select, textarea { font: inherit; max-width: 100%; }
 .product p { font-size: clamp(12px, 3vw, 13px); color: var(--muted); margin: 4px 0 10px; flex: 1; }
 
 /* =========================================================
-   GOOGLE MAPS EMBED (PETA INTERAKTIF)
+   GOOGLE MAPS EMBED
    ========================================================= */
 .map-wrapper {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  background: var(--surface2);
-  position: relative;
+  width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow); background: var(--surface2); position: relative;
 }
-.map-wrapper iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
-}
-@media (max-width: 520px) {
-  .map-wrapper { aspect-ratio: 1 / 1; }
-}
+.map-wrapper iframe { width: 100%; height: 100%; border: 0; display: block; }
+@media (max-width: 520px) { .map-wrapper { aspect-ratio: 1 / 1; } }
 
 /* =========================================================
    GALLERY
    ========================================================= */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .gallery img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: transform .3s;
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: var(--radius-sm); cursor: pointer; transition: transform .3s;
 }
 .gallery img:hover { transform: scale(.95); }
 
 /* =========================================================
    EMERGENCY
    ========================================================= */
-.emergency {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
+.emergency { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .emergency a {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 14px 8px;
-  text-align: center;
-  transition: transform .3s, border-color .3s;
-  font-size: 20px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 14px 8px; text-align: center; transition: transform .3s, border-color .3s; font-size: 20px;
 }
 .emergency a:hover { transform: translateY(-3px); border-color: var(--accent); }
 .emergency b { display: block; margin-top: 6px; font-size: clamp(11px, 2.8vw, 13px); }
@@ -1234,183 +1194,76 @@ input, select, textarea { font: inherit; max-width: 100%; }
    FAQ
    ========================================================= */
 .faq { max-width: 850px; margin: auto; }
-.faq-item {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  margin-bottom: 8px;
-}
+.faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 8px; }
 .faq-q {
-  width: 100%;
-  padding: 15px;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  font-size: clamp(13px, 3.4vw, 15px);
-  color: var(--text);
+  width: 100%; padding: 15px; text-align: left; display: flex; justify-content: space-between;
+  align-items: center; gap: 10px; font-weight: 800; font-size: clamp(13px, 3.4vw, 15px); color: var(--text);
 }
-.faq-a {
-  display: none;
-  padding: 0 15px 15px;
-  color: var(--muted);
-  font-size: clamp(12px, 3vw, 14px);
-  line-height: 1.65;
-}
+.faq-a { display: none; padding: 0 15px 15px; color: var(--muted); font-size: clamp(12px, 3vw, 14px); line-height: 1.65; }
 .faq-item.open .faq-a { display: block; }
 
 /* =========================================================
    NEWSLETTER
    ========================================================= */
 .newsletter {
-  background: linear-gradient(120deg, var(--primary), var(--teal));
-  color: #fff;
-  border-radius: var(--radius-lg);
-  padding: clamp(20px, 5vw, 35px);
-  display: grid;
-  gap: 18px;
+  background: linear-gradient(120deg, var(--primary), var(--teal)); color: #fff;
+  border-radius: var(--radius-lg); padding: clamp(20px, 5vw, 35px); display: grid; gap: 18px;
 }
 .newsletter h2 { font-size: clamp(20px, 5vw, 30px); color: #fff; margin: 4px 0 8px; }
 .newsletter p { color: #d8f2e1; font-size: clamp(13px, 3vw, 15px); }
-.newsletter-form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: #fff;
-  padding: 6px;
-  border-radius: 12px;
-}
-.newsletter-form input {
-  border: 0;
-  outline: 0;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  width: 100%;
-  color: #0f172a;
-}
-.newsletter-form button {
-  background: var(--primary);
-  color: #fff;
-  border-radius: 8px;
-  padding: 12px;
-  font-weight: 800;
-  font-size: 14px;
-}
+.newsletter-form { display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 6px; border-radius: 12px; }
+.newsletter-form input { border: 0; outline: 0; padding: 12px; border-radius: 8px; font-size: 14px; width: 100%; color: #0f172a; }
+.newsletter-form button { background: var(--primary); color: #fff; border-radius: 8px; padding: 12px; font-weight: 800; font-size: 14px; }
 
 /* =========================================================
    FOOTER
    ========================================================= */
-.footer {
-  background: #07150c;
-  color: #d8e9dc;
-  padding: clamp(30px, 6vw, 55px) 0 clamp(70px, 12vw, 90px);
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-}
+.footer { background: #07150c; color: #d8e9dc; padding: clamp(30px, 6vw, 55px) 0 clamp(70px, 12vw, 90px); }
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
 .footer h3 { font-size: 14px; color: #fff; margin-bottom: 8px; }
-.footer a {
-  display: block;
-  color: #9fb7a6;
-  font-size: 13px;
-  margin: 6px 0;
-  transition: all .2s;
-}
+.footer a { display: block; color: #9fb7a6; font-size: 13px; margin: 6px 0; transition: all .2s; }
 .footer a:hover { color: #fff; transform: translateX(3px); }
 .footer-brand p { color: #9fb7a6; font-size: 13px; margin-top: 10px; }
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, .08);
-  margin-top: 24px;
-  padding-top: 16px;
-  color: #8da394;
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  border-top: 1px solid rgba(255, 255, 255, .08); margin-top: 24px; padding-top: 16px;
+  color: #8da394; font-size: 12px; display: flex; flex-direction: column; gap: 6px;
 }
 
 /* =========================================================
    BOTTOM NAV
    ========================================================= */
 .bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1500;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  backdrop-filter: blur(14px);
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  backdrop-filter: blur(14px); border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(5, 1fr);
   padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
   box-shadow: 0 -4px 20px rgba(0, 0, 0, .06);
 }
 .bottom-nav a,
 .bottom-nav button {
-  text-align: center;
-  background: transparent;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 2px;
-  border-radius: 8px;
-  transition: color .2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  text-align: center; background: transparent; color: var(--muted); font-size: 10px;
+  font-weight: 700; padding: 4px 2px; border-radius: 8px; transition: color .2s;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
 .bottom-nav span { font-size: 20px; line-height: 1; }
 
 /* =========================================================
    DRAWER
    ========================================================= */
-.drawer {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .5);
-  z-index: 2000;
-  display: none;
-}
+.drawer { position: fixed; inset: 0; background: rgba(0, 0, 0, .5); z-index: 2000; display: none; }
 .drawer.active { display: block; }
 .drawer-panel {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: min(340px, 88%);
-  background: var(--surface);
-  padding: 18px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  box-shadow: -8px 0 30px rgba(0, 0, 0, .2);
-  animation: slideInRight .25s ease;
+  position: absolute; right: 0; top: 0; height: 100%; width: min(340px, 88%);
+  background: var(--surface); padding: 18px; overflow-y: auto; display: flex; flex-direction: column;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, .2); animation: slideInRight .25s ease;
 }
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-.drawer-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .drawer-head h2 { font-size: 17px; }
 .drawer a {
-  display: block;
-  padding: 13px 6px;
-  border-bottom: 1px solid var(--line);
-  font-weight: 700;
-  font-size: 14px;
-  transition: all .2s;
+  display: block; padding: 13px 6px; border-bottom: 1px solid var(--line); font-weight: 700;
+  font-size: 14px; transition: all .2s;
 }
 .drawer a:hover { color: var(--primary); padding-left: 12px; }
 .drawer-footer { margin-top: auto; border-top: 1px solid var(--line); padding-top: 12px; }
@@ -1418,99 +1271,27 @@ input, select, textarea { font: inherit; max-width: 100%; }
 /* =========================================================
    SEARCH OVERLAY
    ========================================================= */
-.search-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .55);
-  z-index: 2100;
-  display: none;
-  padding: 60px 14px 20px;
-  overflow-y: auto;
-}
+.search-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); z-index: 2100; display: none; padding: 60px 14px 20px; overflow-y: auto; }
 .search-overlay.active { display: block; }
-.search-box {
-  width: 100%;
-  max-width: 700px;
-  margin: auto;
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 18px;
-}
-.search-input {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--bg);
-  color: var(--text);
-  outline: 0;
-  font-size: 14px;
-}
+.search-box { width: 100%; max-width: 700px; margin: auto; background: var(--surface); border-radius: var(--radius); padding: 18px; }
+.search-input { width: 100%; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--text); outline: 0; font-size: 14px; }
 .search-results { max-height: 55vh; overflow-y: auto; margin-top: 10px; }
 .result { padding: 12px; border-bottom: 1px solid var(--line); }
 
 /* =========================================================
    MODAL
    ========================================================= */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .55);
-  z-index: 2200;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 14px;
-  overflow-y: auto;
-}
+.modal { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); z-index: 2200; display: none; align-items: center; justify-content: center; padding: 14px; overflow-y: auto; }
 .modal.active { display: flex; }
-.modal-card {
-  width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow-lg);
-  animation: fadeIn .25s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
-}
-.modal-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
+.modal-card { width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; background: var(--surface); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-lg); animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.modal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
 .modal-head h2 { font-size: clamp(16px, 4vw, 20px); }
-.modal-close {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  border-radius: 10px;
-  background: var(--surface2);
-  color: var(--text);
-  font-size: 20px;
-  display: grid;
-  place-items: center;
-}
+.modal-close { width: 36px; height: 36px; min-width: 36px; border-radius: 10px; background: var(--surface2); color: var(--text); font-size: 20px; display: grid; place-items: center; }
 .form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .field { display: flex; flex-direction: column; }
 .field label { font-size: 12px; font-weight: 800; margin-bottom: 5px; }
-.field input, .field select, .field textarea {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  color: var(--text);
-  padding: 11px;
-  border-radius: 10px;
-  outline: 0;
-  font-size: 14px;
-}
+.field input, .field select, .field textarea { width: 100%; border: 1px solid var(--line); background: var(--bg); color: var(--text); padding: 11px; border-radius: 10px; outline: 0; font-size: 14px; }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); }
 .field textarea { min-height: 90px; resize: vertical; }
 
@@ -1518,22 +1299,10 @@ input, select, textarea { font: inherit; max-width: 100%; }
    TOAST
    ========================================================= */
 .toast {
-  position: fixed;
-  left: 50%;
-  bottom: 86px;
-  transform: translateX(-50%) translateY(20px);
-  z-index: 3000;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-lg);
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 13px;
-  max-width: calc(100vw - 24px);
-  width: max-content;
-  opacity: 0;
-  pointer-events: none;
+  position: fixed; left: 50%; bottom: 86px; transform: translateX(-50%) translateY(20px);
+  z-index: 3000; background: var(--surface); color: var(--text); border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg); border-radius: 12px; padding: 12px 16px; font-size: 13px;
+  max-width: calc(100vw - 24px); width: max-content; opacity: 0; pointer-events: none;
   transition: opacity .25s, transform .25s;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -1541,31 +1310,10 @@ input, select, textarea { font: inherit; max-width: 100%; }
 /* =========================================================
    LIGHTBOX
    ========================================================= */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .9);
-  z-index: 2500;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+.lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, .9); z-index: 2500; display: none; align-items: center; justify-content: center; padding: 20px; }
 .lightbox.active { display: flex; }
 .lightbox img { max-height: 88vh; max-width: 95vw; border-radius: 12px; object-fit: contain; }
-.lightbox button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .2);
-  color: #fff;
-  font-size: 22px;
-  display: grid;
-  place-items: center;
-}
+.lightbox button { position: absolute; top: 16px; right: 16px; width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, .2); color: #fff; font-size: 22px; display: grid; place-items: center; }
 
 /* =========================================================
    REVEAL
@@ -1573,21 +1321,14 @@ input, select, textarea { font: inherit; max-width: 100%; }
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
 /* =========================================================
    RESPONSIVE — TABLET (≥ 640px)
    ========================================================= */
 @media (min-width: 640px) {
-  .readonly-banner .container {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .readonly-banner .container { flex-direction: row; align-items: center; justify-content: space-between; }
   .readonly-banner a { align-self: auto; }
   .quick-grid { grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .quick-card { padding: 16px 10px; }
@@ -1595,7 +1336,6 @@ input, select, textarea { font: inherit; max-width: 100%; }
   .stats { grid-template-columns: repeat(4, 1fr); }
   .program-grid { grid-template-columns: repeat(2, 1fr); }
   .news-grid { grid-template-columns: repeat(2, 1fr); }
-  .agenda-grid { grid-template-columns: repeat(2, 1fr); }
   .services { grid-template-columns: repeat(2, 1fr); }
   .docs { grid-template-columns: repeat(2, 1fr); }
   .products { grid-template-columns: repeat(2, 1fr); }
@@ -1620,7 +1360,6 @@ input, select, textarea { font: inherit; max-width: 100%; }
   .hero-card { display: block; }
   .program-grid { grid-template-columns: repeat(3, 1fr); }
   .news-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .agenda-grid { grid-template-columns: repeat(3, 1fr); }
   .services { grid-template-columns: repeat(4, 1fr); }
   .docs { grid-template-columns: repeat(3, 1fr); }
   .products { grid-template-columns: repeat(4, 1fr); }
@@ -1723,6 +1462,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
         </div>
       </div>
       <a href="#program-unggulan">Program</a>
+      <a href="agenda.html">Agenda</a>
       <a href="#layanan">Layanan</a>
       <a href="#transparansi">Laporan</a>
     </nav>
@@ -1785,13 +1525,14 @@ input, select, textarea { font: inherit; max-width: 100%; }
 
 <!-- QUICK -->
 <section class="quick">
-<nav class="bottom-nav" aria-label="Navigasi mobile">
-  <a href="#home"><span>⌂</span>Home</a>
-  <a href="agenda.html"><span>📅</span>Agenda</a>
-  <a href="#berita"><span>📰</span>Berita</a>
-  <a href="#layanan"><span>📄</span>Layanan</a>
-  <a href="profil.html"><span>👤</span>Profil</a>
-</nav>
+  <div class="container quick-grid">
+    <a class="quick-card" href="#profil"><div class="ico">🏛️</div><strong>Tentang</strong></a>
+    <a class="quick-card" href="agenda.html"><div class="ico">📅</div><strong>Agenda</strong></a>
+    <a class="quick-card" href="#berita"><div class="ico">📰</div><strong>Berita</strong></a>
+    <a class="quick-card" href="#layanan"><div class="ico">📄</div><strong>Layanan</strong></a>
+    <a class="quick-card" href="#" onclick="guestGuard(event,()=>openModal('aduanModal'))"><div class="ico">📢</div><strong>Aduan</strong></a>
+    <a class="quick-card" href="#kontak"><div class="ico">☎️</div><strong>Kontak</strong></a>
+  </div>
 </section>
 
 <!-- PROGRAM UNGGULAN -->
@@ -1849,16 +1590,19 @@ input, select, textarea { font: inherit; max-width: 100%; }
   </div>
 </section>
 
-<!-- AGENDA -->
+<!-- AGENDA PREVIEW (FASE 4) -->
 <section class="section" id="agenda">
   <div class="container">
     <div class="section-head">
       <div>
-        <div class="eyebrow">Kegiatan</div>
-        <h2>Agenda Pemuda</h2>
+        <div class="eyebrow">Kegiatan Mendatang</div>
+        <h2>Agenda Terdekat</h2>
       </div>
+      <a class="link" href="agenda.html">Lihat Semua Agenda →</a>
     </div>
-    <div class="agenda-grid" id="agendaList"></div>
+    <div class="agenda-grid" id="agendaList">
+      <!-- Render dari JS -->
+    </div>
   </div>
 </section>
 
@@ -1892,55 +1636,35 @@ input, select, textarea { font: inherit; max-width: 100%; }
     </div>
 
     <div class="org-chart">
-
-      <!-- LEVEL 1: PEMBINA -->
       <div class="org-level">
         <div class="org-node pembina">
-          <div class="org-photo" id="orgPembinaPhoto">
-            <span>🏛️</span>
-          </div>
+          <div class="org-photo" id="orgPembinaPhoto"><span>🏛️</span></div>
           <div class="org-role">Pembina</div>
           <div class="org-name" id="orgPembinaName">Kepala Desa</div>
         </div>
       </div>
-
       <div class="org-connector"></div>
-
-      <!-- LEVEL 2: KETUA -->
       <div class="org-level">
         <div class="org-node ketua">
-          <div class="org-photo" id="orgKetuaPhoto">
-            <span>👑</span>
-          </div>
+          <div class="org-photo" id="orgKetuaPhoto"><span>👑</span></div>
           <div class="org-role">Ketua</div>
           <div class="org-name" id="orgKetuaName">Nama Ketua</div>
         </div>
       </div>
-
       <div class="org-connector"></div>
-
-      <!-- LEVEL 3: SEKRETARIS + BENDAHARA -->
       <div class="org-level two-col">
         <div class="org-node sekretaris">
-          <div class="org-photo" id="orgSekretarisPhoto">
-            <span>📋</span>
-          </div>
+          <div class="org-photo" id="orgSekretarisPhoto"><span>📋</span></div>
           <div class="org-role">Sekretaris</div>
           <div class="org-name" id="orgSekretarisName">Nama</div>
         </div>
-
         <div class="org-node bendahara">
-          <div class="org-photo" id="orgBendaharaPhoto">
-            <span>💰</span>
-          </div>
+          <div class="org-photo" id="orgBendaharaPhoto"><span>💰</span></div>
           <div class="org-role">Bendahara</div>
           <div class="org-name" id="orgBendaharaName">Nama</div>
         </div>
       </div>
-
       <div class="org-connector"></div>
-
-      <!-- LEVEL 4: DIVISI -->
       <div class="org-level divisions">
         <div class="div-col">
           <div class="div-col-title">Bidang & Divisi</div>
@@ -1948,7 +1672,6 @@ input, select, textarea { font: inherit; max-width: 100%; }
           <div class="div-item">🗂️ Divisi Organisasi</div>
           <div class="div-item">⚖️ Divisi HAM</div>
         </div>
-
         <div class="div-col">
           <div class="div-col-title">Bidang & Divisi</div>
           <div class="div-item">🚀 Divisi Pengembangan</div>
@@ -1956,7 +1679,6 @@ input, select, textarea { font: inherit; max-width: 100%; }
           <div class="div-item">📣 Divisi Humas</div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -2165,12 +1887,12 @@ input, select, textarea { font: inherit; max-width: 100%; }
   </div>
 </footer>
 
-<!-- BOTTOM NAV -->
+<!-- BOTTOM NAV (MOBILE) -->
 <nav class="bottom-nav" aria-label="Navigasi mobile">
   <a href="#home"><span>⌂</span>Home</a>
+  <a href="agenda.html"><span>📅</span>Agenda</a>
   <a href="#berita"><span>📰</span>Berita</a>
   <a href="#layanan"><span>📄</span>Layanan</a>
-  <a href="#" onclick="openModal('statusModal')"><span>🔔</span>Status</a>
   <a href="profil.html"><span>👤</span>Profil</a>
 </nav>
 
@@ -2184,6 +1906,7 @@ input, select, textarea { font: inherit; max-width: 100%; }
     <a href="#home" onclick="closeDrawer()">🏠 Beranda</a>
     <a href="#profil" onclick="closeDrawer()">🏛️ Tentang Kami</a>
     <a href="#struktur" onclick="closeDrawer()">👥 Kepengurusan</a>
+    <a href="agenda.html" onclick="closeDrawer()">📅 Agenda Organisasi</a>
     <a href="#program-unggulan" onclick="closeDrawer()">🎯 Program</a>
     <a href="#berita" onclick="closeDrawer()">📰 Berita</a>
     <a href="#layanan" onclick="closeDrawer()">📄 Layanan Pemuda</a>
@@ -2544,6 +2267,11 @@ function fmtDate(d) {
     return new Date(d).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
   } catch (e) { return ''; }
 }
+function formatTimeOnly(timeStr) {
+  if (!timeStr) return '';
+  if (timeStr.includes('1899')) return timeStr.split(' ')[4].substring(0, 5);
+  return timeStr.substring(0, 5);
+}
 
 /* =========================================================
    PROGRAM ICON MAPPING
@@ -2589,11 +2317,10 @@ function renderWithData(data) {
     `<div class="stat-card reveal"><div class="stat-icon">${x[0]}</div><strong>${x[1]}</strong><span>${x[2]}</span></div>`
   ).join("");
 
-  /* PROGRAM UNGGULAN — FIX: tampil SEMUA program (maks 4) tanpa filter aktif */
+  /* PROGRAM UNGGULAN */
   const programList = document.getElementById('programList');
   if (programList) {
     const allPrograms = Array.isArray(programs) ? programs : [];
-
     programList.innerHTML = allPrograms.length
       ? allPrograms.slice(0, 4).map(p => {
           const statusClass = getProgramStatusClass(p.status);
@@ -2615,14 +2342,14 @@ function renderWithData(data) {
       : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada program. Silakan tambahkan melalui dashboard admin.</p>';
   }
 
-  /* NEWS — limit 2 */
+  /* NEWS */
   const publishedNews = news.filter(x => {
-  const s = String(x.status || '').trim().toLowerCase();
-  const cat = String(x.category || '').toLowerCase();
-  const isPublish = s === 'publish' || s === 'published' || s === '';
-  const isPengumuman = cat.includes('pengumuman');
-  return isPublish && !isPengumuman;  // ← exclude pengumuman
-});
+    const s = String(x.status || '').trim().toLowerCase();
+    const cat = String(x.category || '').toLowerCase();
+    const isPublish = s === 'publish' || s === 'published' || s === '';
+    const isPengumuman = cat.includes('pengumuman');
+    return isPublish && !isPengumuman;
+  });
   document.getElementById("news").innerHTML = publishedNews.length
     ? publishedNews.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 2).map((x, i) => {
         const image = x.image || (Array.isArray(x.images) && x.images.length ? x.images[0] : '') ||
@@ -2640,23 +2367,38 @@ function renderWithData(data) {
       }).join("")
     : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada berita.</p>';
 
-  /* AGENDA */
-  document.getElementById("agendaList").innerHTML = agenda.length
-    ? agenda.map(x => {
-        const d = x.date ? new Date(x.date) : null;
-        const day = d && !isNaN(d) ? String(d.getDate()).padStart(2, '0') : '--';
-        const mon = d && !isNaN(d) ? d.toLocaleDateString('id-ID', { month: 'short' }) : '--';
-        return `<article class="agenda reveal">
-          <div class="agenda-row">
-            <div class="date">${day}<small>${mon}</small></div>
-            <div>
-              <h3>${esc(x.name || 'Agenda')}</h3>
-              <p class="meta">${esc(x.time || '')} ${x.location ? '• ' + esc(x.location) : ''}</p>
+  /* AGENDA PREVIEW (FASE 4) */
+  const agendaList = document.getElementById("agendaList");
+  if (agendaList) {
+    const now = new Date(); now.setHours(0,0,0,0);
+    const upcoming = (agenda || []).filter(a => {
+      const d = new Date(a.date);
+      return d >= now && String(a.status).toLowerCase() === 'published';
+    }).sort((a, b) => new Date(a.date) - new Date(b.date)).slice(0, 3);
+
+    agendaList.innerHTML = upcoming.length 
+      ? upcoming.map(x => {
+          const d = x.date ? new Date(x.date) : null;
+          const day = d && !isNaN(d) ? String(d.getDate()).padStart(2, '0') : '--';
+          const mon = d && !isNaN(d) ? d.toLocaleDateString('id-ID', { month: 'short' }) : '--';
+          const time = formatTimeOnly(x.time);
+          return `<article class="agenda-item reveal">
+            <div class="agenda-row">
+              <div class="agenda-date">
+                <span class="day">${day}</span>
+                <span class="month">${mon}</span>
+              </div>
+              <div class="agenda-info">
+                <h3>${esc(x.name || 'Agenda')}</h3>
+                <p class="meta">🕐 ${time} WIB</p>
+                <p class="meta">📍 ${esc(x.location || '-')}</p>
+              </div>
             </div>
-          </div>
-        </article>`;
-      }).join("")
-    : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada agenda.</p>';
+            <a href="agenda.html" class="agenda-btn-view">Lihat Detail & Konfirmasi →</a>
+          </article>`;
+        }).join("")
+      : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada agenda mendatang.</p>';
+  }
 
   /* STRUKTUR KEPENGURUSAN */
   const latestMgt = Array.isArray(management) && management.length ? management[0] : (management || null);
@@ -2685,7 +2427,7 @@ function renderWithData(data) {
     setOrgPerson('orgBendaharaPhoto', 'orgBendaharaName', '', '', '💰', 'Nama');
   }
 
-  /* SERVICES (Layanan Pemuda) */
+  /* SERVICES */
   const servicesHTML = services.map(x => {
     if (x[3] === "Cek Status") {
       return `<article class="service-card reveal">
@@ -2753,26 +2495,27 @@ function renderWithData(data) {
       ).join("")
     : '<p class="meta" style="text-align:center;padding:30px 0;grid-column:1/-1;">Belum ada dokumen publik.</p>';
 
-  /* NOTICE — dari berita kategori "Pengumuman" */
-const noticeEl = document.getElementById("notice");
-if (noticeEl) {
-  const announcements = (news || []).filter(x => {
-    const cat = String(x.category || '').toLowerCase();
-    const status = String(x.status || '').toLowerCase();
-    const isPublish = status === 'publish' || status === 'published' || status === '';
-    return cat.includes('pengumuman') && isPublish;
-  });
+  /* NOTICE */
+  const noticeEl = document.getElementById("notice");
+  if (noticeEl) {
+    const announcements = (news || []).filter(x => {
+      const cat = String(x.category || '').toLowerCase();
+      const status = String(x.status || '').toLowerCase();
+      const isPublish = status === 'publish' || status === 'published' || status === '';
+      return cat.includes('pengumuman') && isPublish;
+    });
 
-  noticeEl.innerHTML = announcements.length
-    ? announcements.slice(0, 4).map(x =>
-        `<a href="berita-detail.html?id=${encodeURIComponent(x.id)}" class="notice-item reveal">
-          <span class="tag" style="background:#fef3c7;color:#92400e;">📢 Pengumuman</span>
-          <h3>${esc(x.title || 'Pengumuman')}</h3>
-          <p class="meta">${fmtDate(x.date)}</p>
-        </a>`
-      ).join("")
-    : '<p class="meta" style="grid-column:1/-1;text-align:center;padding:10px 0;">Belum ada pengumuman.</p>';
-}
+    noticeEl.innerHTML = announcements.length
+      ? announcements.slice(0, 4).map(x =>
+          `<a href="berita-detail.html?id=${encodeURIComponent(x.id)}" class="notice-item reveal">
+            <span class="tag" style="background:#fef3c7;color:#92400e;">📢 Pengumuman</span>
+            <h3>${esc(x.title || 'Pengumuman')}</h3>
+            <p class="meta">${fmtDate(x.date)}</p>
+          </a>`
+        ).join("")
+      : '<p class="meta" style="grid-column:1/-1;text-align:center;padding:10px 0;">Belum ada pengumuman.</p>';
+  }
+
   /* SERVICE SELECT */
   const select = document.getElementById("serviceSelect");
   if (select) {
@@ -2799,31 +2542,12 @@ async function loadData() {
 /* =========================================================
    UI HELPERS
    ========================================================= */
-function openModal(id) {
-  document.getElementById(id).classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove("active");
-  document.body.style.overflow = "";
-}
-function openDrawer() {
-  document.getElementById("drawer").classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-function closeDrawer() {
-  document.getElementById("drawer").classList.remove("active");
-  document.body.style.overflow = "";
-}
-function openSearch() {
-  document.getElementById("searchOverlay").classList.add("active");
-  document.body.style.overflow = "hidden";
-  setTimeout(() => document.getElementById("searchInput").focus(), 100);
-}
-function closeSearch() {
-  document.getElementById("searchOverlay").classList.remove("active");
-  document.body.style.overflow = "";
-}
+function openModal(id) { document.getElementById(id).classList.add("active"); document.body.style.overflow = "hidden"; }
+function closeModal(id) { document.getElementById(id).classList.remove("active"); document.body.style.overflow = ""; }
+function openDrawer() { document.getElementById("drawer").classList.add("active"); document.body.style.overflow = "hidden"; }
+function closeDrawer() { document.getElementById("drawer").classList.remove("active"); document.body.style.overflow = ""; }
+function openSearch() { document.getElementById("searchOverlay").classList.add("active"); document.body.style.overflow = "hidden"; setTimeout(() => document.getElementById("searchInput").focus(), 100); }
+function closeSearch() { document.getElementById("searchOverlay").classList.remove("active"); document.body.style.overflow = ""; }
 function toggleTheme() {
   const dark = document.documentElement.dataset.theme === "dark";
   document.documentElement.dataset.theme = dark ? "" : "dark";
@@ -2837,144 +2561,74 @@ function showToast(msg) {
   clearTimeout(window.toastTimer);
   window.toastTimer = setTimeout(() => t.classList.remove("show"), 2800);
 }
-function openLightbox(src) {
-  document.getElementById("lightboxImg").src = src;
-  document.getElementById("lightbox").classList.add("active");
-}
-function closeLightbox() {
-  document.getElementById("lightbox").classList.remove("active");
-}
+function openLightbox(src) { document.getElementById("lightboxImg").src = src; document.getElementById("lightbox").classList.add("active"); }
+function closeLightbox() { document.getElementById("lightbox").classList.remove("active"); }
 function observe() {
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add("visible");
-      io.unobserve(e.target);
-    }
-  }), { threshold: .08 });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } }), { threshold: .08 });
   document.querySelectorAll(".reveal").forEach(e => io.observe(e));
 }
 
 /* =========================================================
    FORM SUBMIT
    ========================================================= */
-function submitService(e) {
-  e.preventDefault();
-  if (!isLoggedIn()) { guestGuard(null, null); return; }
-  closeModal("serviceModal");
-  showToast("✓ Permohonan dikirim. Nomor: DN-2026-" + String(Math.floor(Math.random() * 900) + 100));
-}
-function submitComplaint(e) {
-  e.preventDefault();
-  if (!isLoggedIn()) { guestGuard(null, null); return; }
-  closeModal("aduanModal");
-  showToast("✓ Aduan diterima. Terima kasih.");
-}
+function submitService(e) { e.preventDefault(); if (!isLoggedIn()) { guestGuard(null, null); return; } closeModal("serviceModal"); showToast("✓ Permohonan dikirim."); }
+function submitComplaint(e) { e.preventDefault(); if (!isLoggedIn()) { guestGuard(null, null); return; } closeModal("aduanModal"); showToast("✓ Aduan diterima. Terima kasih."); }
 function checkStatus() {
   if (!isLoggedIn()) { guestGuard(null, null); return; }
   const n = document.getElementById("statusNumber").value.trim();
   if (!n) { showToast("Masukkan nomor permohonan."); return; }
-  document.getElementById("statusResult").innerHTML =
-    '<div style="margin-top:14px;padding:14px;background:var(--surface2);border-radius:12px">' +
-    '<b>' + esc(n) + '</b>' +
-    '<div style="margin-top:10px;font-size:13px">Diterima → Verifikasi → <strong style="color:var(--primary)">Diproses</strong> → Selesai</div>' +
-    '<p class="meta" style="margin-top:8px">Status demo.</p></div>';
+  document.getElementById("statusResult").innerHTML = '<div style="margin-top:14px;padding:14px;background:var(--surface2);border-radius:12px"><b>' + esc(n) + '</b><div style="margin-top:10px;font-size:13px">Diterima → Verifikasi → <strong style="color:var(--primary)">Diproses</strong> → Selesai</div></div>';
 }
-function subscribe(e) {
-  e.preventDefault();
-  document.getElementById("emailSubscribe").value = "";
-  showToast("✓ Email berhasil didaftarkan.");
-}
+function subscribe(e) { e.preventDefault(); document.getElementById("emailSubscribe").value = ""; showToast("✓ Email berhasil didaftarkan."); }
 
 /* =========================================================
    SEARCH
    ========================================================= */
 function performSearch(q) {
   const box = document.getElementById("searchResults");
-  if (!q.trim()) {
-    box.innerHTML = '<p class="meta">Ketik kata kunci...</p>';
-    return;
-  }
+  if (!q.trim()) { box.innerHTML = '<p class="meta">Ketik kata kunci...</p>'; return; }
   const all = [
     ...(appData.news || []).map(x => [x.title || '', x.excerpt || x.body || '', "Berita"]),
     ...(appData.services || []).map(x => [x[1], x[2], "Layanan"]),
     ...(appData.products || []).map(x => [x.name || x[0] || '', x.category || x[1] || '', "Potensi"])
   ];
   const r = all.filter(x => x.join(" ").toLowerCase().includes(q.toLowerCase()));
-  box.innerHTML = r.length
-    ? r.map(x => `<div class="result"><span class="tag">${esc(x[2])}</span><b>${esc(x[0])}</b><div class="meta">${esc(x[1])}</div></div>`).join("")
-    : '<p class="meta">Tidak ditemukan.</p>';
+  box.innerHTML = r.length ? r.map(x => `<div class="result"><span class="tag">${esc(x[2])}</span><b>${esc(x[0])}</b><div class="meta">${esc(x[1])}</div></div>`).join("") : '<p class="meta">Tidak ditemukan.</p>';
 }
 
 /* =========================================================
    EVENT LISTENERS
    ========================================================= */
-window.addEventListener("scroll", () => {
-  document.getElementById("header").classList.toggle("scrolled", scrollY > 10);
-}, { passive: true });
-
+window.addEventListener("scroll", () => { document.getElementById("header").classList.toggle("scrolled", scrollY > 10); }, { passive: true });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    closeDrawer();
-    closeSearch();
-    closeLightbox();
-    document.querySelectorAll(".modal.active").forEach(m => closeModal(m.id));
-  }
+  if (e.key === "Escape") { closeDrawer(); closeSearch(); closeLightbox(); document.querySelectorAll(".modal.active").forEach(m => closeModal(m.id)); }
 });
-
 if (localStorage.getItem("theme") === "dark") toggleTheme();
-if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  document.documentElement.classList.add("no-motion");
-}
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) { document.documentElement.classList.add("no-motion"); }
 
 /* =========================================================
-   PWA — SERVICE WORKER & INSTALL PROMPT
+   PWA
    ========================================================= */
 let deferredPrompt = null;
-
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./sw.js", { scope: "./" })
-      .then(function (r) { console.log("[PWA] SW registered:", r.scope); })
-      .catch(function (e) { console.warn("[PWA] SW gagal:", e.message); });
+    navigator.serviceWorker.register("./sw.js", { scope: "./" }).then(r => console.log("[PWA] SW registered")).catch(e => console.warn("[PWA] SW gagal"));
   });
 }
-
 window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  console.log("[PWA] Install prompt ready");
-
-  setTimeout(() => {
-    const banner = document.getElementById("pwaInstall");
-    if (banner && !localStorage.getItem("pwa_dismissed")) {
-      banner.classList.add("show");
-    }
-  }, 3000);
+  e.preventDefault(); deferredPrompt = e;
+  setTimeout(() => { const b = document.getElementById("pwaInstall"); if (b && !localStorage.getItem("pwa_dismissed")) b.classList.add("show"); }, 3000);
 });
-
 document.getElementById("pwaInstallYes")?.addEventListener("click", async () => {
-  const banner = document.getElementById("pwaInstall");
-  banner.classList.remove("show");
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log("[PWA] User choice:", outcome);
-    deferredPrompt = null;
-  }
+  document.getElementById("pwaInstall").classList.remove("show");
+  if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; }
 });
-
 document.getElementById("pwaInstallNo")?.addEventListener("click", () => {
-  const banner = document.getElementById("pwaInstall");
-  banner.classList.remove("show");
+  document.getElementById("pwaInstall").classList.remove("show");
   localStorage.setItem("pwa_dismissed", "1");
 });
-
 window.addEventListener("appinstalled", () => {
-  console.log("[PWA] App installed");
-  deferredPrompt = null;
-  const banner = document.getElementById("pwaInstall");
-  if (banner) banner.classList.remove("show");
-  showToast("✓ Aplikasi berhasil dipasang!");
+  deferredPrompt = null; document.getElementById("pwaInstall")?.classList.remove("show"); showToast("✓ Aplikasi dipasang!");
 });
 
 /* =========================================================
