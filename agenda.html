@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2c7a7b">
+  <meta name="description" content="Agenda Organisasi Karang Taruna (Putra Asmara)">
+  <title>Agenda Organisasi — Karang Taruna (Putra Asmara)</title>
+  
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrgyRNOvRz64nJHacMOfS1zS3Nu-uffga7jZfnnXjAmaelH9p6oQVFMlE5UKiUeV9NxzjOnjqRyXqReI-DpEgWkqBT5pfeiM-U-ry9lf-opHX7-M2V_KEAi4NH8sOOWc1zZfea49CLVXRwRUKN4IBYKJAxuY7sybH_Xe-e6g0ZcGiGRRHGP0BGGFAzoMg/s320/1000007259.png">
+
+<style>
+/* =========================================================
+   RESET & BASE (MOBILE-FIRST)
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6;
+  overflow-x: hidden; width: 100%; max-width: 100vw;
+  transition: background .3s ease, color .3s ease;
+  -webkit-tap-highlight-color: transparent; min-height: 100vh;
+}
+img, svg { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: 0; background: transparent; font: inherit; color: inherit; }
+input, select, textarea { font: inherit; max-width: 100%; }
+
+:root {
+  --primary: #2c7a7b; --primary2: #245f60; --green: #38b2ac; --teal: #319795;
+  --accent: #f59e0b; --danger: #dc2626; --bg: #f5f7f6; --surface: #fff;
+  --surface2: #eef6f0; --text: #0f172a; --muted: #64748b; --line: #e2e8f0;
+  --shadow: 0 8px 24px rgba(15, 23, 42, .08); --shadow-lg: 0 16px 40px rgba(15, 23, 42, .12);
+  --radius: 16px; --pad-x: clamp(14px, 4vw, 32px);
+}
+[data-theme="dark"] {
+  --bg: #07110c; --surface: #0d1912; --surface2: #112319; --text: #e7f4eb;
+  --muted: #9bb0a1; --line: #20352a; --shadow: 0 10px 30px rgba(0, 0, 0, .3);
+  --shadow-lg: 0 18px 45px rgba(0, 0, 0, .4);
+}
+
+.container { width: 100%; max-width: 900px; margin-inline: auto; padding-inline: var(--pad-x); }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line); transition: box-shadow .25s;
+}
+.header.scrolled { box-shadow: var(--shadow); }
+.header-inner {
+  min-height: 60px; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding-block: 6px;
+}
+.back-btn, .theme-toggle {
+  border: 0; background: var(--surface2); color: var(--primary);
+  width: 38px; height: 38px; min-width: 38px; border-radius: 11px;
+  display: grid; place-items: center; font-size: 18px; transition: all .2s;
+}
+.back-btn:hover, .theme-toggle:hover { background: var(--line); }
+.page-title {
+  flex: 1; min-width: 0; text-align: center;
+  font-size: clamp(13px, 3.6vw, 15px); font-weight: 800;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.page-title small {
+  display: block; font-size: 10px; font-weight: 400;
+  color: var(--muted); opacity: .7; margin-top: 2px;
+}
+
+/* =========================================================
+   TABS (MENU)
+   ========================================================= */
+.tabs-wrap {
+  display: flex; gap: 8px; margin-top: 16px; margin-bottom: 20px;
+  overflow-x: auto; white-space: nowrap; padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 700;
+  background: var(--surface); border: 1px solid var(--line); color: var(--muted);
+  transition: all .2s;
+}
+.tab-btn.active {
+  background: var(--primary); border-color: var(--primary); color: #fff;
+  box-shadow: 0 4px 12px rgba(44,122,123,.25);
+}
+
+/* =========================================================
+   AGENDA CARD (TIMELINE)
+   ========================================================= */
+.agenda-list { display: grid; gap: 16px; margin-bottom: 40px; }
+.agenda-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+}
+.agenda-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.agenda-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--green));
+}
+.agenda-date-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface2); color: var(--primary);
+  padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 800;
+  margin-bottom: 12px;
+}
+.agenda-title {
+  font-size: clamp(16px, 4vw, 20px); font-weight: 800; line-height: 1.3;
+  margin-bottom: 12px; color: var(--text);
+}
+.agenda-meta {
+  display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--muted);
+  margin-bottom: 16px;
+}
+.agenda-meta span { display: flex; align-items: center; gap: 6px; }
+.agenda-desc { font-size: 14px; color: var(--text); margin-bottom: 20px; line-height: 1.6; }
+
+/* RSVP BAGIAN */
+.rsvp-area {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px; display: flex; flex-direction: column; gap: 10px;
+}
+.rsvp-title { font-size: 12px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.rsvp-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.rsvp-btn {
+  flex: 1; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700;
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  transition: all .2s; min-width: 120px;
+}
+.rsvp-btn:hover { border-color: var(--primary); }
+.rsvp-btn.active-going { background: #dcfce7; border-color: #22c55e; color: #166534; }
+.rsvp-btn.active-notgoing { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+[data-theme=dark] .rsvp-btn.active-going { background: #052e16; color: #86efac; border-color: #166534; }
+[data-theme=dark] .rsvp-btn.active-notgoing { background: #450a0a; color: #fca5a5; border-color: #991b1b; }
+
+.agenda-status-info { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: center; }
+
+/* =========================================================
+   LOADING & EMPTY
+   ========================================================= */
+.loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; gap: 16px; }
+.spinner { width: 40px; height: 40px; border: 4px solid var(--line); border-top-color: var(--primary); border-radius: 50%; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-state { text-align: center; padding: 50px 20px; }
+.empty-state .icon { font-size: 48px; margin-bottom: 12px; display: block; }
+.empty-state h3 { font-size: 18px; margin-bottom: 6px; }
+.empty-state p { color: var(--muted); font-size: 13px; }
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);
+  z-index: 3000; background: var(--surface); color: var(--text); border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg); border-radius: 12px; padding: 12px 18px; font-size: 13px;
+  width: max-content; max-width: calc(100vw - 24px); opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s; font-weight: 600; text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <button class="back-btn" onclick="goBack()" aria-label="Kembali">←</button>
+    <div class="page-title">
+      Agenda Organisasi
+      <small>Putra Asmara • Desa Ciasmara</small>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Tema" id="themeBtn">☾</button>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    
+    <!-- TABS -->
+    <div class="tabs-wrap">
+      <button class="tab-btn active" data-tab="mendatang" onclick="switchTab('mendatang')">📅 Agenda Mendatang</button>
+      <button class="tab-btn" data-tab="riwayat" onclick="switchTab('riwayat')">🗄️ Riwayat Kegiatan</button>
+    </div>
+
+    <!-- LIST AGENDA -->
+    <div class="agenda-list" id="agendaList">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Memuat agenda...</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbxAck8UdHXSyeBtybGpFQyiamwgMC0O4mDfvrZ2EtAUzJ1YaaEXZcEuxlAPdFWUCW4V7A/exec';
+const SESSION_KEY = 'kt_user';
+const INDEX_URL = 'index.html';
+
+let allAgendas = [];
+let myAttendance = {}; // Format: { agendaId: response }
+let currentUser = null;
+let currentTab = 'mendatang';
+
+const $ = id => document.getElementById(id);
+
+/* =========================================================
+   SESSION & AUTH
+   ========================================================= */
+function getSession() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) { return null; }
+}
+
+function isLoggedIn() {
+  const u = currentUser;
+  return !!(u && (u.NIA || u.nia));
+}
+
+function goBack() {
+  if (history.length > 1) history.back();
+  else location.href = INDEX_URL + '#agenda';
+}
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function formatDateFull(dateStr) {
+  if (!dateStr) return '-';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  } catch (e) { return dateStr; }
+}
+
+function formatTimeOnly(timeStr) {
+  if (!timeStr) return '';
+  if (timeStr.includes('1899')) return timeStr.split(' ')[4].substring(0, 5);
+  return timeStr.substring(0, 5);
+}
+
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* =========================================================
+   FETCH DATA
+   ========================================================= */
+async function fetchAgendas() {
+  try {
+    const res = await fetch(API_URL + '?action=get_agenda', { cache: 'no-store' });
+    const json = await res.json();
+    if (json && json.success) {
+      // Hanya tampilkan yang Published (kecuali admin? Kita asumsikan publik hanya lihat published)
+      allAgendas = json.data.filter(a => String(a.status).toLowerCase() === 'published');
+    }
+  } catch (e) {
+    console.warn('Gagal ambil agenda', e);
+  }
+}
+
+async function fetchMyAttendance() {
+  if (!isLoggedIn()) return;
+  try {
+    // Kita ambil semua attendance yang ada, lalu filter berdasarkan NIA user
+    // (Karena backend belum punya endpoint get_attendance_by_member)
+    const res = await fetch(API_URL + '?action=get_attendance', { cache: 'no-store' }); // Tanpa agendaId = ambil semua?
+    // *Catatan: Backend kita memfilter berdasarkan agendaId. Jika kosong, akan return [].
+    // Untuk optimasi, kita akan memanggil API per agenda saat render.
+  } catch (e) {}
+}
+
+// Cek RSVP user untuk agenda tertentu
+async function checkMyRsvp(agendaId) {
+  if (!isLoggedIn()) return 'Undecided';
+  try {
+    const res = await fetch(API_URL + '?action=get_attendance&agendaId=' + encodeURIComponent(agendaId), { cache: 'no-store' });
+    const json = await res.json();
+    if (json && json.success) {
+      const myAtt = json.data.find(a => String(a.memberNia).toUpperCase() === String(currentUser.NIA).toUpperCase());
+      return myAtt ? myAtt.response : 'Undecided';
+    }
+  } catch (e) {}
+  return 'Undecided';
+}
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+  renderAgendaList();
+}
+
+async function renderAgendaList() {
+  const container = $('agendaList');
+  const now = new Date();
+  now.setHours(0,0,0,0); // Reset jam ke 00:00 untuk perbandingan
+
+  // Filter berdasarkan tab
+  let filtered = allAgendas.filter(a => {
+    const eventDate = new Date(a.date);
+    if (currentTab === 'mendatang') return eventDate >= now;
+    return eventDate < now; // Riwayat
+  });
+
+  // Urutkan
+  filtered.sort((a, b) => {
+    const da = new Date(a.date).getTime();
+    const db = new Date(b.date).getTime();
+    return currentTab === 'mendatang' ? da - db : db - da;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="icon">${currentTab === 'mendatang' ? '📭' : '🗄️'}</span>
+        <h3>${currentTab === 'mendatang' ? 'Belum Ada Agenda Mendatang' : 'Belum Ada Riwayat'}</h3>
+        <p>${currentTab === 'mendatang' ? 'Silakan cek kembali nanti.' : 'Kegiatan yang sudah lewat akan muncul di sini.'}</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = '';
+  
+  for (const a of filtered) {
+    const isPast = new Date(a.date) < now;
+    const myResponse = await checkMyRsvp(a.id); // Cek RSVP
+    
+    // Logika H-1 (Batas Konfirmasi)
+    const eventDate = new Date(a.date);
+    const limitDate = new Date(eventDate);
+    limitDate.setDate(limitDate.getDate() - 1); // Mundur 1 hari
+    const isClosed = new Date() > limitDate || isPast; // Tutup jika sudah lewat H-1 atau acara sudah lewat
+
+    const statusClass = a.status === 'Published' ? 'text-green' : 'text-muted';
+    
+    // Render Tombol RSVP
+    let rsvpHtml = '';
+    if (isPast) {
+      rsvpHtml = `<div class="rsvp-area" style="text-align:center;color:var(--muted);font-size:12px;">Kegiatan telah selesai.</div>`;
+    } else {
+      const isGoing = myResponse === 'Going';
+      const isNotGoing = myResponse === 'NotGoing';
+      const disabledAttr = isClosed ? 'disabled' : '';
+      const closedMsg = isClosed ? '<div class="agenda-status-info">Konfirmasi ditutup (Batas H-1).</div>' : '';
+
+      rsvpHtml = `
+        <div class="rsvp-area">
+          <div class="rsvp-title">Konfirmasi Kehadiran ${isClosed ? '(Ditutup)' : ''}</div>
+          <div class="rsvp-actions">
+            <button class="rsvp-btn ${isGoing ? 'active-going' : ''}" onclick="submitRsvp('${a.id}', 'Going')" ${disabledAttr}>
+              ✅ Hadir
+            </button>
+            <button class="rsvp-btn ${isNotGoing ? 'active-notgoing' : ''}" onclick="submitRsvp('${a.id}', 'NotGoing')" ${disabledAttr}>
+              ❌ Tidak Hadir
+            </button>
+          </div>
+          ${closedMsg}
+        </div>
+      `;
+    }
+
+    // Jika Guest, jangan tampilkan tombol RSVP (ganti dengan CTA Login)
+    if (!isLoggedIn() && !isPast) {
+      rsvpHtml = `
+        <div class="rsvp-area" style="text-align:center;">
+          <div class="rsvp-title" style="margin-bottom:8px">Ingin hadir?</div>
+          <a href="login-register.html" class="rsvp-btn active-going" style="display:inline-block;text-decoration:none;">🔑 Login untuk Konfirmasi</a>
+        </div>
+      `;
+    }
+
+    const mapsLink = a.mapsUrl ? `<a href="${esc(a.mapsUrl)}" target="_blank" style="color:var(--primary);font-weight:700;font-size:12px;margin-left:8px;">🗺️ Buka Peta</a>` : '';
+
+    const card = document.createElement('div');
+    card.className = 'agenda-card';
+    card.innerHTML = `
+      <div class="agenda-date-badge">
+        📅 ${formatDateFull(a.date)} • ${formatTimeOnly(a.time)} WIB
+      </div>
+      <h3 class="agenda-title">${esc(a.name)}</h3>
+      <div class="agenda-meta">
+        <span>📍 ${esc(a.location)} ${mapsLink}</span>
+        ${a.organizer ? `<span>🏢 ${esc(a.organizer)}</span>` : ''}
+      </div>
+      ${a.description ? `<p class="agenda-desc">${esc(a.description)}</p>` : ''}
+      ${rsvpHtml}
+    `;
+    container.appendChild(card);
+  }
+}
+
+/* =========================================================
+   RSVP (KIRIM KONFIRMASI)
+   ========================================================= */
+async function submitRsvp(agendaId, response) {
+  if (!isLoggedIn()) {
+    showToast('🔒 Silakan login dulu.');
+    setTimeout(() => location.href = 'login-register.html', 1000);
+    return;
+  }
+
+  showToast('Menyimpan konfirmasi...');
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'save_attendance',
+        data: {
+          agendaId: agendaId,
+          memberNia: currentUser.NIA,
+          response: response
+        }
+      })
+    });
+    const json = await res.json();
+    
+    if (json && json.success) {
+      showToast('✓ Konfirmasi tersimpan.');
+      renderAgendaList(); // Refresh tampilan tombol
+    } else {
+      showToast('⚠️ ' + (json.message || 'Gagal menyimpan.'));
+    }
+  } catch (e) {
+    showToast('❌ Gagal koneksi ke server.');
+  }
+}
+
+/* =========================================================
+   THEME & INIT
+   ========================================================= */
+function toggleTheme() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = dark ? '' : 'dark';
+  localStorage.setItem('theme', dark ? 'light' : 'dark');
+  $('themeBtn').textContent = dark ? '☾' : '☀';
+}
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+  $('themeBtn').textContent = '☀';
+}
+
+window.addEventListener('scroll', () => {
+  $('header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// START
+(async function init() {
+  currentUser = getSession();
+  await fetchAgendas();
+  await renderAgendaList();
+})();
+</script>
+</body>
+</html>
