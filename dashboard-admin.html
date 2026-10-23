@@ -1642,22 +1642,27 @@ $('saveSet').onclick = () => {
 async function syncData(silent = false) {
   const apiUrl = DB.settings?.apiUrl || API_URL;
   if (!apiUrl) { if (!silent) toast('⚠️ API belum dikonfigurasi'); return; }
+  
   if (!silent) setLoading(true, 'Menyinkronkan data...');
   try {
     const result = await callAPI('getAll', 'GET');
+    
     if (result && result.success && result.data) {
       const d = result.data;
-      // Server primary
-      if (Array.isArray(d.members)) DB.members = d.members.map(normalizeMember).filter(Boolean);
+      
+      // PERBAIKAN: Mengikuti struktur API code.gs yang baru
+      if (Array.isArray(d.users)) DB.members = d.users.map(normalizeMember).filter(Boolean);
       if (Array.isArray(d.programs)) DB.programs = d.programs.map(normalizeProgram).filter(Boolean);
       if (Array.isArray(d.news)) DB.news = d.news;
       if (Array.isArray(d.agenda)) DB.agenda = d.agenda.map(normalizeAgenda).filter(Boolean);
+      
       if (Array.isArray(d.umkm) || Array.isArray(d.products)) {
         DB.umkm = (d.umkm || d.products).map(normalizeUmkm).filter(Boolean);
       }
       if (Array.isArray(d.gallery)) DB.gallery = d.gallery;
       if (Array.isArray(d.finance)) DB.finance = d.finance;
       if (Array.isArray(d.aspirations)) DB.aspirations = d.aspirations;
+      
       if (Array.isArray(d.documents) || Array.isArray(d.docs)) {
         DB.documents = (d.documents || d.docs).map(normalizeDocument).filter(Boolean);
       }
@@ -1665,6 +1670,12 @@ async function syncData(silent = false) {
         const m = Array.isArray(d.management) ? d.management[0] : d.management;
         if (m) DB.management = normalizeManagement(m);
       }
+
+      // Sinkronisasi data Agenda Organisasi (Jika modulnya sudah terpasang)
+      if (typeof loadOrgData === 'function') {
+          await loadOrgData();
+      }
+
       saveLocal();
       render();
       if (!silent) toast('✓ Sinkronisasi berhasil');
@@ -1672,6 +1683,7 @@ async function syncData(silent = false) {
       if (!silent) toast('⚠️ Gagal sinkron: data tidak valid');
     }
   } catch (e) {
+    console.error(e);
     if (!silent) toast('❌ Sinkronisasi gagal: ' + e.message);
   } finally {
     if (!silent) setLoading(false);
