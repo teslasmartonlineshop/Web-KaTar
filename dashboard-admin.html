@@ -1180,13 +1180,15 @@ async function callAPI(action, method = 'GET', body = null, params = null) {
     const options = { method, cache: 'no-store' };
     if (method === 'POST') {
       options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
-      options.body = JSON.stringify({ action, ...body });
+      options.body = JSON.stringify({ action, ...(body || {}) });
     }
+    
     let url = apiUrl;
     if (method === 'GET') {
       const qs = new URLSearchParams({ action, ...(params || {}) });
-      url += '?action=' + qs.toString();
+      url = apiUrl + '?' + qs.toString();
     }
+    
     const response = await fetch(url, options);
     if (!response.ok) throw new Error('HTTP ' + response.status);
     return await response.json();
@@ -1208,6 +1210,9 @@ function nav(p) {
   });
   $('side').classList.remove('open');
   $('back').classList.remove('show');
+// Taruh di dalam function nav(p), di bagian paling bawah:
+  if (p === 'org-agenda' || p === 'org-invitation' || p === 'org-attendance') {
+    if (typeof loadOrgData === 'function') loadOrgData();
 }
 document.querySelectorAll('[data-page]').forEach(x => x.onclick = () => nav(x.dataset.page));
 document.querySelectorAll('[data-jump]').forEach(x => x.onclick = () => nav(x.dataset.jump));
