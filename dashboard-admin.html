@@ -364,6 +364,11 @@ img{max-width:100%;display:block}
       <button data-page="programs">🤝 Program & Kegiatan</button>
       <button data-page="news">📰 Berita</button>
       <button data-page="agenda">📅 Agenda</button>
+      <!-- Tambahkan di bawah menu Agenda -->
+      <div class="nav-title">Agenda Organisasi</div>
+      <button data-page="org-agenda">📆 Jadwal Kegiatan</button>
+      <button data-page="org-invitation">✉️ Undangan Masuk</button>
+      <button data-page="org-attendance">👥 Kehadiran Anggota</button>
       <button data-page="umkm">🛍️ UMKM</button>
       <button data-page="gallery">🖼️ Galeri</button>
       <div class="nav-title">Organisasi</div>
@@ -533,6 +538,132 @@ img{max-width:100%;display:block}
         <div class="grid three" id="agenda"></div>
       </section>
 
+      <!-- SECTION: JADWAL KEGIATAN -->
+      <section class="page" id="page-org-agenda">
+        <div class="head">
+          <div>
+            <h1>Jadwal Kegiatan</h1>
+            <p class="muted">Kelola agenda, waktu, dan lokasi kegiatan organisasi.</p>
+          </div>
+          <button class="btn primary" data-open="orgAgendaModal">＋ Buat Agenda</button>
+        </div>
+        <div class="card">
+          <div class="tablewrap">
+            <table class="table">
+              <thead>
+                <tr><th>Tanggal</th><th>Nama Kegiatan</th><th>Lokasi</th><th>Status</th><th>Aksi</th></tr>
+              </thead>
+              <tbody id="orgAgendaList">
+                <tr><td colspan="5" class="empty">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: UNDANGAN MASUK -->
+      <section class="page" id="page-org-invitation">
+        <div class="head">
+          <div>
+            <h1>Undangan Masuk</h1>
+            <p class="muted">Arsip surat dan undangan dari pihak luar.</p>
+          </div>
+          <button class="btn primary" data-open="orgInvitationModal">＋ Catat Undangan</button>
+        </div>
+        <div class="card">
+          <div class="tablewrap">
+            <table class="table">
+              <thead>
+                <tr><th>Perihal</th><th>Penyelenggara</th><th>Tgl Diterima</th><th>Dokumen</th><th>Aksi</th></tr>
+              </thead>
+              <tbody id="orgInvitationList">
+                <tr><td colspan="5" class="empty">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: KEHADIRAN ANGGOTA -->
+      <section class="page" id="page-org-attendance">
+        <div class="head">
+          <div>
+            <h1>Kehadiran Anggota</h1>
+            <p class="muted">Pantau respons dan catat presensi aktual.</p>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="field">
+            <label>Pilih Agenda:</label>
+            <select id="attendanceAgendaSelect" onchange="loadAttendance()">
+              <option value="">-- Pilih Agenda --</option>
+            </select>
+          </div>
+        </div>
+        <div class="card">
+          <div class="tablewrap">
+            <table class="table">
+              <thead>
+                <tr><th>NIA</th><th>Nama Anggota</th><th>Respons</th><th>Presensi Aktual</th><th>Aksi</th></tr>
+              </thead>
+              <tbody id="orgAttendanceList">
+                <tr><td colspan="5" class="empty">Pilih agenda terlebih dahulu.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL: AGENDA -->
+      <div class="overlay" id="orgAgendaModal">
+        <div class="modal">
+          <div class="modal-head"><h2>Buat / Edit Agenda</h2><button class="close" data-close>✕</button></div>
+          <form id="orgAgendaForm">
+            <input type="hidden" name="id">
+            <div class="formgrid">
+              <div class="field full"><label>Nama Kegiatan</label><input name="name" required></div>
+              <div class="field"><label>Tanggal</label><input name="date" type="date" required></div>
+              <div class="field"><label>Jam Mulai</label><input name="time" type="time" required></div>
+              <div class="field"><label>Jam Selesai (Opsional)</label><input name="endTime" type="time"></div>
+              <div class="field"><label>Lokasi</label><input name="location" required></div>
+              <div class="field full"><label>Deskripsi Singkat</label><textarea name="description"></textarea></div>
+              <div class="field full"><label>Link Google Maps (Opsional)</label><input name="mapsUrl" type="url" placeholder="https://maps.app.goo.gl/..."></div>
+              <div class="field"><label>Status</label>
+                <select name="status">
+                  <option value="Published">Published (Tampil di Publik)</option>
+                  <option value="Draft">Draft (Sembunyikan)</option>
+                </select>
+              </div>
+            </div>
+            <div class="actions" style="justify-content:flex-end;margin-top:16px">
+              <button class="btn" data-close type="button">Batal</button>
+              <button class="btn primary">💾 Simpan Agenda</button>
+                  </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODAL: UNDANGAN -->
+      <div class="overlay" id="orgInvitationModal">
+        <div class="modal">
+          <div class="modal-head"><h2>Catat Undangan Masuk</h2><button class="close" data-close>✕</button></div>
+          <form id="orgInvitationForm">
+            <input type="hidden" name="invitationId">
+            <div class="formgrid">
+              <div class="field full"><label>Judul / Perihal</label><input name="title" required></div>
+              <div class="field"><label>Penyelenggara</label><input name="organizer" required></div>
+              <div class="field"><label>Tanggal Diterima</label><input name="receivedDate" type="date" required></div>
+              <div class="field full"><label>Link Dokumen (Google Drive/Imgur)</label><input name="documentUrl" type="url" placeholder="https://drive.google.com/..."></div>
+              <div class="field full"><label>Catatan Pengurus</label><textarea name="notes"></textarea></div>
+            </div>
+            <div class="actions" style="justify-content:flex-end;margin-top:16px">
+              <button class="btn" data-close type="button">Batal</button>
+              <button class="btn primary">💾 Simpan Undangan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
       <!-- UMKM -->
       <section class="page" id="page-umkm">
         <div class="head">
@@ -1049,20 +1180,18 @@ async function callAPI(action, method = 'GET', body = null, params = null) {
     const options = { method, cache: 'no-store' };
     if (method === 'POST') {
       options.headers = { 'Content-Type': 'text/plain;charset=utf-8' };
-      options.body = JSON.stringify({ action, ...(body || {}) });
+      options.body = JSON.stringify({ action, ...body });
     }
     let url = apiUrl;
     if (method === 'GET') {
       const qs = new URLSearchParams({ action, ...(params || {}) });
-      url += (url.includes('?') ? '&' : '?') + qs.toString();
+      url += '?action=' + qs.toString();
     }
     const response = await fetch(url, options);
     if (!response.ok) throw new Error('HTTP ' + response.status);
-    const text = await response.text();
-    try { return JSON.parse(text); }
-    catch (e) { throw new Error('Respons tidak valid'); }
+    return await response.json();
   } catch (e) {
-    console.warn('API call failed:', action, e.message);
+    console.warn('API call failed:', e);
     return null;
   }
 }
@@ -1651,6 +1780,210 @@ $('logout').onclick = doLogout;
   // Auto-sync dari server (background)
   setTimeout(() => syncData(true), 800);
 })();
+/* =========================================================
+   MODUL AGENDA ORGANISASI (ADMIN)
+   ========================================================= */
+let orgAgendaData = [];
+let orgInvitationData = [];
+let orgMembersData = [];
+let orgAttendanceData = [];
+
+// Helper untuk mengekstrak jam dari format Date string yang aneh
+function formatTimeOnly(timeStr) {
+  if (!timeStr) return '';
+  if (timeStr.includes('1899')) {
+    // Jika format bawaan Google Sheets (1899)
+    const parts = timeStr.split(' ');
+    return parts[4].substring(0, 5); // Mengambil "13:00"
+  }
+  return timeStr.substring(0, 5); // Jika format string "13:00"
+}
+
+async function loadOrgData() {
+  // Ambil Agenda
+  const resA = await callAPI('get_agenda', 'GET');
+  if (resA && resA.success) { orgAgendaData = resA.data; renderOrgAgenda(); }
+
+  // Ambil Undangan
+  const resI = await callAPI('get_invitations', 'GET');
+  if (resI && resI.success) { orgInvitationData = resI.data; renderOrgInvitation(); }
+
+  // Ambil Members (untuk nama anggota)
+  const resM = await callAPI('get_users', 'GET');
+  if (resM && resM.success) { orgMembersData = resM.data; }
+}
+
+function renderOrgAgenda() {
+  const tbody = document.getElementById('orgAgendaList');
+  if (!tbody) return;
+  if (orgAgendaData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">Belum ada agenda.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = orgAgendaData.map(a => {
+    const tgl = a.date ? new Date(a.date).toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) : '-';
+    const jam = formatTimeOnly(a.time);
+    const statusBadge = a.status === 'Published' ? 'ok' : (a.status === 'Cancelled' ? 'bad' : 'pending');
+    return `<tr>
+      <td>${tgl} <br><small class="muted">${jam}</small></td>
+      <td><b>${esc(a.name)}</b></td>
+      <td>${esc(a.location)}</td>
+      <td><span class="badge ${statusBadge}">${esc(a.status)}</span></td>
+      <td>
+        <button class="btn small" onclick="editOrgAgenda('${a.id}')">Edit</button>
+        <button class="btn small danger" onclick="deleteOrgAgenda('${a.id}')">Hapus</button>
+      </td>
+    </tr>`;
+  }).join('');
+  
+  // Isi dropdown kehadiran
+  const select = document.getElementById('attendanceAgendaSelect');
+  if (select) {
+    select.innerHTML = '<option value="">-- Pilih Agenda --</option>' + 
+      orgAgendaData.map(a => `<option value="${a.id}">${esc(a.name)}</option>`).join('');
+  }
+}
+
+function renderOrgInvitation() {
+  const tbody = document.getElementById('orgInvitationList');
+  if (!tbody) return;
+  if (orgInvitationData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">Belum ada undangan.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = orgInvitationData.map(i => {
+    const tgl = i.receivedDate ? new Date(i.receivedDate).toLocaleDateString('id-ID') : '-';
+    return `<tr>
+      <td><b>${esc(i.title)}</b></td>
+      <td>${esc(i.organizer)}</td>
+      <td>${tgl}</td>
+      <td>${i.documentUrl ? `<a href="${esc(i.documentUrl)}" target="_blank" class="btn small">Buka</a>` : '-'}</td>
+      <td><button class="btn small danger" onclick="deleteOrgInvitation('${i.invitationId}')">Hapus</button></td>
+    </tr>`;
+  }).join('');
+}
+
+async function loadAttendance() {
+  const agendaId = document.getElementById('attendanceAgendaSelect').value;
+  const tbody = document.getElementById('orgAttendanceList');
+  if (!agendaId) { tbody.innerHTML = '<tr><td colspan="5" class="empty">Pilih agenda terlebih dahulu.</td></tr>'; return; }
+  
+  tbody.innerHTML = '<tr><td colspan="5" class="empty">Memuat data kehadiran...</td></tr>';
+  const res = await callAPI('get_attendance', 'GET', { params: { agendaId: agendaId } });
+  
+  if (res && res.success) {
+    orgAttendanceData = res.data;
+    if (orgAttendanceData.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">Belum ada anggota yang merespons.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = orgAttendanceData.map(att => {
+      const member = orgMembersData.find(m => m.NIA === att.memberNia);
+      const nama = member ? member.NamaLengkap : att.memberNia;
+      let presensiBtn = '';
+      if (att.attendanceStatus === 'Present') presensiBtn = '<span class="badge ok">Hadir</span>';
+      else if (att.attendanceStatus === 'Absent') presensiBtn = '<span class="badge bad">Absen</span>';
+      else presensiBtn = `<button class="btn small primary" onclick="catatPresensi('${att.attendanceId}', 'Present')">Tandai Hadir</button>`;
+      
+      return `<tr>
+        <td>${esc(att.memberNia)}</td>
+        <td><b>${esc(nama)}</b></td>
+        <td><span class="badge info">${esc(att.response)}</span></td>
+        <td>${presensiBtn}</td>
+        <td>${att.checkedBy ? `<small class="muted">Oleh: ${esc(att.checkedBy)}</small>` : ''}</td>
+      </tr>`;
+    }).join('');
+  }
+}
+
+async function catatPresensi(attId, status) {
+  const admin = getSession(); // Fungsi dari kode sebelumnya
+  if (!admin) return;
+  const res = await callAPI('save_presensi', 'POST', { 
+    adminNia: admin.NIA, 
+    data: { attendanceId: attId, status: status } 
+  });
+  if (res && res.success) { toast('Presensi dicatat'); loadAttendance(); }
+  else toast(res.message || 'Gagal');
+}
+
+// Form Submit Agenda
+document.getElementById('orgAgendaForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const admin = getSession();
+  if (!admin) return toast('Sesi habis');
+  
+  const data = Object.fromEntries(new FormData(e.target));
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = 'Menyimpan...'; btn.disabled = true;
+
+  const res = await callAPI('save_agenda', 'POST', { adminNia: admin.NIA, agenda: data });
+  btn.innerHTML = originalText; btn.disabled = false;
+
+  if (res && res.success) {
+    toast('Agenda disimpan');
+    document.getElementById('orgAgendaModal').classList.remove('show');
+    e.target.reset();
+    loadOrgData();
+  } else toast(res.message || 'Gagal');
+});
+
+// Form Submit Undangan
+document.getElementById('orgInvitationForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const admin = getSession();
+  if (!admin) return toast('Sesi habis');
+
+  const data = Object.fromEntries(new FormData(e.target));
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = 'Menyimpan...'; btn.disabled = true;
+
+  const res = await callAPI('save_invitation', 'POST', { adminNia: admin.NIA, invitation: data });
+  btn.innerHTML = originalText; btn.disabled = false;
+
+  if (res && res.success) {
+    toast('Undangan disimpan');
+    document.getElementById('orgInvitationModal').classList.remove('show');
+    e.target.reset();
+    loadOrgData();
+  } else toast(res.message || 'Gagal');
+});
+
+// Edit Agenda
+window.editOrgAgenda = function(id) {
+  const item = orgAgendaData.find(x => x.id === id);
+  if (!item) return;
+  const form = document.getElementById('orgAgendaForm');
+  form.id.value = item.id;
+  form.name.value = item.name;
+  form.date.value = item.date.split('T')[0];
+  form.time.value = formatTimeOnly(item.time);
+  form.endTime.value = item.endTime || '';
+  form.location.value = item.location;
+  form.description.value = item.description || '';
+  form.mapsUrl.value = item.mapsUrl || '';
+  form.status.value = item.status;
+  document.getElementById('orgAgendaModal').classList.add('show');
+};
+
+window.deleteOrgAgenda = async function(id) {
+  if (!confirm('Batalkan agenda ini?')) return;
+  const admin = getSession();
+  const res = await callAPI('delete_agenda', 'POST', { adminNia: admin.NIA, id });
+  if (res && res.success) { toast('Agenda dibatalkan'); loadOrgData(); }
+};
+
+window.deleteOrgInvitation = async function(id) {
+  if (!confirm('Hapus undangan ini?')) return;
+  const admin = getSession();
+  const res = await callAPI('delete_invitation', 'POST', { adminNia: admin.NIA, id });
+  if (res && res.success) { toast('Undangan dihapus'); loadOrgData(); }
+};
+
+// Panggil loadOrgData saat halaman admin dibuka atau menu diklik
+// (Pastikan menambahkan pemanggilan loadOrgData() saat menu data-page="org-agenda" diklik)
 </script>
 </body>
 </html>
